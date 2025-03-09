@@ -23,5 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DivisionesTableSeeder::class);
         $this->call(LibrosTableSeeder::class);
         $this->call(PartesTableSeeder::class);
+        $this->call(CapitulosTableSeeder1::class);
+        $this->call(CapitulosTableSeeder2::class);
     }
 }
