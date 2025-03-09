@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         ]);
         $this->call(VolumenesTableSeeder::class);
         $this->call(DivisionesTableSeeder::class);
+        $this->call(LibrosTableSeeder::class);
     }
 }
