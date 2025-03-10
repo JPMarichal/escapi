@@ -19,12 +19,21 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
-        $this->call(VolumenesTableSeeder::class);
+        $this->call(class: VolumenesTableSeeder::class);
         $this->call(DivisionesTableSeeder::class);
         $this->call(LibrosTableSeeder::class);
         $this->call(PartesTableSeeder::class);
         $this->call(CapitulosTableSeeder1::class);
         $this->call(CapitulosTableSeeder2::class);
         $this->call(PericopasTableSeeder::class);
+        $this->call(VersiculosTableSeeder1::class);
+        $this->call(VersiculosTableSeeder2::class);
+        $this->call(VersiculosTableSeeder3::class);
+        $this->call(VersiculosTableSeeder4::class);
+        $this->call(VersiculosTableSeeder5::class);
+        $this->call(VersiculosTableSeeder6::class);
+        $this->call(VersiculosTableSeeder7::class);
+        $this->call(VersiculosTableSeeder8::class);
+        $this->call(VersiculosTableSeeder9::class);
     }
 }
