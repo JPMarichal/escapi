@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Pericopas;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Capitulos;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Versiculos extends Model
 {
@@ -25,19 +26,13 @@ class Versiculos extends Model
         'video',
     ];
 
-
-    public function pericopa()
+    public function pericopa(): BelongsTo
     {
-        return $this->belongsTo(Pericopas::class);
+        return $this->belongsTo(Pericopas::class, 'pericopa_id');
     }
 
-    public function capitulo()
+    public function capitulo(): BelongsTo
     {
-        return $this->belongsTo(Capitulos::class);
+        return $this->belongsTo(Capitulos::class, 'capitulo_id');
     }
-
-    // public function versiculos_comentarios(): HasMany
-    // {
-    //     return $this->hasMany(VersiculosComentarios::class);
-    // }
 }

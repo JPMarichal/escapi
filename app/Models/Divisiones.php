@@ -28,12 +28,11 @@ class Divisiones extends Model
 
     public function volumen(): BelongsTo
     {
-
-        return $this->belongsTo(Volumenes::class);
+        return $this->belongsTo(Volumenes::class, 'volumen_id');
     }
 
     public function libros()
     {
-        return $this->hasMany(Libros::class);
+        return $this->hasMany(Libros::class, 'division_id');
     }
 }

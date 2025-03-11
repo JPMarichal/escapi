@@ -46,22 +46,21 @@ class Libros extends Model
 
     public function volumen(): BelongsTo
     {
-        return $this->belongsTo(Volumenes::class);
+        return $this->belongsTo(Volumenes::class, 'volumen_id');
     }
 
     public function division(): BelongsTo
     {
-        return $this->belongsTo(Divisiones::class);
+        return $this->belongsTo(Divisiones::class, 'division_id');
     }
 
     public function partes(): HasMany
     {
-        return $this->hasMany(Partes::class);
+        return $this->hasMany(Partes::class, 'libro_id');
     }
 
     public function capitulos(): HasMany
     {
-        return $this->hasMany(Capitulos::class);
+        return $this->hasMany(Capitulos::class, 'libro_id');
     }
-
 }

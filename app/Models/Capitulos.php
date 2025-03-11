@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Libros;
 use App\Models\Partes;
+use App\Models\Pericopas;
+use App\Models\Versiculos;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -46,26 +48,21 @@ class Capitulos extends Model
 
     public function libro(): BelongsTo
     {
-        return $this->belongsTo(Libros::class);
+        return $this->belongsTo(Libros::class, 'libro_id');
     }
 
     public function parte(): BelongsTo
     {
-        return $this->belongsTo(Partes::class);
+        return $this->belongsTo(Partes::class, 'parte_id');
     }
 
     public function pericopas(): HasMany
     {
-        return $this->hasMany(Pericopas::class);
+        return $this->hasMany(Pericopas::class, 'capitulo_id');
     }
 
     public function versiculos(): HasMany
     {
-        return $this->hasMany(Versiculos::class);
+        return $this->hasMany(Versiculos::class, 'capitulo_id');
     }
-
-
-
-    
-   
 }

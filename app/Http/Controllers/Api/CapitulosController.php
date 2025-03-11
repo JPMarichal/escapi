@@ -14,4 +14,34 @@ class CapitulosController extends Controller
         $capitulos = Capitulos::paginate($itemsPerPage);
         return response()->json($capitulos);
     }
+
+    public function show($id)
+    {
+        $capitulo = Capitulos::findOrFail($id);
+        return response()->json($capitulo);
+    }
+
+    public function pericopas($id)
+    {
+        $capitulo = Capitulos::findOrFail($id);
+        return response()->json($capitulo->pericopas);
+    }
+
+    public function versiculos($id)
+    {
+        $capitulo = Capitulos::findOrFail($id);
+        return response()->json($capitulo->versiculos()->orderBy('num_versiculo', 'asc')->get());
+    }
+
+    public function parte($id)
+    {
+        $capitulo = Capitulos::findOrFail($id);
+        return response()->json($capitulo->parte);
+    }
+
+    public function libro($id)
+    {
+        $capitulo = Capitulos::findOrFail($id);
+        return response()->json($capitulo->libro);
+    }
 }

@@ -32,12 +32,11 @@ class Partes extends Model
 
     public function libro(): BelongsTo
     {
-        return $this->belongsTo(Libros::class);
+        return $this->belongsTo(Libros::class, 'libro_id');
     }
 
     public function capitulos(): HasMany
     {
-        return $this->hasMany(Capitulos::class);
-
+        return $this->hasMany(Capitulos::class, 'parte_id');
     }
 }

@@ -13,4 +13,22 @@ class DivisionesController extends Controller
         $divisiones = Divisiones::all();
         return response()->json($divisiones);
     }
+
+    public function show($id)
+    {
+        $division = Divisiones::findOrFail($id);
+        return response()->json($division);
+    }
+
+    public function libros($id)
+    {
+        $division = Divisiones::findOrFail($id);
+        return response()->json($division->libros);
+    }
+
+    public function volumen($id)
+    {
+        $division = Divisiones::findOrFail($id);
+        return response()->json($division->volumen);
+    }
 }

@@ -21,11 +21,11 @@ class Volumenes extends Model
 
     public function libros()
     {
-        return $this->hasMany(Libros::class);
+        return $this->hasMany(Libros::class, 'volumen_id');
     }
 
     public function divisiones()
     {
-        return $this->hasMany(Divisiones::class);
+        return $this->hasMany(Divisiones::class, 'volumen_id');
     }
 }

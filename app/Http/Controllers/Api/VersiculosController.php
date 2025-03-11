@@ -14,4 +14,22 @@ class VersiculosController extends Controller
         $versiculos = Versiculos::paginate($itemsPerPage);
         return response()->json($versiculos);
     }
+
+    public function show($id)
+    {
+        $versiculo = Versiculos::findOrFail($id);
+        return response()->json($versiculo);
+    }
+
+    public function pericopa($id)
+    {
+        $versiculo = Versiculos::findOrFail($id);
+        return response()->json($versiculo->pericopa);
+    }
+
+    public function capitulo($id)
+    {
+        $versiculo = Versiculos::findOrFail($id);
+        return response()->json($versiculo->capitulo);
+    }
 }

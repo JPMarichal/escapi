@@ -13,4 +13,22 @@ class VolumenesController extends Controller
         $volumenes = Volumenes::all();
         return response()->json($volumenes);
     }
+
+    public function show($id)
+    {
+        $volumen = Volumenes::findOrFail($id);
+        return response()->json($volumen);
+    }
+
+    public function divisiones($id)
+    {
+        $volumen = Volumenes::findOrFail($id);
+        return response()->json($volumen->divisiones);
+    }
+
+    public function libros($id)
+    {
+        $volumen = Volumenes::findOrFail($id);
+        return response()->json($volumen->libros);
+    }
 }
