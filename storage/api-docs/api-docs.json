@@ -1,0 +1,1304 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Escrituras",
+        "description": "API para acceder a las escrituras de La Iglesia de Jesucristo de los Santos de los Últimos Días",
+        "contact": {
+            "email": "admin@example.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api",
+            "description": "Servidor Local"
+        }
+    ],
+    "paths": {
+        "/api/capitulos": {
+            "get": {
+                "tags": [
+                    "Capitulos"
+                ],
+                "summary": "Lista todos los capítulos",
+                "operationId": "2f6fb8d18574384a6586b8f39c7cf3b5",
+                "responses": {
+                    "200": {
+                        "description": "Lista de capítulos obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "current_page": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Capitulo"
+                                            }
+                                        },
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "per_page": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/capitulos/{id}": {
+            "get": {
+                "tags": [
+                    "Capitulos"
+                ],
+                "summary": "Obtiene un capítulo específico",
+                "operationId": "95148e269e3580ad88b333105e1c219e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del capítulo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Capítulo encontrado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Capitulo"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Capítulo no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/capitulos/{id}/pericopas": {
+            "get": {
+                "tags": [
+                    "Capitulos"
+                ],
+                "summary": "Lista todas las pericopas de un capítulo",
+                "operationId": "973043407c8208bc88556bdcb516b911",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del capítulo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de pericopas obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Pericopa"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Capítulo no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/capitulos/{id}/versiculos": {
+            "get": {
+                "tags": [
+                    "Capitulos"
+                ],
+                "summary": "Lista todos los versículos de un capítulo",
+                "operationId": "e5a6162a3c2d86dab8fcec2e4d75a1cb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del capítulo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de versículos obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Versiculo"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Capítulo no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/capitulos/{id}/parte": {
+            "get": {
+                "tags": [
+                    "Capitulos"
+                ],
+                "summary": "Obtiene la parte a la que pertenece el capítulo",
+                "operationId": "18f11d12206e32e83f33b2aff9aed0dd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del capítulo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Parte obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Parte"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Capítulo no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/capitulos/{id}/libro": {
+            "get": {
+                "tags": [
+                    "Capitulos"
+                ],
+                "summary": "Obtiene el libro al que pertenece el capítulo",
+                "operationId": "ebe7663581a330d0aff88387f81e77c8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del capítulo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Libro obtenido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Libro"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Capítulo no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/divisiones": {
+            "get": {
+                "tags": [
+                    "Divisiones"
+                ],
+                "summary": "Lista todas las divisiones",
+                "operationId": "9ca52b80c9401481b98fa9bffe983af9",
+                "responses": {
+                    "200": {
+                        "description": "Lista de divisiones obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Division"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/divisiones/{id}": {
+            "get": {
+                "tags": [
+                    "Divisiones"
+                ],
+                "summary": "Obtiene una división específica",
+                "operationId": "c3cf42cc74eb52f8c73bae4043c88ac3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la división",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "División encontrada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Division"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "División no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/divisiones/{id}/libros": {
+            "get": {
+                "tags": [
+                    "Divisiones"
+                ],
+                "summary": "Lista todos los libros de una división",
+                "operationId": "cc6df11012446b4fa397fdd12a8f1e06",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la división",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de libros obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Libro"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "División no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/divisiones/{id}/volumen": {
+            "get": {
+                "tags": [
+                    "Divisiones"
+                ],
+                "summary": "Obtiene el volumen al que pertenece la división",
+                "operationId": "12b7c770c148c3f03ad79a8d5928c815",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la división",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Volumen obtenido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Volumen"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "División no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/libros": {
+            "get": {
+                "tags": [
+                    "Libros"
+                ],
+                "summary": "Lista todos los libros",
+                "operationId": "d7c56fbedbf2df9607555991f3051ddf",
+                "responses": {
+                    "200": {
+                        "description": "Lista de libros obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Libro"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/libros/{id}": {
+            "get": {
+                "tags": [
+                    "Libros"
+                ],
+                "summary": "Obtiene un libro específico",
+                "operationId": "7ba0f98c8ba5780dd795ab4081054868",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del libro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Libro encontrado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Libro"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Libro no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/libros/{id}/partes": {
+            "get": {
+                "tags": [
+                    "Libros"
+                ],
+                "summary": "Lista todas las partes de un libro",
+                "operationId": "d12157c1f59fd708214bc642abffa222",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del libro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de partes obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Parte"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Libro no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/libros/{id}/capitulos": {
+            "get": {
+                "tags": [
+                    "Libros"
+                ],
+                "summary": "Lista todos los capítulos de un libro",
+                "operationId": "a5ce5e0c4addeec6f1513a885b710c8f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del libro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de capítulos obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Capitulo"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Libro no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/libros/{id}/division": {
+            "get": {
+                "tags": [
+                    "Libros"
+                ],
+                "summary": "Obtiene la división a la que pertenece el libro",
+                "operationId": "0f04263035a84b9c3e0b53982c28e563",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del libro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "División obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Division"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Libro no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/libros/{id}/volumen": {
+            "get": {
+                "tags": [
+                    "Libros"
+                ],
+                "summary": "Obtiene el volumen al que pertenece el libro",
+                "operationId": "f219e43bef7ffeb043dba3b57b58b87f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del libro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Volumen obtenido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Volumen"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Libro no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/partes": {
+            "get": {
+                "tags": [
+                    "Partes"
+                ],
+                "summary": "Lista todas las partes",
+                "operationId": "5cb4c4875506f20c157b53cd2805ddb8",
+                "responses": {
+                    "200": {
+                        "description": "Lista de partes obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Parte"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/partes/{id}": {
+            "get": {
+                "tags": [
+                    "Partes"
+                ],
+                "summary": "Obtiene una parte específica",
+                "operationId": "2d194b8b14fbc3440017a75e2682cf85",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la parte",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Parte encontrada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Parte"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Parte no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/partes/{id}/capitulos": {
+            "get": {
+                "tags": [
+                    "Partes"
+                ],
+                "summary": "Lista todos los capítulos de una parte",
+                "operationId": "10760a1872bed2571d3ce7337ce8be59",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la parte",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de capítulos obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Capitulo"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Parte no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/partes/{id}/libro": {
+            "get": {
+                "tags": [
+                    "Partes"
+                ],
+                "summary": "Obtiene el libro al que pertenece la parte",
+                "operationId": "d4bae71d22dccf48cb63aa6ed70278db",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la parte",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Libro obtenido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Libro"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Parte no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/pericopas": {
+            "get": {
+                "tags": [
+                    "Pericopas"
+                ],
+                "summary": "Lista todas las pericopas",
+                "operationId": "1af41468d4c04036031f197823260a86",
+                "responses": {
+                    "200": {
+                        "description": "Lista de pericopas obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "current_page": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Pericopa"
+                                            }
+                                        },
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "per_page": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/pericopas/{id}": {
+            "get": {
+                "tags": [
+                    "Pericopas"
+                ],
+                "summary": "Obtiene una perícopa específica",
+                "operationId": "2c3e76587aaa4b2dab11f726a90dab31",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la perícopa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Perícopa encontrada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Pericopa"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Perícopa no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/pericopas/{id}/versiculos": {
+            "get": {
+                "tags": [
+                    "Pericopas"
+                ],
+                "summary": "Lista todos los versículos de una perícopa",
+                "operationId": "a97eb13e2e67f0b0f58f15e12c8c6163",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la perícopa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de versículos obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Versiculo"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Perícopa no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/pericopas/{id}/capitulo": {
+            "get": {
+                "tags": [
+                    "Pericopas"
+                ],
+                "summary": "Obtiene el capítulo al que pertenece la perícopa",
+                "operationId": "95d6b773c354e98096be170f2d310844",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la perícopa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Capítulo obtenido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Capitulo"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Perícopa no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/versiculos": {
+            "get": {
+                "tags": [
+                    "Versiculos"
+                ],
+                "summary": "Lista todos los versículos",
+                "operationId": "e6bbead2dbfd4dfc87eb90e03b165c33",
+                "responses": {
+                    "200": {
+                        "description": "Lista de versículos obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "current_page": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Versiculo"
+                                            }
+                                        },
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "per_page": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/versiculos/{id}": {
+            "get": {
+                "tags": [
+                    "Versiculos"
+                ],
+                "summary": "Obtiene un versículo específico",
+                "operationId": "95c0142ad6c7669900d64689fe9a4445",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del versículo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Versículo encontrado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Versiculo"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Versículo no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/versiculos/{id}/pericopa": {
+            "get": {
+                "tags": [
+                    "Versiculos"
+                ],
+                "summary": "Obtiene la perícopa a la que pertenece el versículo",
+                "operationId": "a238b101499260a82f11f386523de334",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del versículo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Perícopa obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Pericopa"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Versículo no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/versiculos/{id}/capitulo": {
+            "get": {
+                "tags": [
+                    "Versiculos"
+                ],
+                "summary": "Obtiene el capítulo al que pertenece el versículo",
+                "operationId": "c5229fc932dcc035d208de0abfd02c73",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del versículo",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Capítulo obtenido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Capitulo"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Versículo no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/volumenes": {
+            "get": {
+                "tags": [
+                    "Volumenes"
+                ],
+                "summary": "Lista todos los volúmenes",
+                "operationId": "413e6c68397fd5b92faeeb332670b027",
+                "responses": {
+                    "200": {
+                        "description": "Lista de volúmenes obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Volumen"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/volumenes/{id}": {
+            "get": {
+                "tags": [
+                    "Volumenes"
+                ],
+                "summary": "Obtiene un volumen específico",
+                "operationId": "09bab61eec73e7ea389a6c97bf0de1f0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del volumen",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Volumen encontrado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Volumen"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Volumen no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/volumenes/{id}/divisiones": {
+            "get": {
+                "tags": [
+                    "Volumenes"
+                ],
+                "summary": "Lista todas las divisiones de un volumen",
+                "operationId": "6532f686f7c49776c120c942e1cea896",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del volumen",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de divisiones obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Division"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Volumen no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/volumenes/{id}/libros": {
+            "get": {
+                "tags": [
+                    "Volumenes"
+                ],
+                "summary": "Lista todos los libros de un volumen",
+                "operationId": "10ef9b4b1d05c08dccc054a87511cfa5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del volumen",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de libros obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Libro"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Volumen no encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Volumen": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "abreviatura": {
+                        "type": "string"
+                    },
+                    "orden": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Division": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "abreviatura": {
+                        "type": "string"
+                    },
+                    "orden": {
+                        "type": "integer"
+                    },
+                    "volumen_id": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Libro": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "abreviatura": {
+                        "type": "string"
+                    },
+                    "orden": {
+                        "type": "integer"
+                    },
+                    "division_id": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Parte": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "orden": {
+                        "type": "integer"
+                    },
+                    "libro_id": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Capitulo": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "num_capitulo": {
+                        "type": "integer"
+                    },
+                    "orden": {
+                        "type": "integer"
+                    },
+                    "libro_id": {
+                        "type": "integer"
+                    },
+                    "parte_id": {
+                        "type": "integer",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Pericopa": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "titulo": {
+                        "type": "string"
+                    },
+                    "orden": {
+                        "type": "integer"
+                    },
+                    "capitulo_id": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Versiculo": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "contenido": {
+                        "type": "string"
+                    },
+                    "num_versiculo": {
+                        "type": "integer"
+                    },
+                    "orden": {
+                        "type": "integer"
+                    },
+                    "capitulo_id": {
+                        "type": "integer"
+                    },
+                    "pericopa_id": {
+                        "type": "integer",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Capitulos",
+            "description": "API Endpoints para capítulos de libros"
+        },
+        {
+            "name": "Divisiones",
+            "description": "API Endpoints para divisiones de escritura"
+        },
+        {
+            "name": "Libros",
+            "description": "API Endpoints para libros de escritura"
+        },
+        {
+            "name": "Partes",
+            "description": "API Endpoints para partes de libros"
+        },
+        {
+            "name": "Pericopas",
+            "description": "API Endpoints para pericopas de capítulos"
+        },
+        {
+            "name": "Versiculos",
+            "description": "API Endpoints para versículos de capítulos"
+        },
+        {
+            "name": "Volumenes",
+            "description": "API Endpoints para volúmenes de escritura"
+        }
+    ]
+}
