@@ -12,9 +12,6 @@
         {
             "url": "/api",
             "description": "Servidor Local"
-        },
-        {
-            "url": "/api"
         }
     ],
     "paths": {
@@ -1024,7 +1021,7 @@
                 "tags": [
                     "Volumenes"
                 ],
-                "summary": "Obtiene un volumen específico",
+                "summary": "Obtiene un volumen específico por ID",
                 "operationId": "09bab61eec73e7ea389a6c97bf0de1f0",
                 "parameters": [
                     {
@@ -1034,6 +1031,41 @@
                         "required": true,
                         "schema": {
                             "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Volumen encontrado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Volumen"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Volumen no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/volumenes/buscar": {
+            "get": {
+                "tags": [
+                    "Volumenes"
+                ],
+                "summary": "Busca un volumen por nombre",
+                "operationId": "86bc51e72b9657a0d571116a08bfca8d",
+                "parameters": [
+                    {
+                        "name": "nombre",
+                        "in": "query",
+                        "description": "Nombre del volumen (insensible a mayúsculas/minúsculas y acentos)",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],
