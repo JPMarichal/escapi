@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Capitulos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 /**
  * @OA\Tag(
@@ -14,6 +15,18 @@ use Illuminate\Http\Request;
  */
 class CapitulosController extends Controller
 {
+    protected function normalizarTexto($texto)
+    {
+        $unwanted_array = array(
+            'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+            'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
+            'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
+            'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
+            'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y'
+        );
+        return strtolower(strtr($texto, $unwanted_array));
+    }
+
     /**
      * @OA\Get(
      *     path="/api/capitulos",
@@ -95,8 +108,14 @@ class CapitulosController extends Controller
         }
 
         $referencia = $request->input('referencia');
-        $capitulo = Capitulos::where('referencia', 'LIKE', "%{$referencia}%")
-            ->first();
+        $referenciaLower = $this->normalizarTexto($referencia);
+
+        $capitulo = Capitulos::all()->first(function($item) use ($referenciaLower) {
+            return str_contains(
+                $this->normalizarTexto($item->referencia),
+                $referenciaLower
+            );
+        });
 
         if (!$capitulo) {
             return response()->json(['error' => 'Capítulo no encontrado'], 404);

@@ -13,11 +13,7 @@ class CapitulosTableSeeder2 extends Seeder
      * @return void
      */
     public function run()
-    {
-        
-
-        \DB::table('capitulos')->delete();
-        
+    {        
         \DB::table('capitulos')->insert(array (
             0 => 
             array (

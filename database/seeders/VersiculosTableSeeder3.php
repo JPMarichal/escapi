@@ -13,11 +13,7 @@ class VersiculosTableSeeder3 extends Seeder
      * @return void
      */
     public function run()
-    {
-        
-
-        \DB::table('versiculos')->delete();
-        
+    {        
         \DB::table('versiculos')->insert(array (
             0 => 
             array (

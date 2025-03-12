@@ -14,10 +14,6 @@ class VersiculosTableSeeder5 extends Seeder
      */
     public function run()
     {
-        
-
-        \DB::table('versiculos')->delete();
-        
         \DB::table('versiculos')->insert(array (
             0 => 
             array (
