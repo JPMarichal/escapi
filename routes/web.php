@@ -77,4 +77,20 @@ Route::group(['prefix' => 'api'], function () {
     Route::get('versiculos/{id}', [VersiculosController::class, 'show']);
     Route::get('versiculos/{id}/pericopa', [VersiculosController::class, 'pericopa']);
     Route::get('versiculos/{id}/capitulo', [VersiculosController::class, 'capitulo']);
+
+    // Audio
+    Route::get('/audio/{libro}/{capitulo}', function ($libro, $capitulo) {
+        $capitulo = \App\Models\Capitulos::whereHas('libro', function($query) use ($libro) {
+            $query->whereRaw('LOWER(nombre) = ? OR LOWER(abreviatura) = ?', 
+                [strtolower($libro), strtolower($libro)]);
+        })
+        ->where('num_capitulo', $capitulo)
+        ->first();
+
+        if (!$capitulo || !$capitulo->url_audio) {
+            return response()->json(['error' => 'Audio no encontrado'], 404);
+        }
+
+        return response()->json(['url' => $capitulo->url_audio]);
+    });
 });

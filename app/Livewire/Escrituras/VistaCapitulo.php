@@ -9,6 +9,7 @@ use App\Models\Libros;
 use App\Traits\ScriptureReferences;
 use App\Traits\TextNormalization;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class VistaCapitulo extends Component
 {
@@ -21,13 +22,64 @@ class VistaCapitulo extends Component
     public $error;
     public $capituloAnterior;
     public $capituloSiguiente;
+    public $url_audio;
 
     public function mount($libro = null, $capitulo = null)
     {
         $this->libro = $libro;
         $this->capitulo = $capitulo;
-        $this->cargarVersiculos();
-        $this->cargarNavegacion();
+        $this->cargarCapitulo();
+    }
+
+    protected function cargarCapitulo()
+    {
+        if (!$this->libro || !$this->capitulo) {
+            $this->error = 'No se ha especificado un libro y capítulo válidos.';
+            return;
+        }
+
+        try {
+            // Primero obtener el libro
+            $libro = Libros::where(function($query) {
+                $query->whereRaw('LOWER(nombre) = ?', [strtolower($this->libro)])
+                    ->orWhereRaw('LOWER(abreviatura) = ?', [strtolower($this->libro)]);
+            })->first();
+
+            if (!$libro) {
+                $this->error = 'No se encontró el libro especificado.';
+                return;
+            }
+
+            // Luego obtener el capítulo con todos los campos necesarios
+            $capitulo = Capitulos::where('libro_id', $libro->id)
+                ->where('num_capitulo', $this->capitulo)
+                ->select(['id', 'num_capitulo', 'url_audio'])
+                ->first();
+
+            if (!$capitulo) {
+                $this->error = 'No se encontró el capítulo especificado.';
+                return;
+            }
+
+            $this->referencia = "{$libro->nombre} {$capitulo->num_capitulo}";
+            $this->url_audio = $capitulo->url_audio;
+
+            // Debug
+            Log::debug('Datos del capítulo:', [
+                'libro_id' => $libro->id,
+                'libro_nombre' => $libro->nombre,
+                'capitulo_id' => $capitulo->id,
+                'num_capitulo' => $capitulo->num_capitulo,
+                'url_audio' => $this->url_audio
+            ]);
+
+            $this->cargarVersiculos();
+            $this->cargarNavegacion();
+
+        } catch (\Exception $e) {
+            $this->error = 'Ocurrió un error al cargar el capítulo.';
+            Log::error('Error cargando capítulo: ' . $e->getMessage());
+        }
     }
 
     protected function cargarNavegacion()

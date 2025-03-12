@@ -19,10 +19,18 @@
             </a>
         @endif
     </div>
+
     <header class="mb-8 text-center">
         <h1 class="text-3xl md:text-4xl font-['Verdana'] text-gray-900">
             {{ $referencia }}
         </h1>
+        @if($url_audio)
+            <div class="mt-3 flex justify-center">
+                <audio controls controlsList="nodownload" class="h-6 w-64 [&::-webkit-media-controls-panel]:bg-gray-50 [&::-webkit-media-controls-current-time-display]:hidden [&::-webkit-media-controls-time-remaining-display]:hidden">
+                    <source src="{{ $url_audio }}" type="audio/mpeg">
+                </audio>
+            </div>
+        @endif
     </header>
 
     @if($error)
