@@ -20,7 +20,7 @@
         @endif
     </div>
 
-    <header class="mb-8 text-center">
+    <header class="mb-12 text-center">
         <h1 class="text-3xl md:text-4xl font-['Verdana'] text-gray-900">
             {{ $referencia }}
         </h1>
@@ -40,13 +40,20 @@
         </div>
     @endif
 
-    @if($versiculos && count($versiculos) > 0)
-        <div class="divide-y divide-gray-100">
+    @if($pericopas && $pericopas->count() > 0)
+        <div class="space-y-0">
+            @foreach($pericopas as $pericopa)
+                <livewire:escrituras.pericopa :pericopa="$pericopa" :versiculos="$versiculos" :wire:key="$pericopa->id" />
+            @endforeach
+        </div>
+    @elseif($versiculos && $versiculos->count() > 0)
+        <!-- Si no hay perícopas pero sí versículos, mostrarlos directamente -->
+        <div class="space-y-2">
             @foreach($versiculos as $versiculo)
                 <livewire:escrituras.versiculo :versiculo="$versiculo" :esPar="$loop->even" :wire:key="$versiculo->id" />
             @endforeach
         </div>
-    @elseif(!$error)
+    @else
         <div class="text-center text-gray-600 font-['Verdana']">
             <i class="fa-solid fa-book-open text-4xl mb-4"></i>
             <p>No se encontraron versículos para esta referencia.</p>

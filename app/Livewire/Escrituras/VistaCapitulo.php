@@ -18,6 +18,7 @@ class VistaCapitulo extends Component
     public $libro;
     public $capitulo;
     public $versiculos;
+    public $pericopas;
     public $referencia;
     public $error;
     public $capituloAnterior;
@@ -50,10 +51,12 @@ class VistaCapitulo extends Component
                 return;
             }
 
-            // Luego obtener el capítulo con todos los campos necesarios
+            // Luego obtener el capítulo con sus perícopas
             $capitulo = Capitulos::where('libro_id', $libro->id)
                 ->where('num_capitulo', $this->capitulo)
-                ->select(['id', 'num_capitulo', 'url_audio'])
+                ->with(['pericopas' => function($query) {
+                    $query->orderBy('versiculo_inicial');
+                }])
                 ->first();
 
             if (!$capitulo) {
@@ -63,17 +66,13 @@ class VistaCapitulo extends Component
 
             $this->referencia = "{$libro->nombre} {$capitulo->num_capitulo}";
             $this->url_audio = $capitulo->url_audio;
+            $this->pericopas = $capitulo->pericopas;
 
-            // Debug
-            Log::debug('Datos del capítulo:', [
-                'libro_id' => $libro->id,
-                'libro_nombre' => $libro->nombre,
-                'capitulo_id' => $capitulo->id,
-                'num_capitulo' => $capitulo->num_capitulo,
-                'url_audio' => $this->url_audio
-            ]);
+            // Cargar todos los versículos del capítulo ordenados
+            $this->versiculos = Versiculos::where('capitulo_id', $capitulo->id)
+                ->orderBy('num_versiculo')
+                ->get();
 
-            $this->cargarVersiculos();
             $this->cargarNavegacion();
 
         } catch (\Exception $e) {
@@ -184,48 +183,6 @@ class VistaCapitulo extends Component
                         'capitulo' => $capituloSiguiente->num_capitulo
                     ];
                 }
-            }
-        }
-    }
-
-    public function cargarVersiculos()
-    {
-        if ($this->libro && $this->capitulo) {
-            try {
-                // Normalizar el nombre del libro para la búsqueda
-                $libroNormalizado = $this->normalizarTexto($this->libro);
-
-                // Buscar el libro primero
-                $libro = Libros::whereRaw('LOWER(nombre) = ? OR LOWER(abreviatura) = ?', 
-                    [strtolower($libroNormalizado), strtolower($libroNormalizado)])
-                    ->first();
-
-                if ($libro) {
-                    // Buscar el capítulo dentro del libro encontrado
-                    $capitulo = Capitulos::where('libro_id', $libro->id)
-                        ->where('num_capitulo', $this->capitulo)
-                        ->first();
-
-                    if ($capitulo) {
-                        // Obtener los versículos del capítulo
-                        $this->versiculos = Versiculos::where('capitulo_id', $capitulo->id)
-                            ->orderBy('num_versiculo', 'asc')
-                            ->get();
-
-                        $this->referencia = $this->formatearReferencia($libro->nombre, $capitulo->num_capitulo);
-                        $this->error = null;
-                        return;
-                    }
-                }
-
-                // Si llegamos aquí, no se encontró el libro o capítulo
-                $this->versiculos = collect();
-                $this->error = 'No se encontró el capítulo especificado';
-                $this->referencia = $this->formatearReferencia($this->libro, $this->capitulo);
-            } catch (\Exception $e) {
-                $this->versiculos = collect();
-                $this->error = 'Ocurrió un error al cargar los versículos';
-                $this->referencia = $this->formatearReferencia($this->libro, $this->capitulo);
             }
         }
     }
