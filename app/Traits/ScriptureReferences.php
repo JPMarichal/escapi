@@ -12,13 +12,13 @@ trait ScriptureReferences
      */
     protected function parsearReferencia($referencia)
     {
-        // Patrón para Doctrina y Convenios: "DyC 4:2" o "Doctrina y Convenios 4:2"
+        // Patrón para Doctrina y Convenios: "DyC 4" o "DyC 4:2" o "Doctrina y Convenios 4:2"
         $patronDyC = '/^(?:DyC|Doctrina y Convenios)\s+(\d+)(?::(\d+)(?:-(\d+))?)?$/u';
         
         // Patrón para Declaraciones Oficiales: "DO 2" o "DO 2:3" o "Declaración oficial 2" o "Declaración oficial 2:3"
         $patronDO = '/^(?:DO|Declaraci[óo]n[es]? oficial[es]?)\s+(\d+)(?::(\d+)(?:-(\d+))?)?$/u';
         
-        // Patrón general para otros libros: "Juan 1:1" o "Juan 1:1-3" o "1 Juan 1:1-3"
+        // Patrón general para otros libros: "Juan 1" o "Juan 1:1" o "Juan 1:1-3" o "1 Juan 1:1-3"
         $patronGeneral = '/^((?:\d\s+)?[A-ZÁÉÍÓÚÜa-záéíóúü\s]+)\s+(\d+)(?::(\d+)(?:-(\d+))?)?$/u';
 
         // Intentar coincidencia con DyC
@@ -97,7 +97,7 @@ trait ScriptureReferences
     {
         $componentes = $this->parsearReferencia($referencia);
         
-        if (!$componentes || !$componentes['versiculo_inicio']) {
+        if (!$componentes) {
             return null;
         }
 
@@ -107,13 +107,17 @@ trait ScriptureReferences
             return null;
         }
 
-        return \App\Models\Versiculos::select('id', 'capitulo_id', 'pericopa_id', 'num_versiculo', 'contenido', 'referencia')
-            ->where('capitulo_id', $capitulo->id)
-            ->whereBetween('num_versiculo', [
+        $query = \App\Models\Versiculos::select('id', 'capitulo_id', 'pericopa_id', 'num_versiculo', 'contenido', 'referencia')
+            ->where('capitulo_id', $capitulo->id);
+
+        // Si se especificaron versículos, filtrar por rango
+        if ($componentes['versiculo_inicio'] !== null) {
+            $query->whereBetween('num_versiculo', [
                 $componentes['versiculo_inicio'],
                 $componentes['versiculo_fin'] ?? $componentes['versiculo_inicio']
-            ])
-            ->orderBy('num_versiculo')
-            ->get();
+            ]);
+        }
+
+        return $query->orderBy('num_versiculo')->get();
     }
 }

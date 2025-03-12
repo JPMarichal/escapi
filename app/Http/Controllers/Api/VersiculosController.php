@@ -163,58 +163,6 @@ class VersiculosController extends Controller
         return response()->json($versiculo->capitulo);
     }
 
-       /**
-     * Parsea una referencia de escritura y retorna sus componentes.
-     * 
-     * @param string $referencia Ejemplo: "Juan 1:1-3" o "Juan 1:1"
-     * @return array|null Retorna null si el formato es inválido
-     */
-    private function parsearReferencia($referencia)
-    {
-        // Patrón para Doctrina y Convenios: "DyC 4:2" o "Doctrina y Convenios 4:2"
-        $patronDyC = '/^(?:DyC|Doctrina y Convenios)\s+(\d+):(\d+)(?:-(\d+))?$/u';
-        
-        // Patrón para Declaraciones Oficiales: "DO 2" o "DO 2:3" o "Declaración oficial 2" o "Declaración oficial 2:3"
-        $patronDO = '/^(?:DO|Declaraci[óo]n[es]? oficial[es]?)\s+(\d+)(?::(\d+)(?:-(\d+))?)?$/u';
-        
-        // Patrón general para otros libros: "Juan 1:1" o "Juan 1:1-3" o "1 Juan 1:1-3"
-        $patronGeneral = '/^((?:\d\s+)?[A-ZÁÉÍÓÚÜa-záéíóúü\s]+)\s+(\d+):(\d+)(?:-(\d+))?$/u';
-
-        // Intentar coincidencia con DyC
-        if (preg_match($patronDyC, $referencia, $matches)) {
-            return [
-                'libro' => 'Secciones',
-                'capitulo' => (int)$matches[1],
-                'versiculo_inicio' => (int)$matches[2],
-                'versiculo_fin' => isset($matches[3]) ? (int)$matches[3] : (int)$matches[2],
-                'es_dyc' => true
-            ];
-        }
-        
-        // Intentar coincidencia con DO
-        if (preg_match($patronDO, $referencia, $matches)) {
-            return [
-                'libro' => 'Declaraciones Oficiales',
-                'capitulo' => (int)$matches[1],
-                'versiculo_inicio' => isset($matches[2]) ? (int)$matches[2] : 1,
-                'versiculo_fin' => isset($matches[3]) ? (int)$matches[3] : (isset($matches[2]) ? (int)$matches[2] : 1),
-                'es_do' => true
-            ];
-        }
-        
-        // Intentar coincidencia con el patrón general
-        if (preg_match($patronGeneral, $referencia, $matches)) {
-            return [
-                'libro' => trim($matches[1]),
-                'capitulo' => (int)$matches[2],
-                'versiculo_inicio' => (int)$matches[3],
-                'versiculo_fin' => isset($matches[4]) ? (int)$matches[4] : (int)$matches[3]
-            ];
-        }
-        
-        return null;
-    }
-
     /**
      * Busca versículos por referencia completa.
      * 
