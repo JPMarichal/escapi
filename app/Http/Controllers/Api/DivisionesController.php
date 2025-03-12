@@ -35,7 +35,7 @@ class DivisionesController extends Controller
     /**
      * @OA\Get(
      *     path="/api/divisiones/{id}",
-     *     summary="Obtiene una división específica",
+     *     summary="Obtiene una división específica por ID",
      *     tags={"Divisiones"},
      *     @OA\Parameter(
      *         name="id",
@@ -58,6 +58,53 @@ class DivisionesController extends Controller
     public function show($id)
     {
         $division = Divisiones::findOrFail($id);
+        return response()->json($division);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/divisiones/item",
+     *     summary="Busca una división por nombre",
+     *     tags={"Divisiones"},
+     *     @OA\Parameter(
+     *         name="nombre",
+     *         in="query",
+     *         required=true,
+     *         description="Nombre de la división (insensible a mayúsculas/minúsculas y acentos)",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="División encontrada exitosamente",
+     *         @OA\JsonContent(ref="#/components/schemas/Division")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="División no encontrada"
+     *     )
+     * )
+     */
+    public function buscarPorNombre(Request $request)
+    {
+        $nombre = $request->query('nombre');
+        if (!$nombre) {
+            return response()->json(['error' => 'El parámetro nombre es requerido'], 400);
+        }
+
+        $nombreNormalizado = $this->normalizarTexto($nombre);
+
+        // Usar el modelo para buscar la división
+        $division = Divisiones::all()
+            ->first(function($division) use ($nombreNormalizado) {
+                $nombreDivision = $this->normalizarTexto($division->nombre);
+                return str_contains($nombreDivision, $nombreNormalizado) || 
+                       str_contains($nombreNormalizado, $nombreDivision);
+            });
+
+        if (!$division) {
+            return response()->json(['error' => 'División no encontrada'], 404);
+        }
+
         return response()->json($division);
     }
 

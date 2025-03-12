@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 /**
  * @OA\Tag(
  *     name="Partes",
- *     description="API Endpoints para partes de libros"
+ *     description="API Endpoints para partes de escritura"
  * )
  */
 class PartesController extends Controller
@@ -35,7 +35,7 @@ class PartesController extends Controller
     /**
      * @OA\Get(
      *     path="/api/partes/{id}",
-     *     summary="Obtiene una parte específica",
+     *     summary="Obtiene una parte específica por ID",
      *     tags={"Partes"},
      *     @OA\Parameter(
      *         name="id",
@@ -58,6 +58,53 @@ class PartesController extends Controller
     public function show($id)
     {
         $parte = Partes::findOrFail($id);
+        return response()->json($parte);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/partes/item",
+     *     summary="Busca una parte por nombre",
+     *     tags={"Partes"},
+     *     @OA\Parameter(
+     *         name="nombre",
+     *         in="query",
+     *         required=true,
+     *         description="Nombre de la parte (insensible a mayúsculas/minúsculas y acentos)",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Parte encontrada exitosamente",
+     *         @OA\JsonContent(ref="#/components/schemas/Parte")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Parte no encontrada"
+     *     )
+     * )
+     */
+    public function buscarPorNombre(Request $request)
+    {
+        $nombre = $request->query('nombre');
+        if (!$nombre) {
+            return response()->json(['error' => 'El parámetro nombre es requerido'], 400);
+        }
+
+        $nombreNormalizado = $this->normalizarTexto($nombre);
+
+        // Usar el modelo para buscar la parte
+        $parte = Partes::all()
+            ->first(function($parte) use ($nombreNormalizado) {
+                $nombreParte = $this->normalizarTexto($parte->nombre);
+                return str_contains($nombreParte, $nombreNormalizado) || 
+                       str_contains($nombreNormalizado, $nombreParte);
+            });
+
+        if (!$parte) {
+            return response()->json(['error' => 'Parte no encontrada'], 404);
+        }
+
         return response()->json($parte);
     }
 

@@ -64,13 +64,13 @@ class CapitulosController extends Controller
     /**
      * @OA\Get(
      *     path="/api/capitulos/item",
-     *     summary="Busca un capítulo por nombre",
+     *     summary="Busca un capítulo por su referencia",
      *     tags={"Capitulos"},
      *     @OA\Parameter(
-     *         name="nombre",
+     *         name="referencia",
      *         in="query",
      *         required=true,
-     *         description="Nombre del capítulo (insensible a mayúsculas/minúsculas y acentos)",
+     *         description="Referencia del capítulo (ejemplo: 'Génesis 1')",
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Response(
@@ -81,20 +81,22 @@ class CapitulosController extends Controller
      *     @OA\Response(
      *         response=404,
      *         description="Capítulo no encontrado"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Parámetro referencia requerido"
      *     )
      * )
      */
-    public function buscarPorNombre(Request $request)
+    public function buscarPorReferencia(Request $request)
     {
-        $nombre = $request->query('nombre');
-        if (!$nombre) {
-            return response()->json(['error' => 'El parámetro nombre es requerido'], 400);
+        if (!$request->has('referencia')) {
+            return response()->json(['error' => 'El parámetro referencia es requerido'], 400);
         }
 
-        // Buscar el capítulo comparando los nombres normalizados
-        $capitulo = Capitulos::all()->first(function($item) use ($nombre) {
-            return $this->normalizarTexto($item->nombre) === $this->normalizarTexto($nombre);
-        });
+        $referencia = $request->input('referencia');
+        $capitulo = Capitulos::where('referencia', 'LIKE', "%{$referencia}%")
+            ->first();
 
         if (!$capitulo) {
             return response()->json(['error' => 'Capítulo no encontrado'], 404);

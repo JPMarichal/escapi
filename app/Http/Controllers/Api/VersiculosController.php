@@ -41,6 +41,50 @@ class VersiculosController extends Controller
 
     /**
      * @OA\Get(
+     *     path="/api/versiculos/item",
+     *     summary="Busca un versículo por su referencia",
+     *     tags={"Versiculos"},
+     *     @OA\Parameter(
+     *         name="referencia",
+     *         in="query",
+     *         required=true,
+     *         description="Referencia del versículo (ejemplo: 'Génesis 1:1')",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Versículo encontrado exitosamente",
+     *         @OA\JsonContent(ref="#/components/schemas/Versiculo")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Versículo no encontrado"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Parámetro referencia requerido"
+     *     )
+     * )
+     */
+    public function buscarPorReferencia(Request $request)
+    {
+        if (!$request->has('referencia')) {
+            return response()->json(['error' => 'El parámetro referencia es requerido'], 400);
+        }
+
+        $referencia = $request->input('referencia');
+        $versiculo = Versiculos::where('referencia', 'LIKE', "%{$referencia}%")
+            ->first();
+
+        if (!$versiculo) {
+            return response()->json(['error' => 'Versículo no encontrado'], 404);
+        }
+
+        return response()->json($versiculo);
+    }
+
+    /**
+     * @OA\Get(
      *     path="/api/versiculos/{id}",
      *     summary="Obtiene un versículo específico",
      *     tags={"Versiculos"},
