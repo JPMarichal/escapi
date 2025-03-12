@@ -35,7 +35,7 @@ class LibrosController extends Controller
     /**
      * @OA\Get(
      *     path="/api/libros/{id}",
-     *     summary="Obtiene un libro específico",
+     *     summary="Obtiene un libro específico por ID",
      *     tags={"Libros"},
      *     @OA\Parameter(
      *         name="id",
@@ -58,6 +58,48 @@ class LibrosController extends Controller
     public function show($id)
     {
         $libro = Libros::findOrFail($id);
+        return response()->json($libro);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/libros/item",
+     *     summary="Busca un libro por nombre",
+     *     tags={"Libros"},
+     *     @OA\Parameter(
+     *         name="nombre",
+     *         in="query",
+     *         required=true,
+     *         description="Nombre del libro (insensible a mayúsculas/minúsculas y acentos)",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Libro encontrado exitosamente",
+     *         @OA\JsonContent(ref="#/components/schemas/Libro")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Libro no encontrado"
+     *     )
+     * )
+     */
+    public function buscarPorNombre(Request $request)
+    {
+        $nombre = $request->query('nombre');
+        if (!$nombre) {
+            return response()->json(['error' => 'El parámetro nombre es requerido'], 400);
+        }
+
+        // Buscar el libro comparando los nombres normalizados
+        $libro = Libros::all()->first(function($item) use ($nombre) {
+            return $this->normalizarTexto($item->nombre) === $this->normalizarTexto($nombre);
+        });
+
+        if (!$libro) {
+            return response()->json(['error' => 'Libro no encontrado'], 404);
+        }
+
         return response()->json($libro);
     }
 

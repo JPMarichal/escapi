@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Volumenes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 /**
  * @OA\Tag(
@@ -35,7 +36,7 @@ class VolumenesController extends Controller
     /**
      * @OA\Get(
      *     path="/api/volumenes/{id}",
-     *     summary="Obtiene un volumen específico",
+     *     summary="Obtiene un volumen específico por ID",
      *     tags={"Volumenes"},
      *     @OA\Parameter(
      *         name="id",
@@ -58,6 +59,48 @@ class VolumenesController extends Controller
     public function show($id)
     {
         $volumen = Volumenes::findOrFail($id);
+        return response()->json($volumen);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/volumenes/item",
+     *     summary="Busca un volumen por nombre",
+     *     tags={"Volumenes"},
+     *     @OA\Parameter(
+     *         name="nombre",
+     *         in="query",
+     *         required=true,
+     *         description="Nombre del volumen (insensible a mayúsculas/minúsculas y acentos)",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Volumen encontrado exitosamente",
+     *         @OA\JsonContent(ref="#/components/schemas/Volumen")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Volumen no encontrado"
+     *     )
+     * )
+     */
+    public function buscarPorNombre(Request $request)
+    {
+        $nombre = $request->query('nombre');
+        if (!$nombre) {
+            return response()->json(['error' => 'El parámetro nombre es requerido'], 400);
+        }
+
+        // Buscar el volumen comparando los nombres normalizados
+        $volumen = Volumenes::all()->first(function($item) use ($nombre) {
+            return $this->normalizarTexto($item->nombre) === $this->normalizarTexto($nombre);
+        });
+
+        if (!$volumen) {
+            return response()->json(['error' => 'Volumen no encontrado'], 404);
+        }
+
         return response()->json($volumen);
     }
 

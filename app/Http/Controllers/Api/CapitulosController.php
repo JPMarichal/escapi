@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 /**
  * @OA\Tag(
  *     name="Capitulos",
- *     description="API Endpoints para capítulos de libros"
+ *     description="API Endpoints para capítulos de escritura"
  * )
  */
 class CapitulosController extends Controller
@@ -22,27 +22,20 @@ class CapitulosController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Lista de capítulos obtenida exitosamente",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="current_page", type="integer"),
-     *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/Capitulo")),
-     *             @OA\Property(property="total", type="integer"),
-     *             @OA\Property(property="per_page", type="integer")
-     *         )
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Capitulo"))
      *     )
      * )
      */
     public function index()
     {
-        $itemsPerPage = config('pagination.items_per_page.capitulos');
-        $capitulos = Capitulos::paginate($itemsPerPage);
+        $capitulos = Capitulos::all();
         return response()->json($capitulos);
     }
 
     /**
      * @OA\Get(
      *     path="/api/capitulos/{id}",
-     *     summary="Obtiene un capítulo específico",
+     *     summary="Obtiene un capítulo específico por ID",
      *     tags={"Capitulos"},
      *     @OA\Parameter(
      *         name="id",
@@ -65,6 +58,48 @@ class CapitulosController extends Controller
     public function show($id)
     {
         $capitulo = Capitulos::findOrFail($id);
+        return response()->json($capitulo);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/capitulos/item",
+     *     summary="Busca un capítulo por nombre",
+     *     tags={"Capitulos"},
+     *     @OA\Parameter(
+     *         name="nombre",
+     *         in="query",
+     *         required=true,
+     *         description="Nombre del capítulo (insensible a mayúsculas/minúsculas y acentos)",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Capítulo encontrado exitosamente",
+     *         @OA\JsonContent(ref="#/components/schemas/Capitulo")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Capítulo no encontrado"
+     *     )
+     * )
+     */
+    public function buscarPorNombre(Request $request)
+    {
+        $nombre = $request->query('nombre');
+        if (!$nombre) {
+            return response()->json(['error' => 'El parámetro nombre es requerido'], 400);
+        }
+
+        // Buscar el capítulo comparando los nombres normalizados
+        $capitulo = Capitulos::all()->first(function($item) use ($nombre) {
+            return $this->normalizarTexto($item->nombre) === $this->normalizarTexto($nombre);
+        });
+
+        if (!$capitulo) {
+            return response()->json(['error' => 'Capítulo no encontrado'], 404);
+        }
+
         return response()->json($capitulo);
     }
 
@@ -95,35 +130,6 @@ class CapitulosController extends Controller
     {
         $capitulo = Capitulos::findOrFail($id);
         return response()->json($capitulo->pericopas);
-    }
-
-    /**
-     * @OA\Get(
-     *     path="/api/capitulos/{id}/versiculos",
-     *     summary="Lista todos los versículos de un capítulo",
-     *     tags={"Capitulos"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         description="ID del capítulo",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Lista de versículos obtenida exitosamente",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Versiculo"))
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Capítulo no encontrado"
-     *     )
-     * )
-     */
-    public function versiculos($id)
-    {
-        $capitulo = Capitulos::findOrFail($id);
-        return response()->json($capitulo->versiculos()->orderBy('num_versiculo', 'asc')->get());
     }
 
     /**
@@ -182,5 +188,34 @@ class CapitulosController extends Controller
     {
         $capitulo = Capitulos::findOrFail($id);
         return response()->json($capitulo->libro);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/capitulos/{id}/versiculos",
+     *     summary="Lista todos los versículos de un capítulo",
+     *     tags={"Capitulos"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID del capítulo",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de versículos obtenida exitosamente",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Versiculo"))
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Capítulo no encontrado"
+     *     )
+     * )
+     */
+    public function versiculos($id)
+    {
+        $capitulo = Capitulos::findOrFail($id);
+        return response()->json($capitulo->versiculos()->orderBy('num_versiculo', 'asc')->get());
     }
 }
