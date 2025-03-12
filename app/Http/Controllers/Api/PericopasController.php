@@ -4,28 +4,35 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pericopas;
+use App\Traits\TextNormalization;
 use Illuminate\Http\Request;
+use Knuckles\Scribe\Attributes\Group;
+use Knuckles\Scribe\Attributes\Response;
+use Knuckles\Scribe\Attributes\QueryParam;
+use Knuckles\Scribe\Attributes\UrlParam;
 
-/**
- * @OA\Tag(
- *     name="Pericopas",
- *     description="API Endpoints para pericopas de escritura"
- * )
- */
+#[Group('Pericopas')]
 class PericopasController extends Controller
 {
+    use TextNormalization;
+
     /**
-     * @OA\Get(
-     *     path="/api/pericopas",
-     *     summary="Lista todas las pericopas",
-     *     tags={"Pericopas"},
-     *     @OA\Response(
-     *         response=200,
-     *         description="Lista de pericopas obtenida exitosamente",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Pericopa"))
-     *     )
-     * )
+     * Lista todas las pericopas.
+     * 
+     * Retorna una colección de todas las pericopas disponibles en el sistema.
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[Response([
+        'data' => [
+            [
+                'id' => 1,
+                'titulo' => 'La Creación',
+                'orden' => 1,
+                'capitulo_id' => 1
+            ]
+        ]
+    ])]
     public function index()
     {
         $pericopas = Pericopas::all();
@@ -33,28 +40,21 @@ class PericopasController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/pericopas/{id}",
-     *     summary="Obtiene una pericopa específica por ID",
-     *     tags={"Pericopas"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         description="ID de la pericopa",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Pericopa encontrada exitosamente",
-     *         @OA\JsonContent(ref="#/components/schemas/Pericopa")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Pericopa no encontrada"
-     *     )
-     * )
+     * Obtiene una pericopa específica por ID.
+     *
+     * @param int $id ID de la pericopa
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[UrlParam('id', 'El ID de la pericopa')]
+    #[Response([
+        'data' => [
+            'id' => 1,
+            'titulo' => 'La Creación',
+            'orden' => 1,
+            'capitulo_id' => 1
+        ]
+    ])]
+    #[Response(status: 404, description: 'Pericopa no encontrada')]
     public function show($id)
     {
         $pericopa = Pericopas::findOrFail($id);
@@ -62,28 +62,25 @@ class PericopasController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/pericopas/item",
-     *     summary="Busca una pericopa por título",
-     *     tags={"Pericopas"},
-     *     @OA\Parameter(
-     *         name="titulo",
-     *         in="query",
-     *         required=true,
-     *         description="Título de la pericopa (insensible a mayúsculas/minúsculas y acentos)",
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Pericopa encontrada exitosamente",
-     *         @OA\JsonContent(ref="#/components/schemas/Pericopa")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Pericopa no encontrada"
-     *     )
-     * )
+     * Busca una pericopa por título.
+     * 
+     * La búsqueda es insensible a mayúsculas/minúsculas y acentos.
+     * Encuentra coincidencias parciales en ambas direcciones.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[QueryParam('titulo', 'Título de la pericopa', required: true, example: 'La Creación')]
+    #[Response([
+        'data' => [
+            'id' => 1,
+            'titulo' => 'La Creación',
+            'orden' => 1,
+            'capitulo_id' => 1
+        ]
+    ])]
+    #[Response(status: 404, description: 'Pericopa no encontrada')]
+    #[Response(status: 400, description: 'El parámetro titulo es requerido')]
     public function buscarPorTitulo(Request $request)
     {
         $titulo = $request->query('titulo');
@@ -93,7 +90,6 @@ class PericopasController extends Controller
 
         $tituloNormalizado = $this->normalizarTexto($titulo);
 
-        // Usar el modelo para buscar la pericopa
         $pericopa = Pericopas::all()
             ->first(function($pericopa) use ($tituloNormalizado) {
                 $tituloPericopa = $this->normalizarTexto($pericopa->titulo);
@@ -109,28 +105,25 @@ class PericopasController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/pericopas/{id}/versiculos",
-     *     summary="Lista todos los versículos de una pericopa",
-     *     tags={"Pericopas"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         description="ID de la pericopa",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Lista de versículos obtenida exitosamente",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Versiculo"))
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Pericopa no encontrada"
-     *     )
-     * )
+     * Lista todos los versículos de una pericopa.
+     *
+     * @param int $id ID de la pericopa
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[UrlParam('id', 'El ID de la pericopa')]
+    #[Response([
+        'data' => [
+            [
+                'id' => 1,
+                'contenido' => 'En el principio creó Dios los cielos y la tierra.',
+                'num_versiculo' => 1,
+                'orden' => 1,
+                'capitulo_id' => 1,
+                'pericopa_id' => 1
+            ]
+        ]
+    ])]
+    #[Response(status: 404, description: 'Pericopa no encontrada')]
     public function versiculos($id)
     {
         $pericopa = Pericopas::findOrFail($id);
@@ -138,28 +131,23 @@ class PericopasController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/pericopas/{id}/capitulo",
-     *     summary="Obtiene el capítulo al que pertenece la pericopa",
-     *     tags={"Pericopas"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         description="ID de la pericopa",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Capítulo obtenido exitosamente",
-     *         @OA\JsonContent(ref="#/components/schemas/Capitulo")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Pericopa no encontrada"
-     *     )
-     * )
+     * Obtiene el capítulo al que pertenece la pericopa.
+     *
+     * @param int $id ID de la pericopa
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[UrlParam('id', 'El ID de la pericopa')]
+    #[Response([
+        'data' => [
+            'id' => 1,
+            'nombre' => 'Capítulo 1',
+            'num_capitulo' => 1,
+            'orden' => 1,
+            'libro_id' => 1,
+            'parte_id' => null
+        ]
+    ])]
+    #[Response(status: 404, description: 'Pericopa no encontrada')]
     public function capitulo($id)
     {
         $pericopa = Pericopas::findOrFail($id);

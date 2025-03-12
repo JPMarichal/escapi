@@ -6,29 +6,33 @@ use App\Http\Controllers\Controller;
 use App\Models\Partes;
 use App\Traits\TextNormalization;
 use Illuminate\Http\Request;
+use Knuckles\Scribe\Attributes\Group;
+use Knuckles\Scribe\Attributes\Response;
+use Knuckles\Scribe\Attributes\QueryParam;
+use Knuckles\Scribe\Attributes\UrlParam;
 
-/**
- * @OA\Tag(
- *     name="Partes",
- *     description="API Endpoints para partes de escritura"
- * )
- */
+#[Group('Partes')]
 class PartesController extends Controller
 {
     use TextNormalization;
 
     /**
-     * @OA\Get(
-     *     path="/api/partes",
-     *     summary="Lista todas las partes",
-     *     tags={"Partes"},
-     *     @OA\Response(
-     *         response=200,
-     *         description="Lista de partes obtenida exitosamente",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Parte"))
-     *     )
-     * )
+     * Lista todas las partes.
+     * 
+     * Retorna una colección de todas las partes disponibles en el sistema.
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[Response([
+        'data' => [
+            [
+                'id' => 1,
+                'nombre' => 'Parte 1',
+                'orden' => 1,
+                'libro_id' => 1
+            ]
+        ]
+    ])]
     public function index()
     {
         $partes = Partes::all();
@@ -36,28 +40,21 @@ class PartesController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/partes/{id}",
-     *     summary="Obtiene una parte específica por ID",
-     *     tags={"Partes"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         description="ID de la parte",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Parte encontrada exitosamente",
-     *         @OA\JsonContent(ref="#/components/schemas/Parte")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Parte no encontrada"
-     *     )
-     * )
+     * Obtiene una parte específica por ID.
+     *
+     * @param int $id ID de la parte
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[UrlParam('id', 'El ID de la parte')]
+    #[Response([
+        'data' => [
+            'id' => 1,
+            'nombre' => 'Parte 1',
+            'orden' => 1,
+            'libro_id' => 1
+        ]
+    ])]
+    #[Response(status: 404, description: 'Parte no encontrada')]
     public function show($id)
     {
         $parte = Partes::findOrFail($id);
@@ -65,28 +62,25 @@ class PartesController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/partes/item",
-     *     summary="Busca una parte por nombre",
-     *     tags={"Partes"},
-     *     @OA\Parameter(
-     *         name="nombre",
-     *         in="query",
-     *         required=true,
-     *         description="Nombre de la parte (insensible a mayúsculas/minúsculas y acentos)",
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Parte encontrada exitosamente",
-     *         @OA\JsonContent(ref="#/components/schemas/Parte")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Parte no encontrada"
-     *     )
-     * )
+     * Busca una parte por nombre.
+     * 
+     * El nombre es insensible a mayúsculas/minúsculas y acentos.
+     * La búsqueda funciona si el nombre buscado está contenido en el nombre de la parte.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[QueryParam('nombre', 'Nombre de la parte a buscar', required: true, example: 'Parte 1')]
+    #[Response([
+        'data' => [
+            'id' => 1,
+            'nombre' => 'Parte 1',
+            'orden' => 1,
+            'libro_id' => 1
+        ]
+    ])]
+    #[Response(status: 404, description: 'Parte no encontrada')]
+    #[Response(status: 400, description: 'El parámetro nombre es requerido')]
     public function buscarPorNombre(Request $request)
     {
         $nombre = $request->query('nombre');
@@ -96,7 +90,6 @@ class PartesController extends Controller
 
         $nombreNormalizado = $this->normalizarTexto($nombre);
 
-        // Cargar todas las partes y filtrar usando el trait TextNormalization
         $parte = Partes::all()->first(function($parte) use ($nombreNormalizado) {
             $nombreParte = $this->normalizarTexto($parte->nombre);
             return str_contains($nombreParte, $nombreNormalizado);
@@ -110,28 +103,25 @@ class PartesController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/partes/{id}/capitulos",
-     *     summary="Lista todos los capítulos de una parte",
-     *     tags={"Partes"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         description="ID de la parte",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Lista de capítulos obtenida exitosamente",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Capitulo"))
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Parte no encontrada"
-     *     )
-     * )
+     * Lista todos los capítulos de una parte.
+     *
+     * @param int $id ID de la parte
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[UrlParam('id', 'El ID de la parte')]
+    #[Response([
+        'data' => [
+            [
+                'id' => 1,
+                'nombre' => 'Capítulo 1',
+                'num_capitulo' => 1,
+                'orden' => 1,
+                'libro_id' => 1,
+                'parte_id' => 1
+            ]
+        ]
+    ])]
+    #[Response(status: 404, description: 'Parte no encontrada')]
     public function capitulos($id)
     {
         $parte = Partes::findOrFail($id);
@@ -139,28 +129,21 @@ class PartesController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/partes/{id}/libro",
-     *     summary="Obtiene el libro al que pertenece la parte",
-     *     tags={"Partes"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         description="ID de la parte",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Libro obtenido exitosamente",
-     *         @OA\JsonContent(ref="#/components/schemas/Libro")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Parte no encontrada"
-     *     )
-     * )
+     * Obtiene el libro al que pertenece la parte.
+     *
+     * @param int $id ID de la parte
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[UrlParam('id', 'El ID de la parte')]
+    #[Response([
+        'data' => [
+            'id' => 1,
+            'nombre' => 'Génesis',
+            'division_id' => 1,
+            'volumen_id' => 1
+        ]
+    ])]
+    #[Response(status: 404, description: 'Parte no encontrada')]
     public function libro($id)
     {
         $parte = Partes::findOrFail($id);

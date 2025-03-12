@@ -5,27 +5,30 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Divisiones;
 use Illuminate\Http\Request;
+use Knuckles\Scribe\Attributes\Group;
+use Knuckles\Scribe\Attributes\Response;
+use Knuckles\Scribe\Attributes\QueryParam;
+use Knuckles\Scribe\Attributes\UrlParam;
 
-/**
- * @OA\Tag(
- *     name="Divisiones",
- *     description="API Endpoints para divisiones de escritura"
- * )
- */
+#[Group('Divisiones')]
 class DivisionesController extends Controller
 {
     /**
-     * @OA\Get(
-     *     path="/api/divisiones",
-     *     summary="Lista todas las divisiones",
-     *     tags={"Divisiones"},
-     *     @OA\Response(
-     *         response=200,
-     *         description="Lista de divisiones obtenida exitosamente",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Division"))
-     *     )
-     * )
+     * Lista todas las divisiones.
+     * 
+     * Retorna una colección de todas las divisiones disponibles en el sistema.
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[Response([
+        'data' => [
+            [
+                'id' => 1,
+                'nombre' => 'Pentateuco',
+                'volumen_id' => 1
+            ]
+        ]
+    ])]
     public function index()
     {
         $divisiones = Divisiones::all();
@@ -33,28 +36,20 @@ class DivisionesController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/divisiones/{id}",
-     *     summary="Obtiene una división específica por ID",
-     *     tags={"Divisiones"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         description="ID de la división",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="División encontrada exitosamente",
-     *         @OA\JsonContent(ref="#/components/schemas/Division")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="División no encontrada"
-     *     )
-     * )
+     * Obtiene una división específica por ID.
+     *
+     * @param int $id ID de la división
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[UrlParam('id', 'El ID de la división')]
+    #[Response([
+        'data' => [
+            'id' => 1,
+            'nombre' => 'Pentateuco',
+            'volumen_id' => 1
+        ]
+    ])]
+    #[Response(status: 404, description: 'División no encontrada')]
     public function show($id)
     {
         $division = Divisiones::findOrFail($id);
@@ -62,28 +57,25 @@ class DivisionesController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/divisiones/item",
-     *     summary="Busca una división por nombre",
-     *     tags={"Divisiones"},
-     *     @OA\Parameter(
-     *         name="nombre",
-     *         in="query",
-     *         required=true,
-     *         description="Nombre de la división (insensible a mayúsculas/minúsculas y acentos)",
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="División encontrada exitosamente",
-     *         @OA\JsonContent(ref="#/components/schemas/Division")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="División no encontrada"
-     *     )
-     * )
+     * Busca una división por nombre.
+     * 
+     * El nombre es insensible a mayúsculas/minúsculas y acentos.
+     * La búsqueda funciona si el nombre buscado está contenido en el nombre de la división
+     * o si el nombre de la división está contenido en el nombre buscado.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[QueryParam('nombre', 'Nombre de la división a buscar', required: true, example: 'Pentateuco')]
+    #[Response([
+        'data' => [
+            'id' => 1,
+            'nombre' => 'Pentateuco',
+            'volumen_id' => 1
+        ]
+    ])]
+    #[Response(status: 404, description: 'División no encontrada')]
+    #[Response(status: 400, description: 'El parámetro nombre es requerido')]
     public function buscarPorNombre(Request $request)
     {
         $nombre = $request->query('nombre');
@@ -93,7 +85,6 @@ class DivisionesController extends Controller
 
         $nombreNormalizado = $this->normalizarTexto($nombre);
 
-        // Usar el modelo para buscar la división
         $division = Divisiones::all()
             ->first(function($division) use ($nombreNormalizado) {
                 $nombreDivision = $this->normalizarTexto($division->nombre);
@@ -109,28 +100,23 @@ class DivisionesController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/divisiones/{id}/libros",
-     *     summary="Lista todos los libros de una división",
-     *     tags={"Divisiones"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         description="ID de la división",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Lista de libros obtenida exitosamente",
-     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Libro"))
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="División no encontrada"
-     *     )
-     * )
+     * Lista todos los libros de una división.
+     *
+     * @param int $id ID de la división
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[UrlParam('id', 'El ID de la división')]
+    #[Response([
+        'data' => [
+            [
+                'id' => 1,
+                'nombre' => 'Génesis',
+                'division_id' => 1,
+                'volumen_id' => 1
+            ]
+        ]
+    ])]
+    #[Response(status: 404, description: 'División no encontrada')]
     public function libros($id)
     {
         $division = Divisiones::findOrFail($id);
@@ -138,28 +124,19 @@ class DivisionesController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/divisiones/{id}/volumen",
-     *     summary="Obtiene el volumen al que pertenece la división",
-     *     tags={"Divisiones"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         description="ID de la división",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Volumen obtenido exitosamente",
-     *         @OA\JsonContent(ref="#/components/schemas/Volumen")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="División no encontrada"
-     *     )
-     * )
+     * Obtiene el volumen al que pertenece la división.
+     *
+     * @param int $id ID de la división
+     * @return \Illuminate\Http\JsonResponse
      */
+    #[UrlParam('id', 'El ID de la división')]
+    #[Response([
+        'data' => [
+            'id' => 1,
+            'nombre' => 'Antiguo Testamento'
+        ]
+    ])]
+    #[Response(status: 404, description: 'División no encontrada')]
     public function volumen($id)
     {
         $division = Divisiones::findOrFail($id);
