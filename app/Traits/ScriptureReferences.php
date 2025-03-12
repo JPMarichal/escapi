@@ -5,6 +5,17 @@ namespace App\Traits;
 trait ScriptureReferences
 {
     /**
+     * Formatea una referencia de escritura.
+     * 
+     * @param string $libro Nombre del libro
+     * @param int $capitulo Número del capítulo
+     * @return string Referencia formateada
+     */
+    protected function formatearReferencia($libro, $capitulo)
+    {
+        return "{$libro} {$capitulo}";
+    }
+    /**
      * Parsea una referencia de escritura y retorna sus componentes.
      * 
      * @param string $referencia Ejemplo: "Juan 1:1-3" o "DyC 4:2"
