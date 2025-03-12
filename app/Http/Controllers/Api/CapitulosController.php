@@ -11,11 +11,12 @@ use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\Response;
 use Knuckles\Scribe\Attributes\QueryParam;
 use Knuckles\Scribe\Attributes\UrlParam;
+use App\Traits\ScriptureReferences;
 
 #[Group('Capitulos')]
 class CapitulosController extends Controller
 {
-    use TextNormalization;
+    use TextNormalization, ScriptureReferences;
 
     /**
      * Lista todos los capítulos.
@@ -100,11 +101,7 @@ class CapitulosController extends Controller
         }
 
         $referencia = trim($request->input('referencia'));
-        
-        $capitulo = Capitulos::all()->first(function($item) use ($referencia) {
-            return strtolower($this->normalizarTexto($item->referencia)) === 
-                   strtolower($this->normalizarTexto($referencia));
-        });
+        $capitulo = $this->encontrarCapituloPorReferencia($referencia);
 
         if (!$capitulo) {
             return response()->json(['error' => 'Capítulo no encontrado'], 404);

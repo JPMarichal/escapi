@@ -12,11 +12,12 @@ use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\Response;
 use Knuckles\Scribe\Attributes\QueryParam;
 use Knuckles\Scribe\Attributes\UrlParam;
+use App\Traits\ScriptureReferences;
 
 #[Group('Versiculos')]
 class VersiculosController extends Controller
 {
-    use TextNormalization;
+    use TextNormalization, ScriptureReferences;
 
     /**
      * Lista todos los versículos.
@@ -251,46 +252,12 @@ class VersiculosController extends Controller
         }
 
         $referencia = $request->input('referencia');
-        $componentes = $this->parsearReferencia($referencia);
+        $versiculos = $this->encontrarVersiculosPorReferencia($referencia);
 
-        if (!$componentes) {
+        if (!$versiculos) {
             return response()->json([
-                'error' => 'Formato de referencia inválido. Use alguno de estos formatos: "Libro Capítulo:Versículo", "DyC Sección:Versículo" o "DO Declaración[:Versículo]"'
-            ], 400);
-        }
-
-        $libroNormalizado = $this->normalizarTexto($componentes['libro']);
-
-        // Primero encontramos el capítulo correcto
-        $query = Capitulos::whereHas('libro', function($query) use ($libroNormalizado) {
-            $query->whereRaw('LOWER(nombre) = LOWER(?)', [$libroNormalizado]);
-        });
-
-        // Si es DyC o DO, asegurarse que el libro pertenece al volumen correcto
-        if (isset($componentes['es_dyc']) || isset($componentes['es_do'])) {
-            $query->whereHas('libro.division.volumen', function($query) {
-                $query->where('nombre', 'Doctrina y Convenios');
-            });
-        }
-
-        $capitulo = $query->where('num_capitulo', $componentes['capitulo'])->first();
-
-        if (!$capitulo) {
-            return response()->json(['error' => 'Capítulo no encontrado'], 404);
-        }
-
-        // Luego buscamos los versículos en el rango especificado
-        $versiculos = Versiculos::select('id', 'capitulo_id', 'pericopa_id', 'num_versiculo', 'contenido', 'referencia')
-            ->where('capitulo_id', $capitulo->id)
-            ->whereBetween('num_versiculo', [
-                $componentes['versiculo_inicio'],
-                $componentes['versiculo_fin']
-            ])
-            ->orderBy('num_versiculo')
-            ->get();
-
-        if ($versiculos->isEmpty()) {
-            return response()->json(['error' => 'Versículos no encontrados'], 404);
+                'error' => 'Formato de referencia inválido o versículos no encontrados. Use alguno de estos formatos: "Libro Capítulo:Versículo", "DyC Sección:Versículo" o "DO Declaración[:Versículo]"'
+            ], 404);
         }
 
         return response()->json($versiculos);
