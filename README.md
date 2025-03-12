@@ -1,104 +1,139 @@
-<<<<<<< HEAD
-# FastAPI Project for Church Scriptures
+# ESCAPI - API de Escrituras
 
-## Project Overview
-This project provides endpoints for querying the scriptures of The Church of Jesus Christ of Latter-day Saints using FastAPI.
+## Descripción
+ESCAPI es una API RESTful desarrollada en Laravel que proporciona acceso a las escrituras de La Iglesia de Jesucristo de los Santos de los Últimos Días. La API permite consultar volúmenes, libros, capítulos, versículos y pericopas de las escrituras.
 
-## Project Structure
-```
-app/
-├── api/
-├── models/
-│   ├── capitulo.py
-│   ├── division.py
-│   ├── libro.py
-│   ├── parte.py
-│   ├── pericopa.py
-│   ├── versiculo.py
-│   └── volumen.py
-└── database.py
+## Requisitos
+- PHP >= 8.1
+- MySQL >= 5.7
+- Composer
+
+## Instalación
+
+1. Clonar el repositorio:
+```bash
+git clone https://github.com/JPMarichal/escapi.git
+cd escapi
 ```
 
-## Models
-The following models have been created to represent the database tables:
-- **Capitulo**: Represents chapters in the scriptures.
-- **Division**: Represents divisions of the scriptures.
-- **Libro**: Represents books in the scriptures.
-- **Parte**: Represents parts of the scriptures.
-- **Pericopa**: Represents pericopes in the scriptures.
-- **Versiculo**: Represents verses in the scriptures.
-- **Volumen**: Represents volumes of the scriptures.
-
-## Database Configuration
-The project uses SQLAlchemy for database interactions. The database connection is configured in the `database.py` file, and the connection details are stored in a `.env` file.
-
+2. Instalar dependencias:
+```bash
+composer install
 ```
-DATABASE_URL=mysql://root:@localhost/bcnew
-=======
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+3. Configurar el archivo .env:
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## About Laravel
+4. Configurar la base de datos en .env:
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=escapi
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+5. Ejecutar migraciones y seeders:
+```bash
+php artisan migrate --seed
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Estructura de Modelos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Volumen
+Representa un volumen de escritura (por ejemplo, El Libro de Mormón)
+- Atributos: id, title, description, featured_image, keywords, nombre
 
-## Learning Laravel
+### División
+Representa una división dentro de un volumen
+- Atributos: id, title, description, featured_image, keywords, volumen_id, nombre
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Libro
+Representa un libro dentro de una división
+- Atributos: id, title, description, featured_image, keywords, division_id, nombre
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Parte
+Representa una parte dentro de un libro
+- Atributos: id, title, description, featured_image, keywords, libro_id, nombre
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Capítulo
+Representa un capítulo dentro de una parte
+- Atributos: id, title, description, featured_image, keywords, libro_id, parte_id, num_capitulo, referencia, abreviatura, num_versiculos, titulo_capitulo, url_oficial, url_audio, id_periodo, sumario, resumen
 
-## Laravel Sponsors
+### Perícopa
+Representa una sección temática dentro de un capítulo
+- Atributos: id, title, description, featured_image, keywords, capitulo_id, titulo, versiculo_inicial, versiculo_final, descripcion
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Versículo
+Representa un versículo dentro de un capítulo
+- Atributos: id, contenido, num_versiculo, capitulo_id, pericopa_id
 
-### Premium Partners
+## API Endpoints
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Volúmenes
+- GET `/api/volumenes` - Lista todos los volúmenes
+- GET `/api/volumenes/{id}` - Obtiene un volumen específico
+- GET `/api/volumenes/{id}/divisiones` - Lista las divisiones de un volumen
 
-## Contributing
+### Divisiones
+- GET `/api/divisiones` - Lista todas las divisiones
+- GET `/api/divisiones/{id}` - Obtiene una división específica
+- GET `/api/divisiones/{id}/libros` - Lista los libros de una división
+- GET `/api/divisiones/{id}/volumen` - Obtiene el volumen de una división
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Libros
+- GET `/api/libros` - Lista todos los libros
+- GET `/api/libros/{id}` - Obtiene un libro específico
+- GET `/api/libros/item?nombre={nombre}` - Busca un libro por nombre
+- GET `/api/libros/{id}/partes` - Lista las partes de un libro
+- GET `/api/libros/{id}/division` - Obtiene la división de un libro
 
-## Code of Conduct
+### Partes
+- GET `/api/partes` - Lista todas las partes
+- GET `/api/partes/{id}` - Obtiene una parte específica
+- GET `/api/partes/item?nombre={nombre}` - Busca una parte por nombre
+- GET `/api/partes/{id}/capitulos` - Lista los capítulos de una parte
+- GET `/api/partes/{id}/libro` - Obtiene el libro de una parte
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Capítulos
+- GET `/api/capitulos` - Lista todos los capítulos (paginado)
+- GET `/api/capitulos/{id}` - Obtiene un capítulo específico
+- GET `/api/capitulos/item?referencia={referencia}` - Busca un capítulo por referencia
+- GET `/api/capitulos/{id}/versiculos` - Lista los versículos de un capítulo
+- GET `/api/capitulos/{id}/pericopas` - Lista las pericopas de un capítulo
+- GET `/api/capitulos/{id}/libro` - Obtiene el libro del capítulo
+- GET `/api/capitulos/{id}/parte` - Obtiene la parte del capítulo
 
-## Security Vulnerabilities
+### Pericopas
+- GET `/api/pericopas` - Lista todas las pericopas
+- GET `/api/pericopas/{id}` - Obtiene una perícopa específica
+- GET `/api/pericopas/{id}/versiculos` - Lista los versículos de una perícopa
+- GET `/api/pericopas/{id}/capitulo` - Obtiene el capítulo de la perícopa
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Versículos
+- GET `/api/versiculos` - Lista todos los versículos (paginado)
+- GET `/api/versiculos/{id}` - Obtiene un versículo específico
+- GET `/api/versiculos/item?referencia={referencia}` - Busca un versículo por referencia
+- GET `/api/versiculos/{id}/pericopa` - Obtiene la perícopa del versículo
+- GET `/api/versiculos/{id}/capitulo` - Obtiene el capítulo del versículo
 
-## License
+## Tests
+El proyecto incluye tests exhaustivos para cada endpoint. Para ejecutar los tests:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
->>>>>>> 1c71a93 (Initial commit)
+```bash
+php artisan test
+```
+
+## Documentación API
+La documentación detallada de la API está disponible a través de Swagger UI:
+```bash
+php artisan serve
+```
+Luego visita: `http://localhost:8000/api/documentation`
+
+## Licencia
+Este proyecto está licenciado bajo la [Licencia MIT](LICENSE).
