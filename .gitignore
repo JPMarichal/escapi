@@ -3,8 +3,10 @@
 /public/build
 /public/hot
 /public/storage
+/public/vendor/scribe
 /storage/*.key
 /storage/pail
+/storage/app/private/scribe
 /vendor
 .env
 .env.backup
@@ -21,6 +23,7 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+/.scribe
 
 # Laravel specific
 .env.*.local
@@ -29,6 +32,7 @@ yarn-error.log
 .php-cs-fixer.cache
 .php_cs.cache
 .php_cs
+/resources/views/scribe
 
 # OS specific
 .DS_Store
