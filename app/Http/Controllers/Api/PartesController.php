@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Partes;
+use App\Traits\TextNormalization;
 use Illuminate\Http\Request;
 
 /**
@@ -14,6 +15,8 @@ use Illuminate\Http\Request;
  */
 class PartesController extends Controller
 {
+    use TextNormalization;
+
     /**
      * @OA\Get(
      *     path="/api/partes",
@@ -93,13 +96,11 @@ class PartesController extends Controller
 
         $nombreNormalizado = $this->normalizarTexto($nombre);
 
-        // Usar el modelo para buscar la parte
-        $parte = Partes::all()
-            ->first(function($parte) use ($nombreNormalizado) {
-                $nombreParte = $this->normalizarTexto($parte->nombre);
-                return str_contains($nombreParte, $nombreNormalizado) || 
-                       str_contains($nombreNormalizado, $nombreParte);
-            });
+        // Cargar todas las partes y filtrar usando el trait TextNormalization
+        $parte = Partes::all()->first(function($parte) use ($nombreNormalizado) {
+            $nombreParte = $this->normalizarTexto($parte->nombre);
+            return str_contains($nombreParte, $nombreNormalizado);
+        });
 
         if (!$parte) {
             return response()->json(['error' => 'Parte no encontrada'], 404);

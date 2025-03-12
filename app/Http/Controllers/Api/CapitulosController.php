@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Capitulos;
+use App\Traits\TextNormalization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -15,17 +16,7 @@ use Illuminate\Support\Str;
  */
 class CapitulosController extends Controller
 {
-    protected function normalizarTexto($texto)
-    {
-        $unwanted_array = array(
-            'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
-            'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
-            'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
-            'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
-            'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y'
-        );
-        return strtolower(strtr($texto, $unwanted_array));
-    }
+    use TextNormalization;
 
     /**
      * @OA\Get(
@@ -70,7 +61,12 @@ class CapitulosController extends Controller
      */
     public function show($id)
     {
-        $capitulo = Capitulos::findOrFail($id);
+        $capitulo = Capitulos::find($id);
+        
+        if (!$capitulo) {
+            return response()->json(['error' => 'Capítulo no encontrado'], 404);
+        }
+        
         return response()->json($capitulo);
     }
 
@@ -107,14 +103,12 @@ class CapitulosController extends Controller
             return response()->json(['error' => 'El parámetro referencia es requerido'], 400);
         }
 
-        $referencia = $request->input('referencia');
-        $referenciaLower = $this->normalizarTexto($referencia);
-
-        $capitulo = Capitulos::all()->first(function($item) use ($referenciaLower) {
-            return str_contains(
-                $this->normalizarTexto($item->referencia),
-                $referenciaLower
-            );
+        $referencia = trim($request->input('referencia'));
+        
+        // Buscar el capítulo por referencia exacta (insensible a mayúsculas/minúsculas y acentos)
+        $capitulo = Capitulos::all()->first(function($item) use ($referencia) {
+            return strtolower($this->normalizarTexto($item->referencia)) === 
+                   strtolower($this->normalizarTexto($referencia));
         });
 
         if (!$capitulo) {

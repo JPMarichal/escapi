@@ -80,10 +80,12 @@ class LibrosControllerTest extends ApiTestCase
         $response = $this->get('/api/libros/item?nombre=Gene');
 
         $this->assertSuccessfulResponse($response);
-        $this->assertTrue(str_contains(
-            strtolower($response->json('nombre')), 
-            'gene'
-        ));
+        $nombreNormalizado = strtolower($this->normalizarTexto($response->json('nombre')));
+        $busquedaNormalizada = strtolower($this->normalizarTexto('Gene'));
+        $this->assertTrue(
+            str_contains($nombreNormalizado, $busquedaNormalizada),
+            "El nombre normalizado '{$nombreNormalizado}' debería contener '{$busquedaNormalizada}'"
+        );
     }
 
     public function test_buscar_por_nombre_handles_accents()
@@ -91,10 +93,12 @@ class LibrosControllerTest extends ApiTestCase
         $response = $this->get('/api/libros/item?nombre=genesis');
 
         $this->assertSuccessfulResponse($response);
-        $this->assertTrue(str_contains(
-            $this->normalizarTexto($response->json('nombre')), 
-            'genesis'
-        ));
+        $nombreNormalizado = strtolower($this->normalizarTexto($response->json('nombre')));
+        $busquedaNormalizada = strtolower($this->normalizarTexto('genesis'));
+        $this->assertTrue(
+            str_contains($nombreNormalizado, $busquedaNormalizada),
+            "El nombre normalizado '{$nombreNormalizado}' debería contener '{$busquedaNormalizada}'"
+        );
     }
 
     public function test_buscar_por_nombre_returns_404_for_nonexistent_libro()

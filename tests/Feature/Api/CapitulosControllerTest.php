@@ -4,6 +4,13 @@ namespace Tests\Feature\Api;
 
 class CapitulosControllerTest extends ApiTestCase
 {
+    protected function assertNotFoundResponse($response)
+    {
+        $response->assertStatus(404)
+            ->assertHeader('Content-Type', 'application/json')
+            ->assertJson(['error' => 'Capítulo no encontrado']);
+    }
+
     public function test_index_returns_all_capitulos()
     {
         $response = $this->get('/api/capitulos');
@@ -64,9 +71,9 @@ class CapitulosControllerTest extends ApiTestCase
 
     public function test_show_returns_404_for_nonexistent_capitulo()
     {
-        $response = $this->get('/api/capitulos/999');
+        $response = $this->get('/api/capitulos/9999');
         
-        $response->assertStatus(404);
+        $this->assertNotFoundResponse($response);
     }
 
     public function test_buscar_por_referencia_finds_capitulo()
@@ -102,37 +109,22 @@ class CapitulosControllerTest extends ApiTestCase
         $response = $this->get('/api/capitulos/item?referencia=GÉNESIS 1');
 
         $this->assertSuccessfulResponse($response);
-        $response->assertJsonPath('referencia', 'Génesis 1');
-    }
-
-    public function test_buscar_por_referencia_handles_partial_matches()
-    {
-        $response = $this->get('/api/capitulos/item?referencia=Gen 1');
-
-        $this->assertSuccessfulResponse($response);
-        $this->assertTrue(str_contains(
-            strtolower($response->json('referencia')), 
-            'gen 1'
-        ));
+        $this->assertEquals('Génesis 1', $response->json('referencia'));
     }
 
     public function test_buscar_por_referencia_handles_accents()
     {
-        $response = $this->get('/api/capitulos/item?referencia=genesis 1');
+        $response = $this->get('/api/capitulos/item?referencia=Genesis 1');
 
         $this->assertSuccessfulResponse($response);
-        $this->assertTrue(str_contains(
-            $this->normalizarTexto($response->json('referencia')), 
-            'genesis 1'
-        ));
+        $this->assertEquals('Génesis 1', $response->json('referencia'));
     }
 
     public function test_buscar_por_referencia_returns_404_for_nonexistent_capitulo()
     {
         $response = $this->get('/api/capitulos/item?referencia=Libro Inexistente 999');
         
-        $response->assertStatus(404)
-            ->assertJson(['error' => 'Capítulo no encontrado']);
+        $this->assertNotFoundResponse($response);
     }
 
     public function test_buscar_por_referencia_requires_referencia_parameter()

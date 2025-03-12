@@ -51,8 +51,7 @@ class PartesControllerTest extends ApiTestCase
 
     public function test_buscar_por_nombre_finds_parte()
     {
-        // Asumiendo que existe una parte con este nombre en los seeders
-        $response = $this->get('/api/partes/item?nombre=Introducción');
+        $response = $this->get('/api/partes/item?nombre=La Creación');
 
         $this->assertSuccessfulResponse($response);
         $response->assertJsonStructure([
@@ -70,40 +69,39 @@ class PartesControllerTest extends ApiTestCase
 
     public function test_buscar_por_nombre_is_case_insensitive()
     {
-        // Asumiendo que existe una parte con este nombre en los seeders
-        $response = $this->get('/api/partes/item?nombre=INTRODUCCIÓN');
+        $response = $this->get('/api/partes/item?nombre=LA CREACIÓN');
 
         $this->assertSuccessfulResponse($response);
         $this->assertTrue(
-            strtolower($response->json('nombre')) === 'introducción' ||
-            str_contains(strtolower($response->json('nombre')), 'introducción')
+            str_contains(
+                $this->normalizarTexto($response->json('nombre')),
+                'creacion'
+            )
         );
     }
 
     public function test_buscar_por_nombre_handles_partial_matches()
     {
-        // Asumiendo que existe una parte que contiene esta palabra
-        $response = $this->get('/api/partes/item?nombre=Intro');
+        $response = $this->get('/api/partes/item?nombre=Creación');
 
         $this->assertSuccessfulResponse($response);
         $this->assertTrue(
             str_contains(
-                $this->normalizarTexto($response->json('nombre')), 
-                'intro'
+                $this->normalizarTexto($response->json('nombre')),
+                'creacion'
             )
         );
     }
 
     public function test_buscar_por_nombre_handles_accents()
     {
-        // Asumiendo que existe una parte con este nombre en los seeders
-        $response = $this->get('/api/partes/item?nombre=introduccion');
+        $response = $this->get('/api/partes/item?nombre=creacion');
 
         $this->assertSuccessfulResponse($response);
         $this->assertTrue(
             str_contains(
-                $this->normalizarTexto($response->json('nombre')), 
-                'introduccion'
+                $this->normalizarTexto($response->json('nombre')),
+                'creacion'
             )
         );
     }

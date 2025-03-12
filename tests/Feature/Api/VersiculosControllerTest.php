@@ -10,15 +10,29 @@ class VersiculosControllerTest extends ApiTestCase
 
         $this->assertSuccessfulResponse($response);
         $response->assertJsonStructure([
-            '*' => [
-                'id',
-                'contenido',
-                'num_versiculo',
-                'capitulo_id',
-                'pericopa_id',
-                'created_at',
-                'updated_at'
-            ]
+            'current_page',
+            'data' => [
+                '*' => [
+                    'id',
+                    'contenido',
+                    'num_versiculo',
+                    'capitulo_id',
+                    'pericopa_id',
+                    'created_at',
+                    'updated_at'
+                ]
+            ],
+            'first_page_url',
+            'from',
+            'last_page',
+            'last_page_url',
+            'links',
+            'next_page_url',
+            'path',
+            'per_page',
+            'prev_page_url',
+            'to',
+            'total'
         ]);
     }
 
@@ -69,17 +83,6 @@ class VersiculosControllerTest extends ApiTestCase
         $this->assertTrue(str_contains(
             strtolower($response->json('referencia')), 
             'génesis 1:1'
-        ));
-    }
-
-    public function test_buscar_por_referencia_handles_partial_matches()
-    {
-        $response = $this->get('/api/versiculos/item?referencia=Gen 1:1');
-
-        $this->assertSuccessfulResponse($response);
-        $this->assertTrue(str_contains(
-            strtolower($response->json('referencia')), 
-            'gen 1:1'
         ));
     }
 

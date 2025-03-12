@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Libros;
+use App\Traits\TextNormalization;
 use Illuminate\Http\Request;
 
 /**
@@ -14,6 +15,8 @@ use Illuminate\Http\Request;
  */
 class LibrosController extends Controller
 {
+    use TextNormalization;
+
     /**
      * @OA\Get(
      *     path="/api/libros",
@@ -91,9 +94,12 @@ class LibrosController extends Controller
             return response()->json(['error' => 'El parámetro nombre es requerido'], 400);
         }
 
-        // Buscar el libro comparando los nombres normalizados
-        $libro = Libros::all()->first(function($item) use ($nombre) {
-            return $this->normalizarTexto($item->nombre) === $this->normalizarTexto($nombre);
+        $busquedaNormalizada = strtolower($this->normalizarTexto($nombre));
+
+        // Buscar el libro usando coincidencia parcial con nombres normalizados
+        $libro = Libros::all()->first(function($item) use ($busquedaNormalizada) {
+            $nombreNormalizado = strtolower($this->normalizarTexto($item->nombre));
+            return str_contains($nombreNormalizado, $busquedaNormalizada);
         });
 
         if (!$libro) {
