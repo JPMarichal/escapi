@@ -69,6 +69,7 @@ Route::group(['prefix' => 'api'], function () {
     // Versículos
     Route::get('versiculos', [VersiculosController::class, 'index']);
     Route::get('versiculos/item', [VersiculosController::class, 'buscarPorReferencia']);
+    Route::get('versiculos/pasaje', [VersiculosController::class, 'buscarPorReferenciaCompleta']);
     Route::get('versiculos/{id}', [VersiculosController::class, 'show']);
     Route::get('versiculos/{id}/pericopa', [VersiculosController::class, 'pericopa']);
     Route::get('versiculos/{id}/capitulo', [VersiculosController::class, 'capitulo']);

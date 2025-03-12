@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Versiculos;
+use App\Models\Capitulos;
 use App\Traits\TextNormalization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -159,5 +160,139 @@ class VersiculosController extends Controller
     {
         $versiculo = Versiculos::findOrFail($id);
         return response()->json($versiculo->capitulo);
+    }
+
+       /**
+     * Parsea una referencia de escritura y retorna sus componentes.
+     * 
+     * @param string $referencia Ejemplo: "Juan 1:1-3" o "Juan 1:1"
+     * @return array|null Retorna null si el formato es inválido
+     */
+    private function parsearReferencia($referencia)
+    {
+        // Patrón para Doctrina y Convenios: "DyC 4:2" o "Doctrina y Convenios 4:2"
+        $patronDyC = '/^(?:DyC|Doctrina y Convenios)\s+(\d+):(\d+)(?:-(\d+))?$/u';
+        
+        // Patrón para Declaraciones Oficiales: "DO 2" o "DO 2:3" o "Declaración oficial 2" o "Declaración oficial 2:3"
+        $patronDO = '/^(?:DO|Declaraci[óo]n[es]? oficial[es]?)\s+(\d+)(?::(\d+)(?:-(\d+))?)?$/u';
+        
+        // Patrón general para otros libros: "Juan 1:1" o "Juan 1:1-3" o "1 Juan 1:1-3"
+        $patronGeneral = '/^((?:\d\s+)?[A-ZÁÉÍÓÚÜa-záéíóúü\s]+)\s+(\d+):(\d+)(?:-(\d+))?$/u';
+
+        // Intentar coincidencia con DyC
+        if (preg_match($patronDyC, $referencia, $matches)) {
+            return [
+                'libro' => 'Secciones',
+                'capitulo' => (int)$matches[1],
+                'versiculo_inicio' => (int)$matches[2],
+                'versiculo_fin' => isset($matches[3]) ? (int)$matches[3] : (int)$matches[2],
+                'es_dyc' => true
+            ];
+        }
+        
+        // Intentar coincidencia con DO
+        if (preg_match($patronDO, $referencia, $matches)) {
+            return [
+                'libro' => 'Declaraciones Oficiales',
+                'capitulo' => (int)$matches[1],
+                'versiculo_inicio' => isset($matches[2]) ? (int)$matches[2] : 1,
+                'versiculo_fin' => isset($matches[3]) ? (int)$matches[3] : (isset($matches[2]) ? (int)$matches[2] : 1),
+                'es_do' => true
+            ];
+        }
+        
+        // Intentar coincidencia con el patrón general
+        if (preg_match($patronGeneral, $referencia, $matches)) {
+            return [
+                'libro' => trim($matches[1]),
+                'capitulo' => (int)$matches[2],
+                'versiculo_inicio' => (int)$matches[3],
+                'versiculo_fin' => isset($matches[4]) ? (int)$matches[4] : (int)$matches[3]
+            ];
+        }
+        
+        return null;
+    }
+
+    /**
+     * Busca versículos por referencia completa.
+     * 
+     * Acepta referencias en los siguientes formatos:
+     * - Formato general: "Libro Capítulo:Versículo" o "Libro Capítulo:Versículo-Versículo"
+     * - Doctrina y Convenios: "DyC 4:2" o "Doctrina y Convenios 4:2"
+     * - Declaraciones Oficiales: "DO 2" o "DO 2:3" o "Declaración oficial 2" o "Declaración oficial 2:3"
+     * 
+     * Ejemplos: 
+     * - "Juan 1:1"
+     * - "Juan 1:1-3"
+     * - "DyC 4:2"
+     * - "DO 2:3"
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    #[QueryParam('referencia', 'Referencia completa', required: true, example: 'Juan 1:1-3')]
+    #[Response([
+        'data' => [
+            [
+                'id' => 1,
+                'contenido' => 'En el principio era el Verbo...',
+                'num_versiculo' => 1,
+                'orden' => 1
+            ]
+        ]
+    ])]
+    #[Response(status: 400, description: 'Formato de referencia inválido')]
+    #[Response(status: 404, description: 'Versículos no encontrados')]
+    public function buscarPorReferenciaCompleta(Request $request)
+    {
+        if (!$request->has('referencia')) {
+            return response()->json(['error' => 'El parámetro referencia es requerido'], 400);
+        }
+
+        $referencia = $request->input('referencia');
+        $componentes = $this->parsearReferencia($referencia);
+
+        if (!$componentes) {
+            return response()->json([
+                'error' => 'Formato de referencia inválido. Use alguno de estos formatos: "Libro Capítulo:Versículo", "DyC Sección:Versículo" o "DO Declaración[:Versículo]"'
+            ], 400);
+        }
+
+        $libroNormalizado = $this->normalizarTexto($componentes['libro']);
+
+        // Primero encontramos el capítulo correcto
+        $query = Capitulos::whereHas('libro', function($query) use ($libroNormalizado) {
+            $query->whereRaw('LOWER(nombre) = LOWER(?)', [$libroNormalizado]);
+        });
+
+        // Si es DyC o DO, asegurarse que el libro pertenece al volumen correcto
+        if (isset($componentes['es_dyc']) || isset($componentes['es_do'])) {
+            $query->whereHas('libro.division.volumen', function($query) {
+                $query->where('nombre', 'Doctrina y Convenios');
+            });
+        }
+
+        $capitulo = $query->where('num_capitulo', $componentes['capitulo'])->first();
+
+        if (!$capitulo) {
+            return response()->json(['error' => 'Capítulo no encontrado'], 404);
+        }
+
+        // Luego buscamos los versículos en el rango especificado
+        $versiculos = Versiculos::select('id', 'capitulo_id', 'pericopa_id', 'num_versiculo', 'contenido', 'referencia')
+            ->where('capitulo_id', $capitulo->id)
+            ->whereBetween('num_versiculo', [
+                $componentes['versiculo_inicio'],
+                $componentes['versiculo_fin']
+            ])
+            ->orderBy('num_versiculo')
+            ->get();
+
+        if ($versiculos->isEmpty()) {
+            return response()->json(['error' => 'Versículos no encontrados'], 404);
+        }
+
+        return response()->json($versiculos);
     }
 }
