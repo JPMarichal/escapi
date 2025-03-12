@@ -52,3 +52,5 @@ _ide_helper_models.php
 # Dependencies
 composer.phar
 package-lock.json
+.scribe/endpoints/00.yaml
+.scribe/endpoints.cache/00.yaml
