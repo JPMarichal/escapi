@@ -1,4 +1,11 @@
-<div class="max-w-4xl mx-auto px-4 py-8 bg-white relative">
+<div class="max-w-4xl mx-auto px-4 py-8 bg-white relative border-l border-green-600/30 border-r">
+    <!-- Migas de pan -->
+    <livewire:escrituras.breadcrumbs 
+        :libro="$libro" 
+        :capitulo="$capitulo" 
+        :referencia="$referencia"
+        tipo="capitulo" />
+
     <!-- Navegación fija -->
     <div class="fixed top-1/2 -translate-y-1/2 left-0 md:left-4 z-50">
         @if($capituloAnterior)
