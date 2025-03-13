@@ -1,4 +1,4 @@
-<div class="mb-12">
+<div id="pericopa-{{ $pericopa->id }}" class="mb-12">
     <div class="py-4 border-t-2 border-b-2 border-green-600/30">
         <h2 class="text-2xl text-green-700 text-center font-semibold tracking-wide">{{ $pericopa->titulo }}</h2>
     </div>

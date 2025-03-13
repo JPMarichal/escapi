@@ -40,6 +40,11 @@
         @endif
     </header>
 
+    <!-- Barra de herramientas -->
+    <livewire:escrituras.toolbar-capitulo 
+        :pericopas="$pericopas"
+        :referencia="$referencia" />
+
     @if($error)
         <div class="text-center text-red-600 mb-8 font-['Verdana']">
             <i class="fa-solid fa-exclamation-circle text-4xl mb-4"></i>
@@ -47,14 +52,14 @@
         </div>
     @endif
 
-    @if($pericopas && $pericopas->count() > 0)
+    @if($mostrarPericopas && $pericopas && $pericopas->count() > 0)
         <div class="space-y-0">
             @foreach($pericopas as $pericopa)
                 <livewire:escrituras.pericopa :pericopa="$pericopa" :versiculos="$versiculos" :wire:key="$pericopa->id" />
             @endforeach
         </div>
     @elseif($versiculos && $versiculos->count() > 0)
-        <!-- Si no hay perícopas pero sí versículos, mostrarlos directamente -->
+        <!-- Si no hay perícopas o están desactivadas, mostrar versículos directamente -->
         <div class="space-y-2">
             @foreach($versiculos as $versiculo)
                 <livewire:escrituras.versiculo :versiculo="$versiculo" :esPar="$loop->even" :wire:key="$versiculo->id" />
@@ -67,3 +72,18 @@
         </div>
     @endif
 </div>
+
+@push('scripts')
+<script>
+    // Restaurar estado de perícopas al cargar
+    let estadoGuardado = localStorage.getItem('mostrarPericopas');
+    if (estadoGuardado !== null) {
+        $wire.mostrarPericopas = estadoGuardado === 'true';
+    }
+
+    // Guardar estado cuando cambie
+    $wire.on('pericopasToggled', (estado) => {
+        localStorage.setItem('mostrarPericopas', estado);
+    });
+</script>
+@endpush

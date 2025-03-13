@@ -8,6 +8,7 @@ use App\Models\Capitulos;
 use App\Models\Libros;
 use App\Traits\ScriptureReferences;
 use App\Traits\TextNormalization;
+use App\Services\SitePreferences;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -25,6 +26,9 @@ class VistaCapitulo extends Component
     public $capituloAnterior;
     public $capituloSiguiente;
     public $url_audio;
+    public $mostrarPericopas = true;
+
+    protected $listeners = ['pericopasToggled'];
 
     public function mount($libro = null, $capitulo = null)
     {
@@ -32,10 +36,14 @@ class VistaCapitulo extends Component
         $this->libro = ucwords(str_replace('-', ' ', $libro));
         $this->capitulo = $capitulo;
         
+        // Cargar preferencia desde el servicio centralizado
+        $this->mostrarPericopas = SitePreferences::get('mostrar_pericopas', true);
+        
         Log::debug('VistaCapitulo mount:', [
             'libro_original' => $libro,
             'libro_procesado' => $this->libro,
-            'capitulo' => $this->capitulo
+            'capitulo' => $this->capitulo,
+            'mostrarPericopas' => $this->mostrarPericopas
         ]);
         
         $this->cargarCapitulo();
@@ -118,6 +126,14 @@ class VistaCapitulo extends Component
             Log::error('Error cargando capítulo: ' . $e->getMessage());
             Log::error($e->getTraceAsString());
         }
+    }
+
+    public function pericopasToggled($estado)
+    {
+        $this->mostrarPericopas = $estado;
+        Log::debug('Perícopas toggled en VistaCapitulo:', [
+            'estado' => $estado
+        ]);
     }
 
     protected function cargarNavegacion()
