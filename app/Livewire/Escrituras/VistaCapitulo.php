@@ -32,11 +32,15 @@ class VistaCapitulo extends Component
 
     public function mount($libro = null, $capitulo = null)
     {
-        // Convertir guiones a espacios y normalizar el texto
-        $this->libro = ucwords(str_replace('-', ' ', $libro));
-        $this->capitulo = $capitulo;
+        // No reemplazar guiones para los libros de José Smith, ya que son parte del nombre oficial
+        if (str_starts_with($libro, 'jose-smith-')) {
+            $this->libro = str_replace('jose-smith-', 'José Smith-', $libro);
+        } else {
+            // Para el resto de libros, convertir guiones a espacios
+            $this->libro = ucwords(str_replace('-', ' ', $libro));
+        }
         
-        // Cargar preferencia desde el servicio centralizado
+        $this->capitulo = $capitulo;
         $this->mostrarPericopas = SitePreferences::get('mostrar_pericopas', true);
         
         Log::debug('VistaCapitulo mount:', [
@@ -59,15 +63,25 @@ class VistaCapitulo extends Component
         try {
             // Primero obtener el libro
             $libro = Libros::where(function($query) {
-                $nombreNormalizado = $this->normalizarTexto($this->libro);
-                Log::debug('Buscando libro:', [
-                    'original' => $this->libro,
-                    'normalizado' => $nombreNormalizado,
-                    'sql' => "SELECT * FROM libros WHERE LOWER(nombre) = '{$nombreNormalizado}' OR LOWER(abreviatura) = '{$nombreNormalizado}'"
-                ]);
-                
-                $query->whereRaw('LOWER(nombre) = ?', [$nombreNormalizado])
-                    ->orWhereRaw('LOWER(abreviatura) = ?', [$nombreNormalizado]);
+                // Para libros de José Smith, buscar el nombre exacto incluyendo el guión
+                if (str_contains($this->libro, 'José Smith-')) {
+                    $nombreNormalizado = $this->normalizarTexto($this->libro);
+                    Log::debug('Buscando libro JS:', [
+                        'original' => $this->libro,
+                        'normalizado' => $nombreNormalizado
+                    ]);
+                    $query->whereRaw('LOWER(nombre) = ?', [$nombreNormalizado]);
+                } else {
+                    // Para otros libros, normalizar y buscar sin guiones
+                    $nombreNormalizado = $this->normalizarTexto(str_replace('-', ' ', $this->libro));
+                    Log::debug('Buscando libro normal:', [
+                        'original' => $this->libro,
+                        'normalizado' => $nombreNormalizado,
+                        'sql' => "SELECT * FROM libros WHERE LOWER(nombre) = '{$nombreNormalizado}' OR LOWER(abreviatura) = '{$nombreNormalizado}'"
+                    ]);
+                    $query->whereRaw('LOWER(nombre) = ?', [$nombreNormalizado])
+                        ->orWhereRaw('LOWER(abreviatura) = ?', [$nombreNormalizado]);
+                }
             })->first();
 
             Log::debug('Libro encontrado:', [
