@@ -55,7 +55,11 @@
     @if($mostrarPericopas && $pericopas && $pericopas->count() > 0)
         <div class="space-y-0">
             @foreach($pericopas as $pericopa)
-                <livewire:escrituras.pericopa :pericopa="$pericopa" :versiculos="$versiculos" :wire:key="$pericopa->id" />
+                <livewire:escrituras.pericopa 
+                    :pericopa="$pericopa" 
+                    :versiculos="$versiculos" 
+                    :enVistaCapitulo="true"
+                    :wire:key="$pericopa->id" />
             @endforeach
         </div>
     @elseif($versiculos && $versiculos->count() > 0)

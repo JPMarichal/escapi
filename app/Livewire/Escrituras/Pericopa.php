@@ -10,8 +10,9 @@ class Pericopa extends Component
 {
     public $pericopa;
     public $versiculos;
+    public $enVistaCapitulo = false;
 
-    public function mount(Pericopas $pericopa, $versiculos)
+    public function mount(Pericopas $pericopa, $versiculos, $enVistaCapitulo = false)
     {
         $this->pericopa = $pericopa;
         
@@ -19,6 +20,8 @@ class Pericopa extends Component
         $this->versiculos = $versiculos->filter(function($versiculo) {
             return $versiculo->pericopa_id === $this->pericopa->id;
         })->sortBy('num_versiculo');
+
+        $this->enVistaCapitulo = $enVistaCapitulo;
 
         Log::debug('Versículos filtrados para perícopa:', [
             'pericopa_id' => $this->pericopa->id,

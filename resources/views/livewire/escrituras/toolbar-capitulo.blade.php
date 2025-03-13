@@ -11,7 +11,7 @@
                 class="text-gray-500 hover:text-gray-700 transition-colors"
                 title="Ver estructura del capítulo"
             >
-                <i class="fa-solid fa-list text-xs"></i>
+                <i class="fa-solid fa-sitemap text-xs"></i>
             </button>
         </div>
 
