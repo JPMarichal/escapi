@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 use App\Models\Pericopas;
 use App\Models\Capitulos;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Comentarios;
 
 class Versiculos extends Model
 {
@@ -34,5 +36,15 @@ class Versiculos extends Model
     public function capitulo(): BelongsTo
     {
         return $this->belongsTo(Capitulos::class, 'capitulo_id');
+    }
+
+    /**
+     * Obtiene los comentarios asociados al versículo.
+     * Los comentarios se ordenan por el campo 'orden' si está definido.
+     */
+    public function comentarios(): MorphMany
+    {
+        return $this->morphMany(Comentarios::class, 'comentable')
+                    ->orderBy('orden');
     }
 }

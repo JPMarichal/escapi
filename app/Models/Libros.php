@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 use App\Models\Volumenes;
 use App\Models\Divisiones;
-use App\Models\Partes;
 use App\Models\Capitulos;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-
+use App\Models\Comentarios;
 
 class Libros extends Model
 {
@@ -43,7 +43,6 @@ class Libros extends Model
         'url',
     ];
 
-
     public function volumen(): BelongsTo
     {
         return $this->belongsTo(Volumenes::class, 'volumen_id');
@@ -54,13 +53,18 @@ class Libros extends Model
         return $this->belongsTo(Divisiones::class, 'division_id');
     }
 
-    public function partes(): HasMany
-    {
-        return $this->hasMany(Partes::class, 'libro_id');
-    }
-
     public function capitulos(): HasMany
     {
         return $this->hasMany(Capitulos::class, 'libro_id');
+    }
+
+    /**
+     * Obtiene los comentarios asociados al libro.
+     * Los comentarios se ordenan por el campo 'orden' si está definido.
+     */
+    public function comentarios(): MorphMany
+    {
+        return $this->morphMany(Comentarios::class, 'comentable')
+                    ->orderBy('orden');
     }
 }

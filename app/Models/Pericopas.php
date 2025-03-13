@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Capitulos;
-use App\Models\Versiculos;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+
+use App\Models\Capitulos;
+use App\Models\Versiculos;
+use App\Models\Comentarios;
 
 class Pericopas extends Model
 {
@@ -35,5 +38,15 @@ class Pericopas extends Model
     public function versiculos(): HasMany
     {
         return $this->hasMany(Versiculos::class, 'pericopa_id');
+    }
+
+    /**
+     * Obtiene los comentarios asociados a la perícopa.
+     * Los comentarios se ordenan por el campo 'orden' si está definido.
+     */
+    public function comentarios(): MorphMany
+    {
+        return $this->morphMany(Comentarios::class, 'comentable')
+                    ->orderBy('orden');
     }
 }
