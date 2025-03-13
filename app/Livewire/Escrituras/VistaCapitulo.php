@@ -10,6 +10,7 @@ use App\Traits\ScriptureReferences;
 use App\Traits\TextNormalization;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class VistaCapitulo extends Component
 {
@@ -27,8 +28,16 @@ class VistaCapitulo extends Component
 
     public function mount($libro = null, $capitulo = null)
     {
-        $this->libro = $libro;
+        // Convertir guiones a espacios y normalizar el texto
+        $this->libro = ucwords(str_replace('-', ' ', $libro));
         $this->capitulo = $capitulo;
+        
+        Log::debug('VistaCapitulo mount:', [
+            'libro_original' => $libro,
+            'libro_procesado' => $this->libro,
+            'capitulo' => $this->capitulo
+        ]);
+        
         $this->cargarCapitulo();
     }
 
@@ -42,9 +51,21 @@ class VistaCapitulo extends Component
         try {
             // Primero obtener el libro
             $libro = Libros::where(function($query) {
-                $query->whereRaw('LOWER(nombre) = ?', [strtolower($this->libro)])
-                    ->orWhereRaw('LOWER(abreviatura) = ?', [strtolower($this->libro)]);
+                $nombreNormalizado = $this->normalizarTexto($this->libro);
+                Log::debug('Buscando libro:', [
+                    'original' => $this->libro,
+                    'normalizado' => $nombreNormalizado,
+                    'sql' => "SELECT * FROM libros WHERE LOWER(nombre) = '{$nombreNormalizado}' OR LOWER(abreviatura) = '{$nombreNormalizado}'"
+                ]);
+                
+                $query->whereRaw('LOWER(nombre) = ?', [$nombreNormalizado])
+                    ->orWhereRaw('LOWER(abreviatura) = ?', [$nombreNormalizado]);
             })->first();
+
+            Log::debug('Libro encontrado:', [
+                'busqueda' => $this->libro,
+                'encontrado' => $libro ? $libro->toArray() : 'no encontrado'
+            ]);
 
             if (!$libro) {
                 $this->error = 'No se encontró el libro especificado.';
@@ -58,6 +79,13 @@ class VistaCapitulo extends Component
                     $query->orderBy('versiculo_inicial');
                 }])
                 ->first();
+
+            Log::debug('Capítulo encontrado:', [
+                'libro_id' => $libro->id,
+                'num_capitulo' => $this->capitulo,
+                'encontrado' => $capitulo ? $capitulo->toArray() : 'no',
+                'pericopas' => $capitulo ? $capitulo->pericopas->count() : 0
+            ]);
 
             if (!$capitulo) {
                 $this->error = 'No se encontró el capítulo especificado.';
@@ -73,11 +101,22 @@ class VistaCapitulo extends Component
                 ->orderBy('num_versiculo')
                 ->get();
 
+            Log::debug('Versículos cargados:', [
+                'capitulo_id' => $capitulo->id,
+                'cantidad' => $this->versiculos->count(),
+                'versiculos' => $this->versiculos->map(fn($v) => [
+                    'id' => $v->id,
+                    'num' => $v->num_versiculo,
+                    'contenido' => substr($v->contenido, 0, 50) . '...'
+                ])
+            ]);
+
             $this->cargarNavegacion();
 
         } catch (\Exception $e) {
             $this->error = 'Ocurrió un error al cargar el capítulo.';
             Log::error('Error cargando capítulo: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
         }
     }
 
@@ -87,103 +126,105 @@ class VistaCapitulo extends Component
             return;
         }
 
-        // Obtener el libro actual
-        $libroActual = Libros::where(function($query) {
-            $query->whereRaw('LOWER(nombre) = ?', [strtolower($this->libro)])
-                  ->orWhereRaw('LOWER(abreviatura) = ?', [strtolower($this->libro)]);
-        })->first();
+        try {
+            // Obtener el libro actual
+            $libroActual = Libros::where(function($query) {
+                $nombreNormalizado = $this->normalizarTexto($this->libro);
+                $query->whereRaw('LOWER(nombre) = ?', [$nombreNormalizado])
+                      ->orWhereRaw('LOWER(abreviatura) = ?', [$nombreNormalizado]);
+            })->first();
 
-        if (!$libroActual) {
-            return;
-        }
-
-        // Obtener el capítulo actual
-        $capituloActual = Capitulos::where('libro_id', $libroActual->id)
-            ->where('num_capitulo', $this->capitulo)
-            ->first();
-
-        if (!$capituloActual) {
-            return;
-        }
-
-        // Buscar el capítulo anterior
-        if ($capituloActual->num_capitulo > 1) {
-            // Si no es el primer capítulo del libro, ir al anterior
-            $capituloAnterior = Capitulos::where('libro_id', $libroActual->id)
-                ->where('num_capitulo', $capituloActual->num_capitulo - 1)
-                ->first();
-            
-            if ($capituloAnterior) {
-                $this->capituloAnterior = [
-                    'libro' => $libroActual->nombre,
-                    'capitulo' => $capituloAnterior->num_capitulo
-                ];
-            }
-        } else {
-            // Si es el primer capítulo, buscar el último capítulo del libro anterior
-            $libroAnterior = Libros::where('id', '<', $libroActual->id)
-                ->orderBy('id', 'desc')
-                ->first();
-
-            if (!$libroAnterior) {
-                // Si no hay libro anterior, ir al último libro
-                $libroAnterior = Libros::orderBy('id', 'desc')->first();
+            if (!$libroActual) {
+                return;
             }
 
-            if ($libroAnterior) {
-                $capituloAnterior = Capitulos::where('libro_id', $libroAnterior->id)
-                    ->orderBy('num_capitulo', 'desc')
+            // Obtener el capítulo actual
+            $capituloActual = Capitulos::where('libro_id', $libroActual->id)
+                ->where('num_capitulo', $this->capitulo)
+                ->first();
+
+            if (!$capituloActual) {
+                return;
+            }
+
+            // Generar URLs usando guiones para espacios
+            $libroUrl = Str::slug($libroActual->nombre);
+
+            // Buscar el capítulo anterior
+            if ($capituloActual->num_capitulo > 1) {
+                $capituloAnterior = Capitulos::where('libro_id', $libroActual->id)
+                    ->where('num_capitulo', $capituloActual->num_capitulo - 1)
                     ->first();
-
+                
                 if ($capituloAnterior) {
                     $this->capituloAnterior = [
-                        'libro' => $libroAnterior->nombre,
+                        'libro' => $libroUrl,
                         'capitulo' => $capituloAnterior->num_capitulo
                     ];
                 }
+            } else {
+                $libroAnterior = Libros::where('id', '<', $libroActual->id)
+                    ->orderBy('id', 'desc')
+                    ->first();
+
+                if (!$libroAnterior) {
+                    $libroAnterior = Libros::orderBy('id', 'desc')->first();
+                }
+
+                if ($libroAnterior) {
+                    $capituloAnterior = Capitulos::where('libro_id', $libroAnterior->id)
+                        ->orderBy('num_capitulo', 'desc')
+                        ->first();
+
+                    if ($capituloAnterior) {
+                        $this->capituloAnterior = [
+                            'libro' => Str::slug($libroAnterior->nombre),
+                            'capitulo' => $capituloAnterior->num_capitulo
+                        ];
+                    }
+                }
             }
-        }
 
-        // Buscar el capítulo siguiente
-        $ultimoCapitulo = Capitulos::where('libro_id', $libroActual->id)
-            ->orderBy('num_capitulo', 'desc')
-            ->first();
-
-        if ($capituloActual->num_capitulo < $ultimoCapitulo->num_capitulo) {
-            // Si no es el último capítulo del libro, ir al siguiente
-            $capituloSiguiente = Capitulos::where('libro_id', $libroActual->id)
-                ->where('num_capitulo', $capituloActual->num_capitulo + 1)
+            // Buscar el capítulo siguiente
+            $ultimoCapitulo = Capitulos::where('libro_id', $libroActual->id)
+                ->orderBy('num_capitulo', 'desc')
                 ->first();
 
-            if ($capituloSiguiente) {
-                $this->capituloSiguiente = [
-                    'libro' => $libroActual->nombre,
-                    'capitulo' => $capituloSiguiente->num_capitulo
-                ];
-            }
-        } else {
-            // Si es el último capítulo, buscar el primer capítulo del libro siguiente
-            $libroSiguiente = Libros::where('id', '>', $libroActual->id)
-                ->orderBy('id')
-                ->first();
-
-            if (!$libroSiguiente) {
-                // Si no hay libro siguiente, ir al primer libro
-                $libroSiguiente = Libros::orderBy('id')->first();
-            }
-
-            if ($libroSiguiente) {
-                $capituloSiguiente = Capitulos::where('libro_id', $libroSiguiente->id)
-                    ->orderBy('num_capitulo')
+            if ($capituloActual->num_capitulo < $ultimoCapitulo->num_capitulo) {
+                $capituloSiguiente = Capitulos::where('libro_id', $libroActual->id)
+                    ->where('num_capitulo', $capituloActual->num_capitulo + 1)
                     ->first();
 
                 if ($capituloSiguiente) {
                     $this->capituloSiguiente = [
-                        'libro' => $libroSiguiente->nombre,
+                        'libro' => $libroUrl,
                         'capitulo' => $capituloSiguiente->num_capitulo
                     ];
                 }
+            } else {
+                $libroSiguiente = Libros::where('id', '>', $libroActual->id)
+                    ->orderBy('id')
+                    ->first();
+
+                if (!$libroSiguiente) {
+                    $libroSiguiente = Libros::orderBy('id')->first();
+                }
+
+                if ($libroSiguiente) {
+                    $capituloSiguiente = Capitulos::where('libro_id', $libroSiguiente->id)
+                        ->orderBy('num_capitulo')
+                        ->first();
+
+                    if ($capituloSiguiente) {
+                        $this->capituloSiguiente = [
+                            'libro' => Str::slug($libroSiguiente->nombre),
+                            'capitulo' => $capituloSiguiente->num_capitulo
+                        ];
+                    }
+                }
             }
+        } catch (\Exception $e) {
+            Log::error('Error cargando navegación: ' . $e->getMessage());
         }
     }
 
