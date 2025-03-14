@@ -1,6 +1,6 @@
 <div class="relative">
     @if($show)
-    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+    <div class="fixed inset-0 bg-gray-500/40 backdrop-blur-sm transition-opacity"></div>
 
     <div class="fixed inset-0 z-10 overflow-y-auto">
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -27,7 +27,9 @@
                             @foreach($comentarios as $comentario)
                                 <article class="rounded-lg border border-gray-200 p-4 hover:border-gray-300 transition-colors">
                                     @if($comentario->titulo)
-                                        <h4 class="font-semibold text-green-700 mb-2">{{ $comentario->titulo }}</h4>
+                                        <h4 class="font-semibold text-green-700 mb-3 pb-2 border-b border-gray-200">
+                                            {{ $comentario->titulo }}
+                                        </h4>
                                     @endif
                                     
                                     <div class="prose prose-sm max-w-none text-gray-600 prose-p:mt-0 prose-p:mb-2 last:prose-p:mb-0">
