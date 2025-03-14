@@ -16,10 +16,10 @@ class Pericopa extends Component
     {
         $this->pericopa = $pericopa;
         
-        // Filtramos los versículos por pericopa_id
+        // Filtramos los versículos por pericopa_id manteniendo todas las propiedades
         $this->versiculos = $versiculos->filter(function($versiculo) {
             return $versiculo->pericopa_id === $this->pericopa->id;
-        })->sortBy('num_versiculo');
+        })->values(); // Usar values() para resetear los índices
 
         $this->enVistaCapitulo = $enVistaCapitulo;
 
@@ -30,7 +30,8 @@ class Pericopa extends Component
             'versiculos' => $this->versiculos->map(fn($v) => [
                 'id' => $v->id,
                 'num' => $v->num_versiculo,
-                'pericopa_id' => $v->pericopa_id
+                'pericopa_id' => $v->pericopa_id,
+                'comentarios_count' => $v->comentarios_count
             ])
         ]);
     }

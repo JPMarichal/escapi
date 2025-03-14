@@ -118,10 +118,16 @@ class VistaCapitulo extends Component
             $this->url_audio = $capitulo->url_audio;
             $this->pericopas = $capitulo->pericopas;
 
-            // Cargar todos los versículos del capítulo ordenados
+            // Cargar todos los versículos del capítulo ordenados, con sus comentarios
             $this->versiculos = Versiculos::where('capitulo_id', $capitulo->id)
+                ->withCount('comentarios')
                 ->orderBy('num_versiculo')
                 ->get();
+
+            // Precalcular si cada versículo tiene comentarios para evitar N+1 queries
+            $this->versiculos->each(function($versiculo) {
+                $versiculo->tiene_comentarios = $versiculo->comentarios_count > 0;
+            });
 
             Log::debug('Versículos cargados:', [
                 'capitulo_id' => $capitulo->id,
@@ -129,7 +135,9 @@ class VistaCapitulo extends Component
                 'versiculos' => $this->versiculos->map(fn($v) => [
                     'id' => $v->id,
                     'num' => $v->num_versiculo,
-                    'contenido' => substr($v->contenido, 0, 50) . '...'
+                    'contenido' => substr($v->contenido, 0, 50) . '...',
+                    'num_comentarios' => $v->comentarios_count,
+                    'tiene_comentarios' => $v->tiene_comentarios
                 ])
             ]);
 

@@ -75,19 +75,19 @@
             <p>No se encontraron versículos para esta referencia.</p>
         </div>
     @endif
+
+    @push('scripts')
+    <script>
+        // Restaurar estado de perícopas al cargar
+        let estadoGuardado = localStorage.getItem('mostrarPericopas');
+        if (estadoGuardado !== null) {
+            $wire.mostrarPericopas = estadoGuardado === 'true';
+        }
+
+        // Guardar estado cuando cambie
+        $wire.on('pericopasToggled', (estado) => {
+            localStorage.setItem('mostrarPericopas', estado);
+        });
+    </script>
+    @endpush
 </div>
-
-@push('scripts')
-<script>
-    // Restaurar estado de perícopas al cargar
-    let estadoGuardado = localStorage.getItem('mostrarPericopas');
-    if (estadoGuardado !== null) {
-        $wire.mostrarPericopas = estadoGuardado === 'true';
-    }
-
-    // Guardar estado cuando cambie
-    $wire.on('pericopasToggled', (estado) => {
-        localStorage.setItem('mostrarPericopas', estado);
-    });
-</script>
-@endpush

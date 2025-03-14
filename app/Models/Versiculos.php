@@ -45,6 +45,6 @@ class Versiculos extends Model
     public function comentarios(): MorphMany
     {
         return $this->morphMany(Comentarios::class, 'comentable')
-                    ->orderBy('orden');
+                    ->orderBy('orden', 'asc');
     }
 }

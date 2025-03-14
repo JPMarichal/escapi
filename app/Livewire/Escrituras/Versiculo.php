@@ -3,16 +3,40 @@
 namespace App\Livewire\Escrituras;
 
 use Livewire\Component;
+use App\Models\Versiculos;
+use Illuminate\Database\Eloquent\Builder;
 
 class Versiculo extends Component
 {
-    public $versiculo;
-    public $esPar;
+    public Versiculos $versiculo;
+    public bool $esPar = false;
+    public bool $tieneComentarios = false;
+    public int $numComentarios = 0;
 
-    public function mount($versiculo, $esPar)
+    public function mount(Versiculos $versiculo, bool $esPar): void
     {
         $this->versiculo = $versiculo;
         $this->esPar = $esPar;
+
+        // Cargar los comentarios de manera eficiente
+        $this->versiculo->loadCount('comentarios');
+        $this->tieneComentarios = $this->versiculo->comentarios_count > 0;
+        $this->numComentarios = $this->versiculo->comentarios_count;
+    }
+
+    public function showComentarios(): void
+    {
+        // Asegurarnos de cargar las relaciones necesarias para la referencia
+        $this->versiculo->load(['capitulo.libro']);
+        
+        $referencia = sprintf(
+            '%s %d:%d',
+            $this->versiculo->capitulo->libro->nombre,
+            $this->versiculo->capitulo->num_capitulo,
+            $this->versiculo->num_versiculo
+        );
+
+        $this->dispatch('showComentarios', versiculoId: $this->versiculo->id, referencia: $referencia);
     }
 
     public function render()
