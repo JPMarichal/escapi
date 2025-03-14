@@ -41,9 +41,12 @@
     </header>
 
     <!-- Barra de herramientas -->
-    <livewire:escrituras.toolbar-capitulo 
-        :pericopas="$pericopas"
-        :referencia="$referencia" />
+    @if($versiculos && $versiculos->count() > 0)
+        <livewire:escrituras.toolbar-capitulo 
+            :pericopas="$pericopas"
+            :referencia="$referencia"
+            :capitulo-id="$versiculos->first()->capitulo_id" />
+    @endif
 
     @if($error)
         <div class="text-center text-red-600 mb-8 font-['Verdana']">

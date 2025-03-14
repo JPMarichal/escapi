@@ -2,10 +2,10 @@
     <!-- Barra de herramientas -->
     <div class="flex justify-between items-center py-1.5 px-4 border-t border-b border-green-600/30 mb-6">
         <!-- Espacio izquierdo -->
-        <div></div>
+        <div class="w-24"></div>
         
         <!-- Botones centrales -->
-        <div class="flex items-center space-x-6">
+        <div class="flex items-center space-x-4">
             <button 
                 wire:click="toggleEstructura"
                 class="text-gray-500 hover:text-gray-700 transition-colors"
@@ -13,15 +13,23 @@
             >
                 <i class="fa-solid fa-sitemap text-xs"></i>
             </button>
+
+            <a href="{{ route('escrituras.comentarios', ['id' => $capituloId]) }}" 
+               class="text-gray-500 hover:text-gray-700 transition-colors"
+               title="Ver todos los comentarios">
+                <i class="fa-solid fa-comments text-xs"></i>
+            </a>
         </div>
 
         <!-- Control de perícopas -->
-        <button 
-            wire:click="togglePericopas"
-            class="text-xs text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
-        >
-            Perícopas {{ $mostrarPericopas ? 'off' : 'on' }}
-        </button>
+        <div class="w-24 text-right">
+            <button 
+                wire:click="togglePericopas"
+                class="text-xs text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+            >
+                Perícopas {{ $mostrarPericopas ? 'off' : 'on' }}
+            </button>
+        </div>
     </div>
 
     <!-- Popup de estructura -->

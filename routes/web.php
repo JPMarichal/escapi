@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\CapitulosController;
 use App\Http\Controllers\Api\PericopasController;
 use App\Http\Controllers\Api\VersiculosController;
 use App\Livewire\Escrituras\VistaCapitulo;
+use App\Livewire\Escrituras\ComentariosCapitulo;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,6 +18,7 @@ Route::get('/', function () {
 
 // Vista de capítulos
 Route::get('/escrituras/{libro}/{capitulo}', VistaCapitulo::class)->name('escrituras.capitulo');
+Route::get('/escrituras/capitulo/{id}/comentarios', ComentariosCapitulo::class)->name('escrituras.comentarios');
 
 Route::group(['prefix' => 'api'], function () {
     // Rutas de documentación
