@@ -5,6 +5,7 @@ namespace App\Livewire\Escrituras;
 use Livewire\Component;
 use App\Models\Versiculos;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Log;
 
 class Versiculo extends Component
 {
@@ -22,6 +23,14 @@ class Versiculo extends Component
         $this->versiculo->loadCount('comentarios');
         $this->tieneComentarios = $this->versiculo->comentarios_count > 0;
         $this->numComentarios = $this->versiculo->comentarios_count;
+
+        Log::debug('Versiculo montado:', [
+            'id' => $this->versiculo->id,
+            'num_versiculo' => $this->versiculo->num_versiculo,
+            'comentarios_count' => $this->versiculo->comentarios_count,
+            'tieneComentarios' => $this->tieneComentarios,
+            'numComentarios' => $this->numComentarios
+        ]);
     }
 
     public function showComentarios(): void

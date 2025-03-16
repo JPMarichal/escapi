@@ -21,6 +21,12 @@ class Pericopa extends Component
             return $versiculo->pericopa_id === $this->pericopa->id;
         })->values(); // Usar values() para resetear los índices
 
+        // Asegurar que cada versículo tenga las propiedades necesarias para los comentarios
+        $this->versiculos->each(function($versiculo) {
+            $versiculo->tieneComentarios = $versiculo->comentarios_count > 0;
+            $versiculo->numComentarios = $versiculo->comentarios_count;
+        });
+
         $this->enVistaCapitulo = $enVistaCapitulo;
 
         Log::debug('Versículos filtrados para perícopa:', [

@@ -124,9 +124,27 @@ class VistaCapitulo extends Component
                 ->orderBy('num_versiculo')
                 ->get();
 
+            Log::debug('Cargando versículos con comentarios:', [
+                'capitulo_id' => $capitulo->id,
+                'total_versiculos' => $this->versiculos->count(),
+                'detalles' => $this->versiculos->map(fn($v) => [
+                    'id' => $v->id,
+                    'num' => $v->num_versiculo,
+                    'comentarios_count' => $v->comentarios_count
+                ])
+            ]);
+
             // Precalcular si cada versículo tiene comentarios para evitar N+1 queries
             $this->versiculos->each(function($versiculo) {
-                $versiculo->tiene_comentarios = $versiculo->comentarios_count > 0;
+                $versiculo->tieneComentarios = $versiculo->comentarios_count > 0;
+                $versiculo->numComentarios = $versiculo->comentarios_count;
+                
+                Log::debug("Versículo {$versiculo->num_versiculo} procesado:", [
+                    'id' => $versiculo->id,
+                    'comentarios_count' => $versiculo->comentarios_count,
+                    'tieneComentarios' => $versiculo->tieneComentarios,
+                    'numComentarios' => $versiculo->numComentarios
+                ]);
             });
 
             Log::debug('Versículos cargados:', [
@@ -136,8 +154,8 @@ class VistaCapitulo extends Component
                     'id' => $v->id,
                     'num' => $v->num_versiculo,
                     'contenido' => substr($v->contenido, 0, 50) . '...',
-                    'num_comentarios' => $v->comentarios_count,
-                    'tiene_comentarios' => $v->tiene_comentarios
+                    'numComentarios' => $v->comentarios_count,
+                    'tieneComentarios' => $v->tieneComentarios
                 ])
             ]);
 

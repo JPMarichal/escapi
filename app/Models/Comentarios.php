@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Comentarios extends Model
 {
+
+    protected $table = 'comentarios';
+
     protected $fillable = [
         'titulo',
         'comentario',
@@ -17,8 +21,9 @@ class Comentarios extends Model
     /**
      * Obtiene el modelo comentable (el modelo al que pertenece este comentario).
      */
-    public function comentable()
+    public function comentable(): MorphTo
     {
         return $this->morphTo();
     }
+
 }

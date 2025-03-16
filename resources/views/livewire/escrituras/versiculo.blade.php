@@ -36,14 +36,17 @@
             @endif
         </div>
 
+        <!-- Comentarios -->
         @if($tieneComentarios)
             <button wire:click="showComentarios" 
                     type="button"
-                    class="ml-2 p-1 text-gray-400 hover:text-green-700 transition-colors"
+                    class="ml-2 p-1 text-gray-400 hover:text-green-700 transition-colors flex items-center"
                     title="Ver {{ $numComentarios }} {{ $numComentarios === 1 ? 'comentario' : 'comentarios' }}">
                 <span class="sr-only">Ver comentarios</span>
-                <i class="fa-solid fa-comment"></i>
-                <span class="text-xs ml-0.5">{{ $numComentarios }}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-xs ml-1">{{ $numComentarios }}</span>
             </button>
         @endif
     </div>
