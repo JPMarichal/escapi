@@ -65,12 +65,12 @@ class LibrosController extends Controller
      * Busca un libro por nombre.
      * 
      * El nombre es insensible a mayúsculas/minúsculas y acentos.
-     * La búsqueda funciona si el nombre buscado está contenido en el nombre del libro.
+     * La búsqueda funciona tanto con el nombre completo como con la abreviatura del libro.
      *
-     * @param Request $request
+     * @param string $nombre Nombre o abreviatura del libro a buscar
      * @return \Illuminate\Http\JsonResponse
      */
-    #[QueryParam('nombre', 'Nombre del libro a buscar', required: true, example: 'Génesis')]
+    #[UrlParam('nombre', 'Nombre o abreviatura del libro', required: true, example: 'Genesis')]
     #[Response([
         'data' => [
             'id' => 1,
@@ -80,20 +80,27 @@ class LibrosController extends Controller
         ]
     ])]
     #[Response(status: 404, description: 'Libro no encontrado')]
-    #[Response(status: 400, description: 'El parámetro nombre es requerido')]
-    public function buscarPorNombre(Request $request)
+    public function buscarPorNombre($nombre)
     {
-        $nombre = $request->query('nombre');
         if (!$nombre) {
-            return response()->json(['error' => 'El parámetro nombre es requerido'], 400);
+            return response()->json(['error' => 'El nombre del libro es requerido'], 400);
         }
 
-        $busquedaNormalizada = strtolower($this->normalizarTexto($nombre));
-
-        $libro = Libros::all()->first(function($item) use ($busquedaNormalizada) {
-            $nombreNormalizado = strtolower($this->normalizarTexto($item->nombre));
-            return str_contains($nombreNormalizado, $busquedaNormalizada);
-        });
+        // Para libros de José Smith, buscar el nombre exacto incluyendo el guión
+        if (str_contains(strtolower($nombre), 'jose-smith-')) {
+            $nombre = str_replace('jose-smith-', 'José Smith-', $nombre);
+            $nombreNormalizado = $this->normalizarTexto($nombre);
+            
+            $libro = Libros::whereRaw('LOWER(nombre) = ?', [$nombreNormalizado])->first();
+        } else {
+            // Para otros libros, normalizar y buscar sin guiones
+            $nombreNormalizado = $this->normalizarTexto(str_replace('-', ' ', $nombre));
+            
+            $libro = Libros::where(function($query) use ($nombreNormalizado) {
+                $query->whereRaw('LOWER(nombre) = ?', [$nombreNormalizado])
+                    ->orWhereRaw('LOWER(abreviatura) = ?', [$nombreNormalizado]);
+            })->first();
+        }
 
         if (!$libro) {
             return response()->json(['error' => 'Libro no encontrado'], 404);

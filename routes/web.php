@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\PericopasController;
 use App\Http\Controllers\Api\VersiculosController;
 use App\Livewire\Escrituras\VistaCapitulo;
 use App\Livewire\Escrituras\ComentariosCapitulo;
+use App\Livewire\Escrituras\VistaVolumen;
+use App\Livewire\Escrituras\VistaLibro;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +20,8 @@ Route::get('/', function () {
 
 // Vista de capítulos
 Route::get('/escrituras/{libro}/{capitulo}', VistaCapitulo::class)->name('escrituras.capitulo');
+Route::get('/escrituras/volumen/{volumen}', VistaVolumen::class)->name('escrituras.volumen');
+Route::get('/escrituras/libro/{libro}', VistaLibro::class)->name('escrituras.libro');
 Route::get('/escrituras/capitulo/{id}/comentarios', ComentariosCapitulo::class)->name('escrituras.comentarios');
 
 Route::group(['prefix' => 'api'], function () {
@@ -28,8 +32,8 @@ Route::group(['prefix' => 'api'], function () {
 
     // Volúmenes
     Route::get('volumenes', [VolumenesController::class, 'index']);
-    Route::get('volumenes/item', [VolumenesController::class, 'buscarPorNombre']);
     Route::get('volumenes/{id}', [VolumenesController::class, 'show']);
+    Route::get('volumenes/{nombre}', [VolumenesController::class, 'buscarPorNombre']);
     Route::get('volumenes/{id}/divisiones', [VolumenesController::class, 'divisiones']);
     Route::get('volumenes/{id}/libros', [VolumenesController::class, 'libros']);
 
@@ -42,8 +46,8 @@ Route::group(['prefix' => 'api'], function () {
 
     // Libros
     Route::get('libros', [LibrosController::class, 'index']);
-    Route::get('libros/item', [LibrosController::class, 'buscarPorNombre']);
-    Route::get('libros/{id}', [LibrosController::class, 'show']);
+    Route::get('libros/{id}', [LibrosController::class, 'show'])->where('id', '[0-9]+');
+    Route::get('libros/{nombre}', [LibrosController::class, 'buscarPorNombre'])->where('nombre', '[^0-9]+');
     Route::get('libros/{id}/partes', [LibrosController::class, 'partes']);
     Route::get('libros/{id}/capitulos', [LibrosController::class, 'capitulos']);
     Route::get('libros/{id}/division', [LibrosController::class, 'division']);
