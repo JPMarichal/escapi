@@ -4,16 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Volumenes;
+use App\Traits\TextNormalization;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\Response;
-use Knuckles\Scribe\Attributes\QueryParam;
 use Knuckles\Scribe\Attributes\UrlParam;
 
 #[Group('Volúmenes')]
 class VolumenesController extends Controller
 {
+    use TextNormalization;
+
     /**
      * Lista todos los volúmenes.
      * 
@@ -58,10 +59,10 @@ class VolumenesController extends Controller
      * 
      * El nombre es insensible a mayúsculas/minúsculas y acentos.
      *
-     * @param Request $request
+     * @param string $nombre Nombre del volumen a buscar
      * @return \Illuminate\Http\JsonResponse
      */
-    #[QueryParam('nombre', 'Nombre del volumen a buscar', required: true, example: 'Antiguo Testamento')]
+    #[UrlParam('nombre', 'Nombre del volumen', required: true, example: 'Antiguo Testamento')]
     #[Response([
         'data' => [
             'id' => 1,
@@ -69,17 +70,15 @@ class VolumenesController extends Controller
         ]
     ])]
     #[Response(status: 404, description: 'Volumen no encontrado')]
-    #[Response(status: 400, description: 'El parámetro nombre es requerido')]
-    public function buscarPorNombre(Request $request)
+    public function buscarPorNombre($nombre)
     {
-        $nombre = $request->query('nombre');
         if (!$nombre) {
-            return response()->json(['error' => 'El parámetro nombre es requerido'], 400);
+            return response()->json(['error' => 'El nombre del volumen es requerido'], 400);
         }
 
-        $volumen = Volumenes::all()->first(function($item) use ($nombre) {
-            return $this->normalizarTexto($item->nombre) === $this->normalizarTexto($nombre);
-        });
+        $nombreNormalizado = $this->normalizarTexto($nombre);
+        
+        $volumen = Volumenes::whereRaw('LOWER(nombre) = ?', [$nombreNormalizado])->first();
 
         if (!$volumen) {
             return response()->json(['error' => 'Volumen no encontrado'], 404);
@@ -133,20 +132,5 @@ class VolumenesController extends Controller
     {
         $volumen = Volumenes::findOrFail($id);
         return response()->json($volumen->libros);
-    }
-
-    /**
-     * Normaliza un texto removiendo acentos y convirtiendo a minúsculas
-     */
-    protected function normalizarTexto($texto)
-    {
-        $unwanted_array = array(
-            'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
-            'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
-            'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
-            'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
-            'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y'
-        );
-        return Str::lower(strtr($texto, $unwanted_array));
     }
 }

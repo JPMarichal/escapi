@@ -32,8 +32,8 @@ Route::group(['prefix' => 'api'], function () {
 
     // Volúmenes
     Route::get('volumenes', [VolumenesController::class, 'index']);
-    Route::get('volumenes/{id}', [VolumenesController::class, 'show']);
-    Route::get('volumenes/{nombre}', [VolumenesController::class, 'buscarPorNombre']);
+    Route::get('volumenes/{id}', [VolumenesController::class, 'show'])->where('id', '[0-9]+');
+    Route::get('volumenes/{nombre}', [VolumenesController::class, 'buscarPorNombre'])->where('nombre', '[^0-9]+');
     Route::get('volumenes/{id}/divisiones', [VolumenesController::class, 'divisiones']);
     Route::get('volumenes/{id}/libros', [VolumenesController::class, 'libros']);
 
