@@ -62,8 +62,8 @@ Route::group(['prefix' => 'api'], function () {
 
     // Capítulos
     Route::get('capitulos', [CapitulosController::class, 'index']);
-    Route::get('capitulos/item', [CapitulosController::class, 'buscarPorReferencia']);
-    Route::get('capitulos/{id}', [CapitulosController::class, 'show']);
+    Route::get('capitulos/{id}', [CapitulosController::class, 'show'])->where('id', '[0-9]+');
+    Route::get('capitulos/{referencia}', [CapitulosController::class, 'buscarPorReferencia'])->where('referencia', '[^0-9]+.*');
     Route::get('capitulos/{id}/pericopas', [CapitulosController::class, 'pericopas']);
     Route::get('capitulos/{id}/versiculos', [CapitulosController::class, 'versiculos']);
     Route::get('capitulos/{id}/parte', [CapitulosController::class, 'parte']);

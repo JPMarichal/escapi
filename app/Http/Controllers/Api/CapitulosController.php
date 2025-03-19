@@ -64,6 +64,7 @@ class CapitulosController extends Controller
     public function show($id)
     {
         $capitulo = Capitulos::find($id);
+        $capitulo->libro->nombre = $this->normalizarTexto($capitulo->libro->nombre);
         
         if (!$capitulo) {
             return response()->json(['error' => 'Capítulo no encontrado'], 404);
@@ -76,12 +77,12 @@ class CapitulosController extends Controller
      * Busca un capítulo por su referencia.
      * 
      * La búsqueda es insensible a mayúsculas/minúsculas y acentos.
-     * Ejemplo de referencia: 'Génesis 1'
+     * Ejemplo de referencia: 'Génesis 1' o 'GEN 1'
      *
-     * @param Request $request
+     * @param string $referencia Referencia del capítulo (ej: 'Génesis 1')
      * @return \Illuminate\Http\JsonResponse
      */
-    #[QueryParam('referencia', 'Referencia del capítulo', required: true, example: 'Génesis 1')]
+    #[UrlParam('referencia', 'Referencia del capítulo', required: true, example: 'Génesis 1')]
     #[Response([
         'data' => [
             'id' => 1,
@@ -93,15 +94,14 @@ class CapitulosController extends Controller
         ]
     ])]
     #[Response(status: 404, description: 'Capítulo no encontrado')]
-    #[Response(status: 400, description: 'El parámetro referencia es requerido')]
-    public function buscarPorReferencia(Request $request)
+    public function buscarPorReferencia($referencia)
     {
-        if (!$request->has('referencia')) {
-            return response()->json(['error' => 'El parámetro referencia es requerido'], 400);
+        if (!$referencia) {
+            return response()->json(['error' => 'La referencia es requerida'], 400);
         }
 
-        $referencia = trim($request->input('referencia'));
-        $capitulo = $this->encontrarCapituloPorReferencia($referencia);
+        $referenciaNormalizada = $this->normalizarTexto(trim($referencia));
+        $capitulo = $this->encontrarCapituloPorReferencia($referenciaNormalizada);
 
         if (!$capitulo) {
             return response()->json(['error' => 'Capítulo no encontrado'], 404);
