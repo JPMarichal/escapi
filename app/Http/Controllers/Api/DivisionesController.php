@@ -4,15 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Divisiones;
+use App\Traits\TextNormalization;
 use Illuminate\Http\Request;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\Response;
-use Knuckles\Scribe\Attributes\QueryParam;
 use Knuckles\Scribe\Attributes\UrlParam;
 
 #[Group('Divisiones')]
 class DivisionesController extends Controller
 {
+    use TextNormalization;
+
     /**
      * Lista todas las divisiones.
      * 
@@ -60,13 +62,11 @@ class DivisionesController extends Controller
      * Busca una división por nombre.
      * 
      * El nombre es insensible a mayúsculas/minúsculas y acentos.
-     * La búsqueda funciona si el nombre buscado está contenido en el nombre de la división
-     * o si el nombre de la división está contenido en el nombre buscado.
      *
-     * @param Request $request
+     * @param string $nombre Nombre de la división a buscar
      * @return \Illuminate\Http\JsonResponse
      */
-    #[QueryParam('nombre', 'Nombre de la división a buscar', required: true, example: 'Pentateuco')]
+    #[UrlParam('nombre', 'Nombre de la división', required: true, example: 'Pentateuco')]
     #[Response([
         'data' => [
             'id' => 1,
@@ -75,22 +75,15 @@ class DivisionesController extends Controller
         ]
     ])]
     #[Response(status: 404, description: 'División no encontrada')]
-    #[Response(status: 400, description: 'El parámetro nombre es requerido')]
-    public function buscarPorNombre(Request $request)
+    public function buscarPorNombre($nombre)
     {
-        $nombre = $request->query('nombre');
         if (!$nombre) {
-            return response()->json(['error' => 'El parámetro nombre es requerido'], 400);
+            return response()->json(['error' => 'El nombre de la división es requerido'], 400);
         }
 
         $nombreNormalizado = $this->normalizarTexto($nombre);
-
-        $division = Divisiones::all()
-            ->first(function($division) use ($nombreNormalizado) {
-                $nombreDivision = $this->normalizarTexto($division->nombre);
-                return str_contains($nombreDivision, $nombreNormalizado) || 
-                       str_contains($nombreNormalizado, $nombreDivision);
-            });
+        
+        $division = Divisiones::whereRaw('LOWER(nombre) = ?', [$nombreNormalizado])->first();
 
         if (!$division) {
             return response()->json(['error' => 'División no encontrada'], 404);

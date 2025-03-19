@@ -39,8 +39,8 @@ Route::group(['prefix' => 'api'], function () {
 
     // Divisiones
     Route::get('divisiones', [DivisionesController::class, 'index']);
-    Route::get('divisiones/item', [DivisionesController::class, 'buscarPorNombre']);
-    Route::get('divisiones/{id}', [DivisionesController::class, 'show']);
+    Route::get('divisiones/{id}', [DivisionesController::class, 'show'])->where('id', '[0-9]+');
+    Route::get('divisiones/{nombre}', [DivisionesController::class, 'buscarPorNombre'])->where('nombre', '[^0-9]+');
     Route::get('divisiones/{id}/libros', [DivisionesController::class, 'libros']);
     Route::get('divisiones/{id}/volumen', [DivisionesController::class, 'volumen']);
 
