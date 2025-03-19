@@ -104,7 +104,7 @@ endpoints:
         name: libro
         description: ''
         required: true
-        example: sed
+        example: corrupti
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -114,15 +114,15 @@ endpoints:
         name: capitulo
         description: ''
         required: true
-        example: non
+        example: recusandae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      libro: sed
-      capitulo: non
+      libro: corrupti
+      capitulo: recusandae
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

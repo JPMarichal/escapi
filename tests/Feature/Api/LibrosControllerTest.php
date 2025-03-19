@@ -184,4 +184,38 @@ class LibrosControllerTest extends ApiTestCase
             'updated_at'
         ]);
     }
+
+    public function test_buscar_por_nombre_handles_jose_smith_historia()
+    {
+        $response = $this->get('/api/libros/item?nombre=José Smith-Historia');
+
+        $this->assertSuccessfulResponse($response);
+        $response->assertJsonPath('nombre', 'José Smith-Historia');
+    }
+
+    public function test_buscar_por_nombre_handles_jose_smith_mateo()
+    {
+        $response = $this->get('/api/libros/item?nombre=José Smith-Mateo');
+
+        $this->assertSuccessfulResponse($response);
+        $response->assertJsonPath('nombre', 'José Smith-Mateo');
+    }
+
+    public function test_buscar_por_nombre_handles_jose_smith_variations()
+    {
+        // Variaciones en espacios
+        $response = $this->get('/api/libros/item?nombre=José  Smith-Historia');
+        $this->assertSuccessfulResponse($response);
+        $response->assertJsonPath('nombre', 'José Smith-Historia');
+
+        // Sin tilde
+        $response = $this->get('/api/libros/item?nombre=Jose Smith-Historia');
+        $this->assertSuccessfulResponse($response);
+        $response->assertJsonPath('nombre', 'José Smith-Historia');
+
+        // Múltiples guiones
+        $response = $this->get('/api/libros/item?nombre=José Smith--Historia');
+        $this->assertSuccessfulResponse($response);
+        $response->assertJsonPath('nombre', 'José Smith-Historia');
+    }
 }

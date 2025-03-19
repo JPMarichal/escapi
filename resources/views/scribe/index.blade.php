@@ -394,12 +394,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/capitulos/commodi"</code></pre></div>
+    --get "http://localhost/api/capitulos/quis"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/capitulos/commodi"
+    "http://localhost/api/capitulos/quis"
 );
 
 fetch(url, {
@@ -486,10 +486,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-capitulos--id-"
-               value="commodi"
+               value="quis"
                data-component="url">
     <br>
-<p>Example: <code>commodi</code></p>
+<p>Example: <code>quis</code></p>
             </div>
                     </form>
 
@@ -625,12 +625,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/capitulos/ea/pericopas"</code></pre></div>
+    --get "http://localhost/api/capitulos/consectetur/pericopas"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/capitulos/ea/pericopas"
+    "http://localhost/api/capitulos/consectetur/pericopas"
 );
 
 fetch(url, {
@@ -718,10 +718,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-capitulos--id--pericopas"
-               value="ea"
+               value="consectetur"
                data-component="url">
     <br>
-<p>Example: <code>ea</code></p>
+<p>Example: <code>consectetur</code></p>
             </div>
                     </form>
 
@@ -738,12 +738,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/capitulos/expedita/versiculos"</code></pre></div>
+    --get "http://localhost/api/capitulos/nobis/versiculos"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/capitulos/expedita/versiculos"
+    "http://localhost/api/capitulos/nobis/versiculos"
 );
 
 fetch(url, {
@@ -830,10 +830,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-capitulos--id--versiculos"
-               value="expedita"
+               value="nobis"
                data-component="url">
     <br>
-<p>Example: <code>expedita</code></p>
+<p>Example: <code>nobis</code></p>
             </div>
                     </form>
 
@@ -850,12 +850,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/capitulos/dolore/parte"</code></pre></div>
+    --get "http://localhost/api/capitulos/numquam/parte"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/capitulos/dolore/parte"
+    "http://localhost/api/capitulos/numquam/parte"
 );
 
 fetch(url, {
@@ -940,10 +940,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-capitulos--id--parte"
-               value="dolore"
+               value="numquam"
                data-component="url">
     <br>
-<p>Example: <code>dolore</code></p>
+<p>Example: <code>numquam</code></p>
             </div>
                     </form>
 
@@ -960,12 +960,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/capitulos/nesciunt/libro"</code></pre></div>
+    --get "http://localhost/api/capitulos/quia/libro"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/capitulos/nesciunt/libro"
+    "http://localhost/api/capitulos/quia/libro"
 );
 
 fetch(url, {
@@ -1051,10 +1051,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-capitulos--id--libro"
-               value="nesciunt"
+               value="quia"
                data-component="url">
     <br>
-<p>Example: <code>nesciunt</code></p>
+<p>Example: <code>quia</code></p>
             </div>
                     </form>
 
@@ -1173,12 +1173,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/divisiones/alias"</code></pre></div>
+    --get "http://localhost/api/divisiones/quam"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/divisiones/alias"
+    "http://localhost/api/divisiones/quam"
 );
 
 fetch(url, {
@@ -1262,10 +1262,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-divisiones--id-"
-               value="alias"
+               value="quam"
                data-component="url">
     <br>
-<p>Example: <code>alias</code></p>
+<p>Example: <code>quam</code></p>
             </div>
                     </form>
 
@@ -1392,12 +1392,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/divisiones/perspiciatis/libros"</code></pre></div>
+    --get "http://localhost/api/divisiones/quasi/libros"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/divisiones/perspiciatis/libros"
+    "http://localhost/api/divisiones/quasi/libros"
 );
 
 fetch(url, {
@@ -1485,10 +1485,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-divisiones--id--libros"
-               value="perspiciatis"
+               value="quasi"
                data-component="url">
     <br>
-<p>Example: <code>perspiciatis</code></p>
+<p>Example: <code>quasi</code></p>
             </div>
                     </form>
 
@@ -1505,12 +1505,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/divisiones/blanditiis/volumen"</code></pre></div>
+    --get "http://localhost/api/divisiones/eum/volumen"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/divisiones/blanditiis/volumen"
+    "http://localhost/api/divisiones/eum/volumen"
 );
 
 fetch(url, {
@@ -1593,10 +1593,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-divisiones--id--volumen"
-               value="blanditiis"
+               value="eum"
                data-component="url">
     <br>
-<p>Example: <code>blanditiis</code></p>
+<p>Example: <code>eum</code></p>
             </div>
                     </form>
 
@@ -1848,12 +1848,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/audio/sed/non"</code></pre></div>
+    --get "http://localhost/api/audio/corrupti/recusandae"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/audio/sed/non"
+    "http://localhost/api/audio/corrupti/recusandae"
 );
 
 fetch(url, {
@@ -1917,10 +1917,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="libro"                data-endpoint="GETapi-audio--libro---capitulo-"
-               value="sed"
+               value="corrupti"
                data-component="url">
     <br>
-<p>Example: <code>sed</code></p>
+<p>Example: <code>corrupti</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>capitulo</code></b>&nbsp;&nbsp;
@@ -1928,10 +1928,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="capitulo"                data-endpoint="GETapi-audio--libro---capitulo-"
-               value="non"
+               value="recusandae"
                data-component="url">
     <br>
-<p>Example: <code>non</code></p>
+<p>Example: <code>recusandae</code></p>
             </div>
                     </form>
 
@@ -2046,12 +2046,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/libros/id"</code></pre></div>
+    --get "http://localhost/api/libros/ab"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/libros/id"
+    "http://localhost/api/libros/ab"
 );
 
 fetch(url, {
@@ -2137,10 +2137,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-libros--id-"
-               value="id"
+               value="ab"
                data-component="url">
     <br>
-<p>Example: <code>id</code></p>
+<p>Example: <code>ab</code></p>
             </div>
                     </form>
 
@@ -2270,12 +2270,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/libros/debitis/partes"</code></pre></div>
+    --get "http://localhost/api/libros/deleniti/partes"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/libros/debitis/partes"
+    "http://localhost/api/libros/deleniti/partes"
 );
 
 fetch(url, {
@@ -2362,10 +2362,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-libros--id--partes"
-               value="debitis"
+               value="deleniti"
                data-component="url">
     <br>
-<p>Example: <code>debitis</code></p>
+<p>Example: <code>deleniti</code></p>
             </div>
                     </form>
 
@@ -2382,12 +2382,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/libros/sit/capitulos"</code></pre></div>
+    --get "http://localhost/api/libros/et/capitulos"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/libros/sit/capitulos"
+    "http://localhost/api/libros/et/capitulos"
 );
 
 fetch(url, {
@@ -2476,10 +2476,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-libros--id--capitulos"
-               value="sit"
+               value="et"
                data-component="url">
     <br>
-<p>Example: <code>sit</code></p>
+<p>Example: <code>et</code></p>
             </div>
                     </form>
 
@@ -2496,12 +2496,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/libros/incidunt/division"</code></pre></div>
+    --get "http://localhost/api/libros/inventore/division"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/libros/incidunt/division"
+    "http://localhost/api/libros/inventore/division"
 );
 
 fetch(url, {
@@ -2585,10 +2585,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-libros--id--division"
-               value="incidunt"
+               value="inventore"
                data-component="url">
     <br>
-<p>Example: <code>incidunt</code></p>
+<p>Example: <code>inventore</code></p>
             </div>
                     </form>
 
@@ -2605,12 +2605,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/libros/officia/volumen"</code></pre></div>
+    --get "http://localhost/api/libros/harum/volumen"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/libros/officia/volumen"
+    "http://localhost/api/libros/harum/volumen"
 );
 
 fetch(url, {
@@ -2693,10 +2693,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-libros--id--volumen"
-               value="officia"
+               value="harum"
                data-component="url">
     <br>
-<p>Example: <code>officia</code></p>
+<p>Example: <code>harum</code></p>
             </div>
                     </form>
 
@@ -2934,12 +2934,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/partes/doloribus"</code></pre></div>
+    --get "http://localhost/api/partes/ea"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/partes/doloribus"
+    "http://localhost/api/partes/ea"
 );
 
 fetch(url, {
@@ -3024,10 +3024,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-partes--id-"
-               value="doloribus"
+               value="ea"
                data-component="url">
     <br>
-<p>Example: <code>doloribus</code></p>
+<p>Example: <code>ea</code></p>
             </div>
                     </form>
 
@@ -3044,12 +3044,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/partes/dolores/capitulos"</code></pre></div>
+    --get "http://localhost/api/partes/deserunt/capitulos"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/partes/dolores/capitulos"
+    "http://localhost/api/partes/deserunt/capitulos"
 );
 
 fetch(url, {
@@ -3138,10 +3138,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-partes--id--capitulos"
-               value="dolores"
+               value="deserunt"
                data-component="url">
     <br>
-<p>Example: <code>dolores</code></p>
+<p>Example: <code>deserunt</code></p>
             </div>
                     </form>
 
@@ -3158,12 +3158,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/partes/et/libro"</code></pre></div>
+    --get "http://localhost/api/partes/eos/libro"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/partes/et/libro"
+    "http://localhost/api/partes/eos/libro"
 );
 
 fetch(url, {
@@ -3248,10 +3248,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-partes--id--libro"
-               value="et"
+               value="eos"
                data-component="url">
     <br>
-<p>Example: <code>et</code></p>
+<p>Example: <code>eos</code></p>
             </div>
                     </form>
 
@@ -3489,12 +3489,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/pericopas/odit"</code></pre></div>
+    --get "http://localhost/api/pericopas/architecto"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/pericopas/odit"
+    "http://localhost/api/pericopas/architecto"
 );
 
 fetch(url, {
@@ -3579,10 +3579,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-pericopas--id-"
-               value="odit"
+               value="architecto"
                data-component="url">
     <br>
-<p>Example: <code>odit</code></p>
+<p>Example: <code>architecto</code></p>
             </div>
                     </form>
 
@@ -3599,12 +3599,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/pericopas/modi/versiculos"</code></pre></div>
+    --get "http://localhost/api/pericopas/alias/versiculos"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/pericopas/modi/versiculos"
+    "http://localhost/api/pericopas/alias/versiculos"
 );
 
 fetch(url, {
@@ -3693,10 +3693,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-pericopas--id--versiculos"
-               value="modi"
+               value="alias"
                data-component="url">
     <br>
-<p>Example: <code>modi</code></p>
+<p>Example: <code>alias</code></p>
             </div>
                     </form>
 
@@ -3713,12 +3713,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/pericopas/qui/capitulo"</code></pre></div>
+    --get "http://localhost/api/pericopas/cum/capitulo"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/pericopas/qui/capitulo"
+    "http://localhost/api/pericopas/cum/capitulo"
 );
 
 fetch(url, {
@@ -3805,10 +3805,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-pericopas--id--capitulo"
-               value="qui"
+               value="cum"
                data-component="url">
     <br>
-<p>Example: <code>qui</code></p>
+<p>Example: <code>cum</code></p>
             </div>
                     </form>
 
@@ -4190,12 +4190,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/versiculos/nihil"</code></pre></div>
+    --get "http://localhost/api/versiculos/assumenda"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/versiculos/nihil"
+    "http://localhost/api/versiculos/assumenda"
 );
 
 fetch(url, {
@@ -4282,10 +4282,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-versiculos--id-"
-               value="nihil"
+               value="assumenda"
                data-component="url">
     <br>
-<p>Example: <code>nihil</code></p>
+<p>Example: <code>assumenda</code></p>
             </div>
                     </form>
 
@@ -4302,12 +4302,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/versiculos/suscipit/pericopa"</code></pre></div>
+    --get "http://localhost/api/versiculos/fuga/pericopa"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/versiculos/suscipit/pericopa"
+    "http://localhost/api/versiculos/fuga/pericopa"
 );
 
 fetch(url, {
@@ -4392,10 +4392,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-versiculos--id--pericopa"
-               value="suscipit"
+               value="fuga"
                data-component="url">
     <br>
-<p>Example: <code>suscipit</code></p>
+<p>Example: <code>fuga</code></p>
             </div>
                     </form>
 
@@ -4412,12 +4412,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/versiculos/expedita/capitulo"</code></pre></div>
+    --get "http://localhost/api/versiculos/repellat/capitulo"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/versiculos/expedita/capitulo"
+    "http://localhost/api/versiculos/repellat/capitulo"
 );
 
 fetch(url, {
@@ -4504,10 +4504,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-versiculos--id--capitulo"
-               value="expedita"
+               value="repellat"
                data-component="url">
     <br>
-<p>Example: <code>expedita</code></p>
+<p>Example: <code>repellat</code></p>
             </div>
                     </form>
 
@@ -4624,12 +4624,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/volumenes/aut"</code></pre></div>
+    --get "http://localhost/api/volumenes/alias"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/volumenes/aut"
+    "http://localhost/api/volumenes/alias"
 );
 
 fetch(url, {
@@ -4712,10 +4712,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-volumenes--id-"
-               value="aut"
+               value="alias"
                data-component="url">
     <br>
-<p>Example: <code>aut</code></p>
+<p>Example: <code>alias</code></p>
             </div>
                     </form>
 
@@ -4841,12 +4841,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/volumenes/ea/divisiones"</code></pre></div>
+    --get "http://localhost/api/volumenes/ut/divisiones"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/volumenes/ea/divisiones"
+    "http://localhost/api/volumenes/ut/divisiones"
 );
 
 fetch(url, {
@@ -4932,10 +4932,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-volumenes--id--divisiones"
-               value="ea"
+               value="ut"
                data-component="url">
     <br>
-<p>Example: <code>ea</code></p>
+<p>Example: <code>ut</code></p>
             </div>
                     </form>
 
@@ -4952,12 +4952,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/volumenes/doloremque/libros"</code></pre></div>
+    --get "http://localhost/api/volumenes/voluptatem/libros"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/volumenes/doloremque/libros"
+    "http://localhost/api/volumenes/voluptatem/libros"
 );
 
 fetch(url, {
@@ -5045,10 +5045,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-volumenes--id--libros"
-               value="doloremque"
+               value="voluptatem"
                data-component="url">
     <br>
-<p>Example: <code>doloremque</code></p>
+<p>Example: <code>voluptatem</code></p>
             </div>
                     </form>
 
