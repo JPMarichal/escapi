@@ -22,6 +22,7 @@ class CapitulosController extends Controller
      * Lista todos los capítulos.
      * 
      * Retorna una colección de todos los capítulos disponibles en el sistema.
+     * Los capítulos son las divisiones principales de los libros de las escrituras.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -49,7 +50,7 @@ class CapitulosController extends Controller
      * @param int $id ID del capítulo
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del capítulo')]
+    #[UrlParam('id', 'El ID del capítulo', required: true)]
     #[Response([
         'data' => [
             'id' => 1,
@@ -63,13 +64,7 @@ class CapitulosController extends Controller
     #[Response(status: 404, description: 'Capítulo no encontrado')]
     public function show($id)
     {
-        $capitulo = Capitulos::find($id);
-        $capitulo->libro->nombre = $this->normalizarTexto($capitulo->libro->nombre);
-        
-        if (!$capitulo) {
-            return response()->json(['error' => 'Capítulo no encontrado'], 404);
-        }
-        
+        $capitulo = Capitulos::findOrFail($id);
         return response()->json($capitulo);
     }
 
@@ -77,9 +72,13 @@ class CapitulosController extends Controller
      * Busca un capítulo por su referencia.
      * 
      * La búsqueda es insensible a mayúsculas/minúsculas y acentos.
-     * Ejemplo de referencia: 'Génesis 1' o 'GEN 1'
+     * La referencia debe incluir el nombre del libro (o su abreviatura) y el número de capítulo.
+     * Ejemplos válidos:
+     * - 'Génesis 1'
+     * - 'GEN 1'
+     * - 'José Smith-Historia 1'
      *
-     * @param string $referencia Referencia del capítulo (ej: 'Génesis 1')
+     * @param string $referencia Referencia del capítulo
      * @return \Illuminate\Http\JsonResponse
      */
     #[UrlParam('referencia', 'Referencia del capítulo', required: true, example: 'Génesis 1')]
@@ -111,18 +110,19 @@ class CapitulosController extends Controller
     }
 
     /**
-     * Lista todas las pericopas de un capítulo.
+     * Lista todas las perícopas de un capítulo.
      *
      * @param int $id ID del capítulo
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del capítulo')]
+    #[UrlParam('id', 'El ID del capítulo', required: true)]
     #[Response([
         'data' => [
             [
                 'id' => 1,
                 'titulo' => 'La Creación',
-                'orden' => 1,
+                'versiculo_inicio' => 1,
+                'versiculo_fin' => 31,
                 'capitulo_id' => 1
             ]
         ]
@@ -135,12 +135,36 @@ class CapitulosController extends Controller
     }
 
     /**
-     * Obtiene la parte a la que pertenece el capítulo.
+     * Lista todos los versículos de un capítulo.
      *
      * @param int $id ID del capítulo
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del capítulo')]
+    #[UrlParam('id', 'El ID del capítulo', required: true)]
+    #[Response([
+        'data' => [
+            [
+                'id' => 1,
+                'num_versiculo' => 1,
+                'contenido' => 'En el principio creó Dios los cielos y la tierra.',
+                'capitulo_id' => 1
+            ]
+        ]
+    ])]
+    #[Response(status: 404, description: 'Capítulo no encontrado')]
+    public function versiculos($id)
+    {
+        $capitulo = Capitulos::findOrFail($id);
+        return response()->json($capitulo->versiculos);
+    }
+
+    /**
+     * Obtiene la parte a la que pertenece el capítulo, si existe.
+     *
+     * @param int $id ID del capítulo
+     * @return \Illuminate\Http\JsonResponse
+     */
+    #[UrlParam('id', 'El ID del capítulo', required: true)]
     #[Response([
         'data' => [
             'id' => 1,
@@ -162,11 +186,12 @@ class CapitulosController extends Controller
      * @param int $id ID del capítulo
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del capítulo')]
+    #[UrlParam('id', 'El ID del capítulo', required: true)]
     #[Response([
         'data' => [
             'id' => 1,
             'nombre' => 'Génesis',
+            'abreviatura' => 'GEN',
             'division_id' => 1,
             'volumen_id' => 1
         ]
@@ -176,33 +201,5 @@ class CapitulosController extends Controller
     {
         $capitulo = Capitulos::findOrFail($id);
         return response()->json($capitulo->libro);
-    }
-
-    /**
-     * Lista todos los versículos de un capítulo.
-     * 
-     * Los versículos son retornados ordenados por número de versículo.
-     *
-     * @param int $id ID del capítulo
-     * @return \Illuminate\Http\JsonResponse
-     */
-    #[UrlParam('id', 'El ID del capítulo')]
-    #[Response([
-        'data' => [
-            [
-                'id' => 1,
-                'contenido' => 'En el principio creó Dios los cielos y la tierra.',
-                'num_versiculo' => 1,
-                'orden' => 1,
-                'capitulo_id' => 1,
-                'pericopa_id' => 1
-            ]
-        ]
-    ])]
-    #[Response(status: 404, description: 'Capítulo no encontrado')]
-    public function versiculos($id)
-    {
-        $capitulo = Capitulos::findOrFail($id);
-        return response()->json($capitulo->versiculos()->orderBy('num_versiculo', 'asc')->get());
     }
 }

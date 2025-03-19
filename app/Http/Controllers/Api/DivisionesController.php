@@ -19,6 +19,7 @@ class DivisionesController extends Controller
      * Lista todas las divisiones.
      * 
      * Retorna una colección de todas las divisiones disponibles en el sistema.
+     * Las divisiones son agrupaciones de libros dentro de un volumen (ej: Pentateuco, Libros Históricos).
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -27,6 +28,11 @@ class DivisionesController extends Controller
             [
                 'id' => 1,
                 'nombre' => 'Pentateuco',
+                'volumen_id' => 1
+            ],
+            [
+                'id' => 2,
+                'nombre' => 'Libros Históricos',
                 'volumen_id' => 1
             ]
         ]
@@ -43,7 +49,7 @@ class DivisionesController extends Controller
      * @param int $id ID de la división
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID de la división')]
+    #[UrlParam('id', 'El ID de la división', required: true)]
     #[Response([
         'data' => [
             'id' => 1,
@@ -62,8 +68,9 @@ class DivisionesController extends Controller
      * Busca una división por nombre.
      * 
      * El nombre es insensible a mayúsculas/minúsculas y acentos.
+     * La búsqueda debe ser exacta con el nombre de la división.
      *
-     * @param string $nombre Nombre de la división a buscar
+     * @param string $nombre Nombre de la división (ej: 'Pentateuco')
      * @return \Illuminate\Http\JsonResponse
      */
     #[UrlParam('nombre', 'Nombre de la división', required: true, example: 'Pentateuco')]
@@ -98,12 +105,13 @@ class DivisionesController extends Controller
      * @param int $id ID de la división
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID de la división')]
+    #[UrlParam('id', 'El ID de la división', required: true)]
     #[Response([
         'data' => [
             [
                 'id' => 1,
                 'nombre' => 'Génesis',
+                'abreviatura' => 'GEN',
                 'division_id' => 1,
                 'volumen_id' => 1
             ]
@@ -122,7 +130,7 @@ class DivisionesController extends Controller
      * @param int $id ID de la división
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID de la división')]
+    #[UrlParam('id', 'El ID de la división', required: true)]
     #[Response([
         'data' => [
             'id' => 1,

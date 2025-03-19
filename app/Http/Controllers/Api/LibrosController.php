@@ -28,6 +28,7 @@ class LibrosController extends Controller
             [
                 'id' => 1,
                 'nombre' => 'Génesis',
+                'abreviatura' => 'GEN',
                 'division_id' => 1,
                 'volumen_id' => 1
             ]
@@ -45,11 +46,12 @@ class LibrosController extends Controller
      * @param int $id ID del libro
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del libro')]
+    #[UrlParam('id', 'El ID del libro', required: true)]
     #[Response([
         'data' => [
             'id' => 1,
             'nombre' => 'Génesis',
+            'abreviatura' => 'GEN',
             'division_id' => 1,
             'volumen_id' => 1
         ]
@@ -66,8 +68,9 @@ class LibrosController extends Controller
      * 
      * El nombre es insensible a mayúsculas/minúsculas y acentos.
      * La búsqueda funciona tanto con el nombre completo como con la abreviatura del libro.
+     * Para libros de José Smith, se debe incluir el guión (ej: 'José Smith-Historia').
      *
-     * @param string $nombre Nombre o abreviatura del libro a buscar
+     * @param string $nombre Nombre o abreviatura del libro
      * @return \Illuminate\Http\JsonResponse
      */
     #[UrlParam('nombre', 'Nombre o abreviatura del libro', required: true, example: 'Genesis')]
@@ -75,6 +78,7 @@ class LibrosController extends Controller
         'data' => [
             'id' => 1,
             'nombre' => 'Génesis',
+            'abreviatura' => 'GEN',
             'division_id' => 1,
             'volumen_id' => 1
         ]
@@ -115,7 +119,7 @@ class LibrosController extends Controller
      * @param int $id ID del libro
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del libro')]
+    #[UrlParam('id', 'El ID del libro', required: true)]
     #[Response([
         'data' => [
             [
@@ -139,7 +143,7 @@ class LibrosController extends Controller
      * @param int $id ID del libro
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del libro')]
+    #[UrlParam('id', 'El ID del libro', required: true)]
     #[Response([
         'data' => [
             [
@@ -165,7 +169,7 @@ class LibrosController extends Controller
      * @param int $id ID del libro
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del libro')]
+    #[UrlParam('id', 'El ID del libro', required: true)]
     #[Response([
         'data' => [
             'id' => 1,
@@ -186,7 +190,7 @@ class LibrosController extends Controller
      * @param int $id ID del libro
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del libro')]
+    #[UrlParam('id', 'El ID del libro', required: true)]
     #[Response([
         'data' => [
             'id' => 1,
