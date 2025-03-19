@@ -90,12 +90,25 @@ class LibrosController extends Controller
             return response()->json(['error' => 'El nombre del libro es requerido'], 400);
         }
 
-        // Para libros de José Smith, buscar el nombre exacto incluyendo el guión
-        if (str_contains(strtolower($nombre), 'jose-smith-')) {
-            $nombre = str_replace('jose-smith-', 'José Smith-', $nombre);
-            $nombreNormalizado = $this->normalizarTexto($nombre);
+        // Primero verificamos si es un caso de José Smith (antes de normalizar)
+        if (preg_match('/^josé\s*smith[-]+(?:historia|mateo)$/i', $nombre)) {
+            // Para libros de José Smith, preservamos el formato exacto
+            $nombreFormateado = preg_replace(
+                '/^josé\s*smith[-]+(historia|mateo)$/i',
+                'José Smith-$1',
+                $nombre
+            );
             
-            $libro = Libros::whereRaw('LOWER(nombre) = ?', [$nombreNormalizado])->first();
+            // Capitalizar la primera letra después del guión
+            $nombreFormateado = preg_replace_callback(
+                '/-(.)/u',
+                function($matches) {
+                    return '-' . mb_strtoupper($matches[1]);
+                },
+                $nombreFormateado
+            );
+            
+            $libro = Libros::where('nombre', $nombreFormateado)->first();
         } else {
             // Para otros libros, normalizar y buscar sin guiones
             $nombreNormalizado = $this->normalizarTexto(str_replace('-', ' ', $nombre));

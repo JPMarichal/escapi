@@ -7,6 +7,7 @@ use App\Models\Capitulos;
 use App\Traits\TextNormalization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\Response;
 use Knuckles\Scribe\Attributes\QueryParam;
@@ -99,8 +100,20 @@ class CapitulosController extends Controller
             return response()->json(['error' => 'La referencia es requerida'], 400);
         }
 
-        $referenciaNormalizada = $this->normalizarTexto(trim($referencia));
-        $capitulo = $this->encontrarCapituloPorReferencia($referenciaNormalizada);
+        \Log::info('Referencia recibida:', ['referencia' => $referencia]);
+        
+        // No normalizamos la referencia completa, solo después del parseo
+        $componentes = $this->parsearReferencia($referencia);
+        
+        \Log::info('Componentes parseados:', ['componentes' => $componentes]);
+        
+        if (!$componentes) {
+            return response()->json(['error' => 'Formato de referencia inválido'], 400);
+        }
+
+        $capitulo = $this->encontrarCapituloPorReferencia($referencia);
+        
+        \Log::info('Capítulo encontrado:', ['capitulo' => $capitulo]);
 
         if (!$capitulo) {
             return response()->json(['error' => 'Capítulo no encontrado'], 404);

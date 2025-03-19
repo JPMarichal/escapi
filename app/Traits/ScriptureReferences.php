@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Log;
+
 trait ScriptureReferences
 {
     /**
@@ -23,6 +25,9 @@ trait ScriptureReferences
      */
     protected function parsearReferencia($referencia)
     {
+        // Patrón para José Smith
+        $patronJoseSmith = '/^(José\s*Smith[-]+(?:Historia|Mateo))\s+(\d+)(?::(\d+)(?:-(\d+))?)?$/ui';
+        
         // Patrón para Doctrina y Convenios: "DyC 4" o "DyC 4:2" o "Doctrina y Convenios 4:2"
         $patronDyC = '/^(?:DyC|Doctrina y Convenios)\s+(\d+)(?::(\d+)(?:-(\d+))?)?$/u';
         
@@ -31,6 +36,17 @@ trait ScriptureReferences
         
         // Patrón general para otros libros: "Juan 1" o "Juan 1:1" o "Juan 1:1-3" o "1 Juan 1:1-3"
         $patronGeneral = '/^((?:\d\s+)?[A-ZÁÉÍÓÚÜa-záéíóúü\s]+)\s+(\d+)(?::(\d+)(?:-(\d+))?)?$/u';
+
+        // Primero intentar coincidencia con José Smith
+        if (preg_match($patronJoseSmith, $referencia, $matches)) {
+            \Log::info('Coincidencia José Smith:', ['matches' => $matches]);
+            return [
+                'libro' => $matches[1],
+                'capitulo' => (int)$matches[2],
+                'versiculo_inicio' => isset($matches[3]) ? (int)$matches[3] : null,
+                'versiculo_fin' => isset($matches[4]) ? (int)$matches[4] : (isset($matches[3]) ? (int)$matches[3] : null)
+            ];
+        }
 
         // Intentar coincidencia con DyC
         if (preg_match($patronDyC, $referencia, $matches)) {
@@ -81,12 +97,39 @@ trait ScriptureReferences
             return null;
         }
 
-        $libroNormalizado = $this->normalizarTexto($componentes['libro']);
+        $libro = $componentes['libro'];
 
-        // Construir la consulta base
-        $query = \App\Models\Capitulos::whereHas('libro', function($query) use ($libroNormalizado) {
-            $query->whereRaw('LOWER(nombre) = LOWER(?)', [$libroNormalizado]);
-        });
+        // Manejo especial para libros de José Smith
+        if (preg_match('/^josé\s*smith[-]+(historia|mateo)$/i', $libro)) {
+            $libroFormateado = preg_replace(
+                '/^josé\s*smith[-]+(historia|mateo)$/i',
+                'José Smith-$1',
+                $libro
+            );
+            
+            // Capitalizar la primera letra después del guión
+            $libroFormateado = preg_replace_callback(
+                '/-(.)/u',
+                function($matches) {
+                    return '-' . mb_strtoupper($matches[1]);
+                },
+                $libroFormateado
+            );
+
+            // Buscar el libro exacto para José Smith
+            $query = \App\Models\Capitulos::whereHas('libro', function($query) use ($libroFormateado) {
+                $query->where('nombre', $libroFormateado);
+            });
+        } else {
+            // Para otros libros, usar la normalización estándar
+            $libroNormalizado = $this->normalizarTexto($libro);
+
+            // Construir la consulta base
+            $query = \App\Models\Capitulos::whereHas('libro', function($query) use ($libroNormalizado) {
+                $query->whereRaw('LOWER(nombre) = LOWER(?)', [$libroNormalizado])
+                    ->orWhereRaw('LOWER(abreviatura) = LOWER(?)', [$libroNormalizado]);
+            });
+        }
 
         // Si es DyC o DO, asegurarse que el libro pertenece al volumen correcto
         if (isset($componentes['es_dyc']) || isset($componentes['es_do'])) {
