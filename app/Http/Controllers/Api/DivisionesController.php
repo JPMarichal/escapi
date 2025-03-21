@@ -60,7 +60,12 @@ class DivisionesController extends Controller
     #[Response(status: 404, description: 'División no encontrada')]
     public function show($id)
     {
-        $division = Divisiones::findOrFail($id);
+        $division = Divisiones::find($id);
+        
+        if (!$division) {
+            return response()->json(['error' => 'División no encontrada'], 404);
+        }
+
         return response()->json($division);
     }
 
@@ -120,7 +125,12 @@ class DivisionesController extends Controller
     #[Response(status: 404, description: 'División no encontrada')]
     public function libros($id)
     {
-        $division = Divisiones::findOrFail($id);
+        $division = Divisiones::find($id);
+        
+        if (!$division) {
+            return response()->json(['error' => 'División no encontrada'], 404);
+        }
+
         return response()->json($division->libros);
     }
 
@@ -140,7 +150,12 @@ class DivisionesController extends Controller
     #[Response(status: 404, description: 'División no encontrada')]
     public function volumen($id)
     {
-        $division = Divisiones::findOrFail($id);
+        $division = Divisiones::find($id);
+        
+        if (!$division) {
+            return response()->json(['error' => 'División no encontrada'], 404);
+        }
+
         return response()->json($division->volumen);
     }
 }
