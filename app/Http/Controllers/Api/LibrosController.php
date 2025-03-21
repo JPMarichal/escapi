@@ -59,7 +59,12 @@ class LibrosController extends Controller
     #[Response(status: 404, description: 'Libro no encontrado')]
     public function show($id)
     {
-        $libro = Libros::findOrFail($id);
+        $libro = Libros::find($id);
+        
+        if (!$libro) {
+            return response()->json(['error' => 'Libro no encontrado'], 404);
+        }
+
         return response()->json($libro);
     }
 
@@ -146,7 +151,12 @@ class LibrosController extends Controller
     #[Response(status: 404, description: 'Libro no encontrado')]
     public function partes($id)
     {
-        $libro = Libros::findOrFail($id);
+        $libro = Libros::find($id);
+        
+        if (!$libro) {
+            return response()->json(['error' => 'Libro no encontrado'], 404);
+        }
+
         return response()->json($libro->partes);
     }
 
@@ -172,7 +182,12 @@ class LibrosController extends Controller
     #[Response(status: 404, description: 'Libro no encontrado')]
     public function capitulos($id)
     {
-        $libro = Libros::findOrFail($id);
+        $libro = Libros::find($id);
+        
+        if (!$libro) {
+            return response()->json(['error' => 'Libro no encontrado'], 404);
+        }
+
         return response()->json($libro->capitulos);
     }
 
@@ -193,7 +208,12 @@ class LibrosController extends Controller
     #[Response(status: 404, description: 'Libro no encontrado')]
     public function division($id)
     {
-        $libro = Libros::findOrFail($id);
+        $libro = Libros::find($id);
+        
+        if (!$libro) {
+            return response()->json(['error' => 'Libro no encontrado'], 404);
+        }
+
         return response()->json($libro->division);
     }
 
@@ -213,7 +233,12 @@ class LibrosController extends Controller
     #[Response(status: 404, description: 'Libro no encontrado')]
     public function volumen($id)
     {
-        $libro = Libros::findOrFail($id);
+        $libro = Libros::find($id);
+        
+        if (!$libro) {
+            return response()->json(['error' => 'Libro no encontrado'], 404);
+        }
+
         return response()->json($libro->volumen);
     }
 }
