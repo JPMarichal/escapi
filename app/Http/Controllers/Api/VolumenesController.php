@@ -57,7 +57,12 @@ class VolumenesController extends Controller
     #[Response(status: 404, description: 'Volumen no encontrado')]
     public function show($id)
     {
-        $volumen = Volumenes::findOrFail($id);
+        $volumen = Volumenes::find($id);
+        
+        if (!$volumen) {
+            return response()->json(['error' => 'Volumen no encontrado'], 404);
+        }
+
         return response()->json($volumen);
     }
 
