@@ -31,17 +31,65 @@ class CapitulosController extends Controller
         'data' => [
             [
                 'id' => 1,
-                'nombre' => 'Capítulo 1',
-                'num_capitulo' => 1,
-                'orden' => 1,
+                'title' => 'Capítulo 1',
+                'description' => 'Descripción del capítulo',
+                'featured_image' => 'ruta/a/imagen.jpg',
+                'keywords' => 'palabras,clave',
                 'libro_id' => 1,
-                'parte_id' => null
+                'parte_id' => null,
+                'num_capitulo' => 1,
+                'url_audio' => 'ruta/a/audio.mp3',
+                'referencia' => 'Juan 1',
+                'abreviatura' => 'Jn 1',
+                'num_versiculos' => 51,
+                'titulo_capitulo' => 'El Verbo se hizo carne',
+                'url_oficial' => 'https://escrituras.lds.org/juan/1',
+                'id_periodo' => 1,
+                'sumario' => 'Resumen corto del capítulo',
+                'resumen' => 'Resumen detallado del capítulo',
+                'ajuste_pericopas' => null,
+                'secuencia' => null,
+                'url_bc' => null,
+                'url_bcdev' => null,
+                'introduccion' => 'Introducción al capítulo',
+                'conclusion' => 'Conclusión del capítulo',
+                'estado_publicacion' => 0,
+                'created_at' => '2022-01-01 12:00:00',
+                'updated_at' => '2022-01-01 12:00:00'
             ]
         ]
     ])]
     public function index()
     {
-        $capitulos = Capitulos::all();
+        $capitulos = Capitulos::select([
+            'id',
+            'title',
+            'description',
+            'featured_image',
+            'keywords',
+            'libro_id',
+            'parte_id',
+            'num_capitulo',
+            'url_audio',
+            'referencia',
+            'abreviatura',
+            'num_versiculos',
+            'titulo_capitulo',
+            'url_oficial',
+            'id_periodo',
+            'sumario',
+            'resumen',
+            'ajuste_pericopas',
+            'secuencia',
+            'url_bc',
+            'url_bcdev',
+            'introduccion',
+            'conclusion',
+            'estado_publicacion',
+            'created_at',
+            'updated_at'
+        ])->get();
+        
         return response()->json($capitulos);
     }
 
@@ -55,17 +103,69 @@ class CapitulosController extends Controller
     #[Response([
         'data' => [
             'id' => 1,
-            'nombre' => 'Capítulo 1',
-            'num_capitulo' => 1,
-            'orden' => 1,
+            'title' => 'Capítulo 1',
+            'description' => 'Descripción del capítulo',
+            'featured_image' => 'ruta/a/imagen.jpg',
+            'keywords' => 'palabras,clave',
             'libro_id' => 1,
-            'parte_id' => null
+            'parte_id' => null,
+            'num_capitulo' => 1,
+            'url_audio' => 'ruta/a/audio.mp3',
+            'referencia' => 'Juan 1',
+            'abreviatura' => 'Jn 1',
+            'num_versiculos' => 51,
+            'titulo_capitulo' => 'El Verbo se hizo carne',
+            'url_oficial' => 'https://escrituras.lds.org/juan/1',
+            'id_periodo' => 1,
+            'sumario' => 'Resumen corto del capítulo',
+            'resumen' => 'Resumen detallado del capítulo',
+            'ajuste_pericopas' => null,
+            'secuencia' => null,
+            'url_bc' => null,
+            'url_bcdev' => null,
+            'introduccion' => 'Introducción al capítulo',
+            'conclusion' => 'Conclusión del capítulo',
+            'estado_publicacion' => 0,
+            'created_at' => '2022-01-01 12:00:00',
+            'updated_at' => '2022-01-01 12:00:00'
         ]
     ])]
     #[Response(status: 404, description: 'Capítulo no encontrado')]
     public function show($id)
     {
-        $capitulo = Capitulos::findOrFail($id);
+        $capitulo = Capitulos::select([
+            'id',
+            'title',
+            'description',
+            'featured_image',
+            'keywords',
+            'libro_id',
+            'parte_id',
+            'num_capitulo',
+            'url_audio',
+            'referencia',
+            'abreviatura',
+            'num_versiculos',
+            'titulo_capitulo',
+            'url_oficial',
+            'id_periodo',
+            'sumario',
+            'resumen',
+            'ajuste_pericopas',
+            'secuencia',
+            'url_bc',
+            'url_bcdev',
+            'introduccion',
+            'conclusion',
+            'estado_publicacion',
+            'created_at',
+            'updated_at'
+        ])->find($id);
+
+        if (!$capitulo) {
+            return response()->json(['error' => 'Capítulo no encontrado'], 404);
+        }
+
         return response()->json($capitulo);
     }
 
@@ -86,39 +186,49 @@ class CapitulosController extends Controller
     #[Response([
         'data' => [
             'id' => 1,
-            'nombre' => 'Capítulo 1',
-            'num_capitulo' => 1,
-            'orden' => 1,
+            'title' => 'Capítulo 1',
+            'description' => 'Descripción del capítulo',
+            'featured_image' => 'ruta/a/imagen.jpg',
+            'keywords' => 'palabras,clave',
             'libro_id' => 1,
-            'parte_id' => null
+            'parte_id' => null,
+            'num_capitulo' => 1,
+            'url_audio' => 'ruta/a/audio.mp3',
+            'referencia' => 'Juan 1',
+            'abreviatura' => 'Jn 1',
+            'num_versiculos' => 51,
+            'titulo_capitulo' => 'El Verbo se hizo carne',
+            'url_oficial' => 'https://escrituras.lds.org/juan/1',
+            'id_periodo' => 1,
+            'sumario' => 'Resumen corto del capítulo',
+            'resumen' => 'Resumen detallado del capítulo',
+            'ajuste_pericopas' => null,
+            'secuencia' => null,
+            'url_bc' => null,
+            'url_bcdev' => null,
+            'introduccion' => 'Introducción al capítulo',
+            'conclusion' => 'Conclusión del capítulo',
+            'estado_publicacion' => 0,
+            'created_at' => '2022-01-01 12:00:00',
+            'updated_at' => '2022-01-01 12:00:00'
         ]
     ])]
     #[Response(status: 404, description: 'Capítulo no encontrado')]
     public function buscarPorReferencia($referencia)
     {
+        Log::info('Buscando capítulo por referencia:', ['referencia' => $referencia]);
+
         if (!$referencia) {
             return response()->json(['error' => 'La referencia es requerida'], 400);
         }
 
-        \Log::info('Referencia recibida:', ['referencia' => $referencia]);
-        
-        // No normalizamos la referencia completa, solo después del parseo
-        $componentes = $this->parsearReferencia($referencia);
-        
-        \Log::info('Componentes parseados:', ['componentes' => $componentes]);
-        
-        if (!$componentes) {
-            return response()->json(['error' => 'Formato de referencia inválido'], 400);
-        }
-
         $capitulo = $this->encontrarCapituloPorReferencia($referencia);
-        
-        \Log::info('Capítulo encontrado:', ['capitulo' => $capitulo]);
-
         if (!$capitulo) {
+            Log::info('No se encontró el capítulo');
             return response()->json(['error' => 'Capítulo no encontrado'], 404);
         }
 
+        Log::info('Capítulo encontrado:', ['capitulo' => $capitulo]);
         return response()->json($capitulo);
     }
 
@@ -143,7 +253,10 @@ class CapitulosController extends Controller
     #[Response(status: 404, description: 'Capítulo no encontrado')]
     public function pericopas($id)
     {
-        $capitulo = Capitulos::findOrFail($id);
+        $capitulo = Capitulos::find($id);
+        if (!$capitulo) {
+            return response()->json(['error' => 'Capítulo no encontrado'], 404);
+        }
         return response()->json($capitulo->pericopas);
     }
 
@@ -167,7 +280,10 @@ class CapitulosController extends Controller
     #[Response(status: 404, description: 'Capítulo no encontrado')]
     public function versiculos($id)
     {
-        $capitulo = Capitulos::findOrFail($id);
+        $capitulo = Capitulos::find($id);
+        if (!$capitulo) {
+            return response()->json(['error' => 'Capítulo no encontrado'], 404);
+        }
         return response()->json($capitulo->versiculos);
     }
 
@@ -189,7 +305,10 @@ class CapitulosController extends Controller
     #[Response(status: 404, description: 'Capítulo no encontrado')]
     public function parte($id)
     {
-        $capitulo = Capitulos::findOrFail($id);
+        $capitulo = Capitulos::find($id);
+        if (!$capitulo) {
+            return response()->json(['error' => 'Capítulo no encontrado'], 404);
+        }
         return response()->json($capitulo->parte);
     }
 
@@ -212,7 +331,10 @@ class CapitulosController extends Controller
     #[Response(status: 404, description: 'Capítulo no encontrado')]
     public function libro($id)
     {
-        $capitulo = Capitulos::findOrFail($id);
+        $capitulo = Capitulos::find($id);
+        if (!$capitulo) {
+            return response()->json(['error' => 'Capítulo no encontrado'], 404);
+        }
         return response()->json($capitulo->libro);
     }
 }
