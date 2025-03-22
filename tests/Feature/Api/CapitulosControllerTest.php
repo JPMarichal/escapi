@@ -5,6 +5,8 @@ namespace Tests\Feature\Api;
 use App\Models\Capitulos;
 use App\Models\Libros;
 use App\Models\Divisiones;
+use App\Models\Pericopas;
+use App\Models\Versiculos;
 
 class CapitulosControllerTest extends ApiTestCase
 {
@@ -69,7 +71,37 @@ class CapitulosControllerTest extends ApiTestCase
      */
     public function test_show_returns_specific_capitulo()
     {
-        $capitulo = Capitulos::first();
+        $libro = Libros::where('nombre', 'Génesis')->first();
+        if (!$libro) {
+            $division = Divisiones::firstOrCreate([
+                'nombre' => 'Antiguo Testamento'
+            ], [
+                'abreviatura' => 'AT',
+                'volumen_id' => 1
+            ]);
+
+            $libro = Libros::create([
+                'nombre' => 'Génesis',
+                'abreviatura' => 'GEN',
+                'division_id' => $division->id
+            ]);
+        }
+
+        $capitulo = Capitulos::where('libro_id', $libro->id)
+            ->where('num_capitulo', 1)
+            ->first();
+            
+        if (!$capitulo) {
+            $capitulo = Capitulos::create([
+                'libro_id' => $libro->id,
+                'num_capitulo' => 1,
+                'title' => 'Capítulo 1',
+                'description' => 'El primer capítulo',
+                'referencia' => 'Génesis 1',
+                'abreviatura' => 'GEN 1'
+            ]);
+        }
+
         $response = $this->get("/api/capitulos/{$capitulo->id}");
 
         $this->assertSuccessfulResponse($response);
@@ -369,7 +401,53 @@ class CapitulosControllerTest extends ApiTestCase
      */
     public function test_pericopas_returns_pericopas_for_capitulo()
     {
-        $capitulo = Capitulos::first();
+        // Asegurarnos de que tenemos un libro y capítulo válidos con perícopas
+        $libro = Libros::where('nombre', 'Génesis')->first();
+        if (!$libro) {
+            $division = Divisiones::firstOrCreate([
+                'nombre' => 'Antiguo Testamento'
+            ], [
+                'abreviatura' => 'AT',
+                'volumen_id' => 1
+            ]);
+
+            $libro = Libros::create([
+                'nombre' => 'Génesis',
+                'abreviatura' => 'GEN',
+                'division_id' => $division->id
+            ]);
+        }
+
+        $capitulo = Capitulos::where('libro_id', $libro->id)
+            ->where('num_capitulo', 1)
+            ->first();
+            
+        if (!$capitulo) {
+            $capitulo = Capitulos::create([
+                'libro_id' => $libro->id,
+                'num_capitulo' => 1,
+                'title' => 'Capítulo 1',
+                'description' => 'El primer capítulo',
+                'referencia' => 'Génesis 1',
+                'abreviatura' => 'GEN 1'
+            ]);
+        }
+
+        // Crear una perícopa de prueba si no existe
+        $pericopa = Pericopas::where('capitulo_id', $capitulo->id)->first();
+        if (!$pericopa) {
+            $pericopa = Pericopas::create([
+                'capitulo_id' => $capitulo->id,
+                'versiculo_inicial' => 1,
+                'versiculo_final' => 31,
+                'titulo' => 'La Creación'
+            ]);
+        }
+
+        // Verificar que el capítulo y la perícopa existen
+        $this->assertNotNull($capitulo, 'El capítulo 1 de Génesis no se creó correctamente');
+        $this->assertNotNull($pericopa, 'La perícopa de prueba no se creó correctamente');
+
         $response = $this->get("/api/capitulos/{$capitulo->id}/pericopas");
 
         $this->assertSuccessfulResponse($response);
@@ -384,6 +462,13 @@ class CapitulosControllerTest extends ApiTestCase
                 'updated_at'
             ]
         ]);
+
+        // Verificar que la perícopa creada está en la respuesta
+        $response->assertJsonFragment([
+            'titulo' => 'La Creación',
+            'versiculo_inicial' => 1,
+            'versiculo_final' => 31
+        ]);
     }
 
     /**
@@ -396,7 +481,56 @@ class CapitulosControllerTest extends ApiTestCase
      */
     public function test_versiculos_returns_versiculos_for_capitulo()
     {
-        $capitulo = Capitulos::first();
+        // Asegurarnos de que tenemos un libro y capítulo válidos con versículos
+        $libro = Libros::where('nombre', 'Génesis')->first();
+        if (!$libro) {
+            $division = Divisiones::firstOrCreate([
+                'nombre' => 'Antiguo Testamento'
+            ], [
+                'abreviatura' => 'AT',
+                'volumen_id' => 1
+            ]);
+
+            $libro = Libros::create([
+                'nombre' => 'Génesis',
+                'abreviatura' => 'GEN',
+                'division_id' => $division->id
+            ]);
+        }
+
+        $capitulo = Capitulos::where('libro_id', $libro->id)
+            ->where('num_capitulo', 1)
+            ->first();
+            
+        if (!$capitulo) {
+            $capitulo = Capitulos::create([
+                'libro_id' => $libro->id,
+                'num_capitulo' => 1,
+                'title' => 'Capítulo 1',
+                'description' => 'El primer capítulo',
+                'referencia' => 'Génesis 1',
+                'abreviatura' => 'GEN 1'
+            ]);
+        }
+
+        // Crear un versículo de prueba si no existe
+        $versiculo = Versiculos::where('capitulo_id', $capitulo->id)
+            ->where('num_versiculo', 1)
+            ->first();
+            
+        if (!$versiculo) {
+            $versiculo = Versiculos::create([
+                'capitulo_id' => $capitulo->id,
+                'num_versiculo' => 1,
+                'contenido' => 'En el principio creó Dios los cielos y la tierra.',
+                'referencia' => 'Génesis 1:1'
+            ]);
+        }
+
+        // Verificar que el capítulo y el versículo existen
+        $this->assertNotNull($capitulo, 'El capítulo 1 de Génesis no se creó correctamente');
+        $this->assertNotNull($versiculo, 'El versículo de prueba no se creó correctamente');
+
         $response = $this->get("/api/capitulos/{$capitulo->id}/versiculos");
 
         $this->assertSuccessfulResponse($response);
@@ -412,6 +546,13 @@ class CapitulosControllerTest extends ApiTestCase
                 'updated_at'
             ]
         ]);
+
+        // Verificar que el versículo creado está en la respuesta
+        $response->assertJsonFragment([
+            'num_versiculo' => 1,
+            'contenido' => 'En el principio creó Dios los cielos y la tierra.',
+            'referencia' => 'Génesis 1:1'
+        ]);
     }
 
     /**
@@ -424,7 +565,42 @@ class CapitulosControllerTest extends ApiTestCase
      */
     public function test_libro_returns_libro_for_capitulo()
     {
-        $capitulo = Capitulos::first();
+        // Asegurarnos de que tenemos un libro y capítulo válidos
+        $libro = Libros::where('nombre', 'Génesis')->first();
+        if (!$libro) {
+            $division = Divisiones::firstOrCreate([
+                'nombre' => 'Antiguo Testamento'
+            ], [
+                'abreviatura' => 'AT',
+                'volumen_id' => 1
+            ]);
+
+            $libro = Libros::create([
+                'nombre' => 'Génesis',
+                'abreviatura' => 'GEN',
+                'division_id' => $division->id
+            ]);
+        }
+
+        $capitulo = Capitulos::where('libro_id', $libro->id)
+            ->where('num_capitulo', 1)
+            ->first();
+            
+        if (!$capitulo) {
+            $capitulo = Capitulos::create([
+                'libro_id' => $libro->id,
+                'num_capitulo' => 1,
+                'title' => 'Capítulo 1',
+                'description' => 'El primer capítulo',
+                'referencia' => 'Génesis 1',
+                'abreviatura' => 'GEN 1'
+            ]);
+        }
+
+        // Verificar que el libro y capítulo existen
+        $this->assertNotNull($libro, 'El libro Génesis no se creó correctamente');
+        $this->assertNotNull($capitulo, 'El capítulo 1 de Génesis no se creó correctamente');
+
         $response = $this->get("/api/capitulos/{$capitulo->id}/libro");
 
         $this->assertSuccessfulResponse($response);
@@ -435,6 +611,12 @@ class CapitulosControllerTest extends ApiTestCase
             'division_id',
             'created_at',
             'updated_at'
+        ]);
+
+        // Verificar que el libro en la respuesta es el correcto
+        $response->assertJsonFragment([
+            'nombre' => 'Génesis',
+            'abreviatura' => 'GEN'
         ]);
     }
 
