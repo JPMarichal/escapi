@@ -38,19 +38,23 @@ trait ScriptureReferences
         }
 
         // Manejo especial para José Smith-Historia y José Smith-Mateo
-        if (preg_match('/^(José\s*Smith[-]+(?:Historia|Mateo))\s+(\d+)/ui', $referencia, $matches)) {
+        if (preg_match('/^(José\s*Smith[-]+(?:Historia|Mateo))\s+(\d+)(?::(\d+)(?:-(\d+))?)?/ui', $referencia, $matches)) {
             Log::info('Referencia de José Smith encontrada:', [
                 'libro' => $matches[1],
-                'capitulo' => $matches[2]
+                'capitulo' => $matches[2],
+                'versiculo_inicio' => $matches[3] ?? null,
+                'versiculo_fin' => $matches[4] ?? null
             ]);
             return [
                 'libro' => $matches[1],
-                'capitulo' => (int)$matches[2]
+                'capitulo' => (int)$matches[2],
+                'versiculo_inicio' => isset($matches[3]) ? (int)$matches[3] : null,
+                'versiculo_fin' => isset($matches[4]) ? (int)$matches[4] : null
             ];
         }
 
         // Para otros libros, intentar parsear la referencia normal
-        if (preg_match('/^(.*?)\s+(\d+)$/u', $referencia, $matches)) {
+        if (preg_match('/^(.*?)\s+(\d+)(?::(\d+)(?:-(\d+))?)?$/u', $referencia, $matches)) {
             $libro = trim($matches[1]);
             $capitulo = (int)$matches[2];
 
@@ -63,6 +67,8 @@ trait ScriptureReferences
             Log::info('Referencia normal encontrada:', [
                 'libro' => $libro,
                 'capitulo' => $capitulo,
+                'versiculo_inicio' => $matches[3] ?? null,
+                'versiculo_fin' => $matches[4] ?? null,
                 'es_dyc' => $es_dyc,
                 'es_do' => $es_do
             ]);
@@ -70,6 +76,8 @@ trait ScriptureReferences
             return [
                 'libro' => $libro,
                 'capitulo' => $capitulo,
+                'versiculo_inicio' => isset($matches[3]) ? (int)$matches[3] : null,
+                'versiculo_fin' => isset($matches[4]) ? (int)$matches[4] : null,
                 'es_dyc' => $es_dyc,
                 'es_do' => $es_do
             ];
@@ -201,6 +209,14 @@ trait ScriptureReferences
             ]);
         }
 
-        return $query->orderBy('num_versiculo')->get();
+        $versiculos = $query->get();
+
+        // Agregar el campo orden basado en el número de versículo
+        $versiculos = $versiculos->map(function($versiculo) {
+            $versiculo->orden = $versiculo->num_versiculo;
+            return $versiculo;
+        });
+
+        return $versiculos;
     }
 }

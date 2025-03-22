@@ -208,6 +208,6 @@ class VersiculosController extends Controller
             ], 404);
         }
 
-        return response()->json($versiculos);
+        return response()->json(['data' => $versiculos]);
     }
 }
