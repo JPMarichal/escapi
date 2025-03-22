@@ -42,6 +42,39 @@ DB_PASSWORD=
 php artisan migrate --seed
 ```
 
+6. Configurar permisos (en producción):
+```bash
+# Establecer el usuario y grupo web (ajustar según tu servidor)
+sudo chown -R www-data:www-data /ruta/a/escapi
+
+# Establecer permisos para directorios
+sudo find /ruta/a/escapi -type d -exec chmod 755 {} \;
+
+# Establecer permisos para archivos
+sudo find /ruta/a/escapi -type f -exec chmod 644 {} \;
+
+# Permisos especiales para directorios que requieren escritura
+sudo chmod -R 775 storage
+sudo chmod -R 775 bootstrap/cache
+
+# Asegurarse que el usuario web puede escribir en estos directorios
+sudo chown -R www-data:www-data storage
+sudo chown -R www-data:www-data bootstrap/cache
+
+# Proteger archivos sensibles
+sudo chmod 600 .env
+sudo chmod 600 config/app.php
+```
+
+7. Limpiar y optimizar (en producción):
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+> **Nota**: En desarrollo local, los permisos 644 para archivos y 755 para directorios suelen ser suficientes. Los permisos más restrictivos son importantes en producción.
+
 ## Estructura de Modelos
 
 ### Volumen
@@ -118,8 +151,57 @@ Representa un versículo dentro de un capítulo
 - GET `/api/versiculos` - Lista todos los versículos (paginado)
 - GET `/api/versiculos/{id}` - Obtiene un versículo específico
 - GET `/api/versiculos/item?referencia={referencia}` - Busca un versículo por referencia
+- GET `/api/versiculos/pasaje?referencia={referencia}` - Busca un conjunto de versículos por referencia completa
 - GET `/api/versiculos/{id}/pericopa` - Obtiene la perícopa del versículo
 - GET `/api/versiculos/{id}/capitulo` - Obtiene el capítulo del versículo
+
+## Formatos de Referencia
+
+### Referencias Estándar
+- `Libro Capítulo:Versículo` - Un versículo específico (ej. "Génesis 1:1")
+- `Libro Capítulo:Versículo-Versículo` - Un rango de versículos (ej. "Génesis 1:1-3")
+
+### Referencias Especiales
+- **Doctrina y Convenios (DyC)**
+  - Formato: `DyC Sección:Versículo` o `Doctrina y Convenios Sección:Versículo`
+  - Ejemplo: "DyC 4:2" o "Doctrina y Convenios 4:2"
+
+- **Declaraciones Oficiales (DO)**
+  - Formato: `DO Declaración:Versículo` o `Declaración Oficial Declaración:Versículo`
+  - Ejemplo: "DO 2:3" o "Declaración Oficial 2:3"
+
+- **José Smith**
+  - Formato: `José Smith-Historia Capítulo:Versículo` o `José Smith-Mateo Capítulo:Versículo`
+  - Ejemplo: "José Smith-Historia 1:1" o "José Smith-Mateo 1:1"
+
+### Características de Búsqueda
+- Insensible a mayúsculas/minúsculas
+- Manejo de acentos y caracteres especiales
+- Soporte para abreviaturas de libros
+- Normalización automática de texto
+
+## Desarrollo
+
+1. Instalar dependencias de Node.js:
+```bash
+npm install
+```
+
+2. Iniciar el servidor de desarrollo de Vite:
+```bash
+npm run dev
+```
+
+3. En otra terminal, iniciar el servidor PHP:
+```bash
+# Opción 1 (recomendada):
+php -S 127.0.0.1:8000 -t public
+
+# Opción 2 (alternativa):
+php artisan serve
+```
+
+> **Importante**: Ambos servidores (Vite y PHP) deben estar ejecutándose simultáneamente durante el desarrollo.
 
 ## Tests
 El proyecto incluye tests exhaustivos para cada endpoint. Para ejecutar los tests:
