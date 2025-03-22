@@ -74,20 +74,20 @@
                                                     <li class="tocify-item level-2" data-unique="capitulos-GETapi-capitulos">
                                 <a href="#capitulos-GETapi-capitulos">Lista todos los capítulos.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="capitulos-GETapi-capitulos-item">
-                                <a href="#capitulos-GETapi-capitulos-item">Busca un capítulo por su referencia.</a>
-                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="capitulos-GETapi-capitulos--id-">
                                 <a href="#capitulos-GETapi-capitulos--id-">Obtiene un capítulo específico por ID.</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="capitulos-GETapi-capitulos--referencia-">
+                                <a href="#capitulos-GETapi-capitulos--referencia-">Busca un capítulo por su referencia.</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="capitulos-GETapi-capitulos--id--pericopas">
-                                <a href="#capitulos-GETapi-capitulos--id--pericopas">Lista todas las pericopas de un capítulo.</a>
+                                <a href="#capitulos-GETapi-capitulos--id--pericopas">Lista todas las perícopas de un capítulo.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="capitulos-GETapi-capitulos--id--versiculos">
                                 <a href="#capitulos-GETapi-capitulos--id--versiculos">Lista todos los versículos de un capítulo.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="capitulos-GETapi-capitulos--id--parte">
-                                <a href="#capitulos-GETapi-capitulos--id--parte">Obtiene la parte a la que pertenece el capítulo.</a>
+                                <a href="#capitulos-GETapi-capitulos--id--parte">Obtiene la parte a la que pertenece el capítulo, si existe.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="capitulos-GETapi-capitulos--id--libro">
                                 <a href="#capitulos-GETapi-capitulos--id--libro">Obtiene el libro al que pertenece el capítulo.</a>
@@ -102,11 +102,11 @@
                                                     <li class="tocify-item level-2" data-unique="divisiones-GETapi-divisiones">
                                 <a href="#divisiones-GETapi-divisiones">Lista todas las divisiones.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="divisiones-GETapi-divisiones-item">
-                                <a href="#divisiones-GETapi-divisiones-item">Busca una división por nombre.</a>
-                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="divisiones-GETapi-divisiones--id-">
                                 <a href="#divisiones-GETapi-divisiones--id-">Obtiene una división específica por ID.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="divisiones-GETapi-divisiones--nombre-">
+                                <a href="#divisiones-GETapi-divisiones--nombre-">Busca una división por nombre.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="divisiones-GETapi-divisiones--id--libros">
                                 <a href="#divisiones-GETapi-divisiones--id--libros">Lista todos los libros de una división.</a>
@@ -130,6 +130,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-docs-json">
                                 <a href="#endpoints-GETapi-docs-json">Handles requests for API documentation and returns the corresponding file content.</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-audio--libro---capitulo-">
+                                <a href="#endpoints-GETapi-audio--libro---capitulo-">GET api/audio/{libro}/{capitulo}</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-libros" class="tocify-header">
@@ -140,11 +143,11 @@
                                                     <li class="tocify-item level-2" data-unique="libros-GETapi-libros">
                                 <a href="#libros-GETapi-libros">Lista todos los libros.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="libros-GETapi-libros-item">
-                                <a href="#libros-GETapi-libros-item">Busca un libro por nombre.</a>
-                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="libros-GETapi-libros--id-">
                                 <a href="#libros-GETapi-libros--id-">Obtiene un libro específico por ID.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="libros-GETapi-libros--nombre-">
+                                <a href="#libros-GETapi-libros--nombre-">Busca un libro por nombre.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="libros-GETapi-libros--id--partes">
                                 <a href="#libros-GETapi-libros--id--partes">Lista todas las partes de un libro.</a>
@@ -237,11 +240,11 @@
                                                     <li class="tocify-item level-2" data-unique="volumenes-GETapi-volumenes">
                                 <a href="#volumenes-GETapi-volumenes">Lista todos los volúmenes.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="volumenes-GETapi-volumenes-item">
-                                <a href="#volumenes-GETapi-volumenes-item">Busca un volumen por nombre.</a>
-                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="volumenes-GETapi-volumenes--id-">
                                 <a href="#volumenes-GETapi-volumenes--id-">Obtiene un volumen específico por ID.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="volumenes-GETapi-volumenes--nombre-">
+                                <a href="#volumenes-GETapi-volumenes--nombre-">Busca un volumen por nombre.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="volumenes-GETapi-volumenes--id--divisiones">
                                 <a href="#volumenes-GETapi-volumenes--id--divisiones">Lista todas las divisiones de un volumen.</a>
@@ -260,7 +263,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: March 12, 2025</li>
+        <li>Last updated: March 19, 2025</li>
     </ul>
 </div>
 
@@ -287,7 +290,8 @@ You can switch the language used with the tabs at the top right (or from the nav
 <p>
 </p>
 
-<p>Retorna una colección de todos los capítulos disponibles en el sistema.</p>
+<p>Retorna una colección de todos los capítulos disponibles en el sistema.
+Los capítulos son las divisiones principales de los libros de las escrituras.</p>
 
 <span id="example-requests-GETapi-capitulos">
 <blockquote>Example request:</blockquote>
@@ -377,132 +381,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                     </form>
 
-                    <h2 id="capitulos-GETapi-capitulos-item">Busca un capítulo por su referencia.</h2>
-
-<p>
-</p>
-
-<p>La búsqueda es insensible a mayúsculas/minúsculas y acentos.
-Ejemplo de referencia: 'Génesis 1'</p>
-
-<span id="example-requests-GETapi-capitulos-item">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/capitulos/item?referencia=G%C3%A9nesis+1"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/capitulos/item"
-);
-
-const params = {
-    "referencia": "Génesis 1",
-};
-Object.keys(params)
-    .forEach(key =&gt; url.searchParams.append(key, params[key]));
-
-fetch(url, {
-    method: "GET",
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-capitulos-item">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: {
-        &quot;id&quot;: 1,
-        &quot;nombre&quot;: &quot;Cap&iacute;tulo 1&quot;,
-        &quot;num_capitulo&quot;: 1,
-        &quot;orden&quot;: 1,
-        &quot;libro_id&quot;: 1,
-        &quot;parte_id&quot;: null
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (400, El parámetro referencia es requerido):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;"></code>
- </pre>
-            <blockquote>
-            <p>Example response (404, Capítulo no encontrado):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;"></code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-capitulos-item" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-capitulos-item"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-capitulos-item"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-capitulos-item" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-capitulos-item">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-capitulos-item" data-method="GET"
-      data-path="api/capitulos/item"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-capitulos-item', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-capitulos-item"
-                    onclick="tryItOut('GETapi-capitulos-item');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-capitulos-item"
-                    onclick="cancelTryOut('GETapi-capitulos-item');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-capitulos-item"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/capitulos/item</code></b>
-        </p>
-                        <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
-                                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>referencia</code></b>&nbsp;&nbsp;
-<small>Referencia del capítulo</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="referencia"                data-endpoint="GETapi-capitulos-item"
-               value="Génesis 1"
-               data-component="query">
-    <br>
-<p>Example: <code>Génesis 1</code></p>
-            </div>
-                </form>
-
                     <h2 id="capitulos-GETapi-capitulos--id-">Obtiene un capítulo específico por ID.</h2>
 
 <p>
@@ -516,12 +394,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/capitulos/sit"</code></pre></div>
+    --get "http://localhost/api/capitulos/quis"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/capitulos/sit"
+    "http://localhost/api/capitulos/quis"
 );
 
 fetch(url, {
@@ -608,14 +486,133 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-capitulos--id-"
-               value="sit"
+               value="quis"
                data-component="url">
     <br>
-<p>Example: <code>sit</code></p>
+<p>Example: <code>quis</code></p>
             </div>
                     </form>
 
-                    <h2 id="capitulos-GETapi-capitulos--id--pericopas">Lista todas las pericopas de un capítulo.</h2>
+                    <h2 id="capitulos-GETapi-capitulos--referencia-">Busca un capítulo por su referencia.</h2>
+
+<p>
+</p>
+
+<p>La búsqueda es insensible a mayúsculas/minúsculas y acentos.
+La referencia debe incluir el nombre del libro (o su abreviatura) y el número de capítulo.
+Ejemplos válidos:</p>
+<ul>
+<li>'Génesis 1'</li>
+<li>'GEN 1'</li>
+<li>'José Smith-Historia 1'</li>
+</ul>
+
+<span id="example-requests-GETapi-capitulos--referencia-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/capitulos/Génesis 1"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/capitulos/Génesis 1"
+);
+
+fetch(url, {
+    method: "GET",
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-capitulos--referencia-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;nombre&quot;: &quot;Cap&iacute;tulo 1&quot;,
+        &quot;num_capitulo&quot;: 1,
+        &quot;orden&quot;: 1,
+        &quot;libro_id&quot;: 1,
+        &quot;parte_id&quot;: null
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Capítulo no encontrado):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;"></code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-capitulos--referencia-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-capitulos--referencia-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-capitulos--referencia-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-capitulos--referencia-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-capitulos--referencia-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-capitulos--referencia-" data-method="GET"
+      data-path="api/capitulos/{referencia}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-capitulos--referencia-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-capitulos--referencia-"
+                    onclick="tryItOut('GETapi-capitulos--referencia-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-capitulos--referencia-"
+                    onclick="cancelTryOut('GETapi-capitulos--referencia-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-capitulos--referencia-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/capitulos/{referencia}</code></b>
+        </p>
+                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>referencia</code></b>&nbsp;&nbsp;
+<small>Referencia del capítulo</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="referencia"                data-endpoint="GETapi-capitulos--referencia-"
+               value="Génesis 1"
+               data-component="url">
+    <br>
+<p>Example: <code>Génesis 1</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="capitulos-GETapi-capitulos--id--pericopas">Lista todas las perícopas de un capítulo.</h2>
 
 <p>
 </p>
@@ -628,12 +625,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/capitulos/voluptatem/pericopas"</code></pre></div>
+    --get "http://localhost/api/capitulos/consectetur/pericopas"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/capitulos/voluptatem/pericopas"
+    "http://localhost/api/capitulos/consectetur/pericopas"
 );
 
 fetch(url, {
@@ -653,7 +650,8 @@ fetch(url, {
         {
             &quot;id&quot;: 1,
             &quot;titulo&quot;: &quot;La Creaci&oacute;n&quot;,
-            &quot;orden&quot;: 1,
+            &quot;versiculo_inicio&quot;: 1,
+            &quot;versiculo_fin&quot;: 31,
             &quot;capitulo_id&quot;: 1
         }
     ]
@@ -720,10 +718,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-capitulos--id--pericopas"
-               value="voluptatem"
+               value="consectetur"
                data-component="url">
     <br>
-<p>Example: <code>voluptatem</code></p>
+<p>Example: <code>consectetur</code></p>
             </div>
                     </form>
 
@@ -732,7 +730,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>
 </p>
 
-<p>Los versículos son retornados ordenados por número de versículo.</p>
+
 
 <span id="example-requests-GETapi-capitulos--id--versiculos">
 <blockquote>Example request:</blockquote>
@@ -740,12 +738,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/capitulos/reprehenderit/versiculos"</code></pre></div>
+    --get "http://localhost/api/capitulos/nobis/versiculos"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/capitulos/reprehenderit/versiculos"
+    "http://localhost/api/capitulos/nobis/versiculos"
 );
 
 fetch(url, {
@@ -764,11 +762,9 @@ fetch(url, {
     &quot;data&quot;: [
         {
             &quot;id&quot;: 1,
-            &quot;contenido&quot;: &quot;En el principio cre&oacute; Dios los cielos y la tierra.&quot;,
             &quot;num_versiculo&quot;: 1,
-            &quot;orden&quot;: 1,
-            &quot;capitulo_id&quot;: 1,
-            &quot;pericopa_id&quot;: 1
+            &quot;contenido&quot;: &quot;En el principio cre&oacute; Dios los cielos y la tierra.&quot;,
+            &quot;capitulo_id&quot;: 1
         }
     ]
 }</code>
@@ -834,14 +830,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-capitulos--id--versiculos"
-               value="reprehenderit"
+               value="nobis"
                data-component="url">
     <br>
-<p>Example: <code>reprehenderit</code></p>
+<p>Example: <code>nobis</code></p>
             </div>
                     </form>
 
-                    <h2 id="capitulos-GETapi-capitulos--id--parte">Obtiene la parte a la que pertenece el capítulo.</h2>
+                    <h2 id="capitulos-GETapi-capitulos--id--parte">Obtiene la parte a la que pertenece el capítulo, si existe.</h2>
 
 <p>
 </p>
@@ -854,12 +850,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/capitulos/est/parte"</code></pre></div>
+    --get "http://localhost/api/capitulos/numquam/parte"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/capitulos/est/parte"
+    "http://localhost/api/capitulos/numquam/parte"
 );
 
 fetch(url, {
@@ -944,10 +940,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-capitulos--id--parte"
-               value="est"
+               value="numquam"
                data-component="url">
     <br>
-<p>Example: <code>est</code></p>
+<p>Example: <code>numquam</code></p>
             </div>
                     </form>
 
@@ -964,12 +960,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/capitulos/sint/libro"</code></pre></div>
+    --get "http://localhost/api/capitulos/quia/libro"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/capitulos/sint/libro"
+    "http://localhost/api/capitulos/quia/libro"
 );
 
 fetch(url, {
@@ -988,6 +984,7 @@ fetch(url, {
     &quot;data&quot;: {
         &quot;id&quot;: 1,
         &quot;nombre&quot;: &quot;G&eacute;nesis&quot;,
+        &quot;abreviatura&quot;: &quot;GEN&quot;,
         &quot;division_id&quot;: 1,
         &quot;volumen_id&quot;: 1
     }
@@ -1054,10 +1051,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-capitulos--id--libro"
-               value="sint"
+               value="quia"
                data-component="url">
     <br>
-<p>Example: <code>sint</code></p>
+<p>Example: <code>quia</code></p>
             </div>
                     </form>
 
@@ -1070,7 +1067,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>
 </p>
 
-<p>Retorna una colección de todas las divisiones disponibles en el sistema.</p>
+<p>Retorna una colección de todas las divisiones disponibles en el sistema.
+Las divisiones son agrupaciones de libros dentro de un volumen (ej: Pentateuco, Libros Históricos).</p>
 
 <span id="example-requests-GETapi-divisiones">
 <blockquote>Example request:</blockquote>
@@ -1103,6 +1101,11 @@ fetch(url, {
         {
             &quot;id&quot;: 1,
             &quot;nombre&quot;: &quot;Pentateuco&quot;,
+            &quot;volumen_id&quot;: 1
+        },
+        {
+            &quot;id&quot;: 2,
+            &quot;nombre&quot;: &quot;Libros Hist&oacute;ricos&quot;,
             &quot;volumen_id&quot;: 1
         }
     ]
@@ -1157,130 +1160,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                     </form>
 
-                    <h2 id="divisiones-GETapi-divisiones-item">Busca una división por nombre.</h2>
-
-<p>
-</p>
-
-<p>El nombre es insensible a mayúsculas/minúsculas y acentos.
-La búsqueda funciona si el nombre buscado está contenido en el nombre de la división
-o si el nombre de la división está contenido en el nombre buscado.</p>
-
-<span id="example-requests-GETapi-divisiones-item">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/divisiones/item?nombre=Pentateuco"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/divisiones/item"
-);
-
-const params = {
-    "nombre": "Pentateuco",
-};
-Object.keys(params)
-    .forEach(key =&gt; url.searchParams.append(key, params[key]));
-
-fetch(url, {
-    method: "GET",
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-divisiones-item">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: {
-        &quot;id&quot;: 1,
-        &quot;nombre&quot;: &quot;Pentateuco&quot;,
-        &quot;volumen_id&quot;: 1
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (400, El parámetro nombre es requerido):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;"></code>
- </pre>
-            <blockquote>
-            <p>Example response (404, División no encontrada):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;"></code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-divisiones-item" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-divisiones-item"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-divisiones-item"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-divisiones-item" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-divisiones-item">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-divisiones-item" data-method="GET"
-      data-path="api/divisiones/item"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-divisiones-item', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-divisiones-item"
-                    onclick="tryItOut('GETapi-divisiones-item');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-divisiones-item"
-                    onclick="cancelTryOut('GETapi-divisiones-item');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-divisiones-item"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/divisiones/item</code></b>
-        </p>
-                        <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
-                                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>nombre</code></b>&nbsp;&nbsp;
-<small>Nombre de la división a buscar</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="nombre"                data-endpoint="GETapi-divisiones-item"
-               value="Pentateuco"
-               data-component="query">
-    <br>
-<p>Example: <code>Pentateuco</code></p>
-            </div>
-                </form>
-
                     <h2 id="divisiones-GETapi-divisiones--id-">Obtiene una división específica por ID.</h2>
 
 <p>
@@ -1294,12 +1173,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/divisiones/nemo"</code></pre></div>
+    --get "http://localhost/api/divisiones/quam"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/divisiones/nemo"
+    "http://localhost/api/divisiones/quam"
 );
 
 fetch(url, {
@@ -1383,10 +1262,120 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-divisiones--id-"
-               value="nemo"
+               value="quam"
                data-component="url">
     <br>
-<p>Example: <code>nemo</code></p>
+<p>Example: <code>quam</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="divisiones-GETapi-divisiones--nombre-">Busca una división por nombre.</h2>
+
+<p>
+</p>
+
+<p>El nombre es insensible a mayúsculas/minúsculas y acentos.
+La búsqueda debe ser exacta con el nombre de la división.</p>
+
+<span id="example-requests-GETapi-divisiones--nombre-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/divisiones/Pentateuco"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/divisiones/Pentateuco"
+);
+
+fetch(url, {
+    method: "GET",
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-divisiones--nombre-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;nombre&quot;: &quot;Pentateuco&quot;,
+        &quot;volumen_id&quot;: 1
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, División no encontrada):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;"></code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-divisiones--nombre-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-divisiones--nombre-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-divisiones--nombre-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-divisiones--nombre-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-divisiones--nombre-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-divisiones--nombre-" data-method="GET"
+      data-path="api/divisiones/{nombre}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-divisiones--nombre-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-divisiones--nombre-"
+                    onclick="tryItOut('GETapi-divisiones--nombre-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-divisiones--nombre-"
+                    onclick="cancelTryOut('GETapi-divisiones--nombre-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-divisiones--nombre-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/divisiones/{nombre}</code></b>
+        </p>
+                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>nombre</code></b>&nbsp;&nbsp;
+<small>Nombre de la división</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="nombre"                data-endpoint="GETapi-divisiones--nombre-"
+               value="Pentateuco"
+               data-component="url">
+    <br>
+<p>Example: <code>Pentateuco</code></p>
             </div>
                     </form>
 
@@ -1403,12 +1392,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/divisiones/fugiat/libros"</code></pre></div>
+    --get "http://localhost/api/divisiones/quasi/libros"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/divisiones/fugiat/libros"
+    "http://localhost/api/divisiones/quasi/libros"
 );
 
 fetch(url, {
@@ -1428,6 +1417,7 @@ fetch(url, {
         {
             &quot;id&quot;: 1,
             &quot;nombre&quot;: &quot;G&eacute;nesis&quot;,
+            &quot;abreviatura&quot;: &quot;GEN&quot;,
             &quot;division_id&quot;: 1,
             &quot;volumen_id&quot;: 1
         }
@@ -1495,10 +1485,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-divisiones--id--libros"
-               value="fugiat"
+               value="quasi"
                data-component="url">
     <br>
-<p>Example: <code>fugiat</code></p>
+<p>Example: <code>quasi</code></p>
             </div>
                     </form>
 
@@ -1515,12 +1505,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/divisiones/perspiciatis/volumen"</code></pre></div>
+    --get "http://localhost/api/divisiones/eum/volumen"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/divisiones/perspiciatis/volumen"
+    "http://localhost/api/divisiones/eum/volumen"
 );
 
 fetch(url, {
@@ -1603,10 +1593,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-divisiones--id--volumen"
-               value="perspiciatis"
+               value="eum"
                data-component="url">
     <br>
-<p>Example: <code>perspiciatis</code></p>
+<p>Example: <code>eum</code></p>
             </div>
                     </form>
 
@@ -1845,6 +1835,106 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                     </form>
 
+                    <h2 id="endpoints-GETapi-audio--libro---capitulo-">GET api/audio/{libro}/{capitulo}</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-audio--libro---capitulo-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/audio/corrupti/recusandae"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/audio/corrupti/recusandae"
+);
+
+fetch(url, {
+    method: "GET",
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-audio--libro---capitulo-">
+    </span>
+<span id="execution-results-GETapi-audio--libro---capitulo-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-audio--libro---capitulo-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-audio--libro---capitulo-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-audio--libro---capitulo-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-audio--libro---capitulo-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-audio--libro---capitulo-" data-method="GET"
+      data-path="api/audio/{libro}/{capitulo}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-audio--libro---capitulo-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-audio--libro---capitulo-"
+                    onclick="tryItOut('GETapi-audio--libro---capitulo-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-audio--libro---capitulo-"
+                    onclick="cancelTryOut('GETapi-audio--libro---capitulo-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-audio--libro---capitulo-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/audio/{libro}/{capitulo}</code></b>
+        </p>
+                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>libro</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="libro"                data-endpoint="GETapi-audio--libro---capitulo-"
+               value="corrupti"
+               data-component="url">
+    <br>
+<p>Example: <code>corrupti</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>capitulo</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="capitulo"                data-endpoint="GETapi-audio--libro---capitulo-"
+               value="recusandae"
+               data-component="url">
+    <br>
+<p>Example: <code>recusandae</code></p>
+            </div>
+                    </form>
+
                 <h1 id="libros">Libros</h1>
 
     
@@ -1887,6 +1977,7 @@ fetch(url, {
         {
             &quot;id&quot;: 1,
             &quot;nombre&quot;: &quot;G&eacute;nesis&quot;,
+            &quot;abreviatura&quot;: &quot;GEN&quot;,
             &quot;division_id&quot;: 1,
             &quot;volumen_id&quot;: 1
         }
@@ -1942,130 +2033,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                     </form>
 
-                    <h2 id="libros-GETapi-libros-item">Busca un libro por nombre.</h2>
-
-<p>
-</p>
-
-<p>El nombre es insensible a mayúsculas/minúsculas y acentos.
-La búsqueda funciona si el nombre buscado está contenido en el nombre del libro.</p>
-
-<span id="example-requests-GETapi-libros-item">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/libros/item?nombre=G%C3%A9nesis"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/libros/item"
-);
-
-const params = {
-    "nombre": "Génesis",
-};
-Object.keys(params)
-    .forEach(key =&gt; url.searchParams.append(key, params[key]));
-
-fetch(url, {
-    method: "GET",
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-libros-item">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: {
-        &quot;id&quot;: 1,
-        &quot;nombre&quot;: &quot;G&eacute;nesis&quot;,
-        &quot;division_id&quot;: 1,
-        &quot;volumen_id&quot;: 1
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (400, El parámetro nombre es requerido):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;"></code>
- </pre>
-            <blockquote>
-            <p>Example response (404, Libro no encontrado):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;"></code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-libros-item" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-libros-item"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-libros-item"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-libros-item" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-libros-item">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-libros-item" data-method="GET"
-      data-path="api/libros/item"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-libros-item', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-libros-item"
-                    onclick="tryItOut('GETapi-libros-item');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-libros-item"
-                    onclick="cancelTryOut('GETapi-libros-item');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-libros-item"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/libros/item</code></b>
-        </p>
-                        <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
-                                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>nombre</code></b>&nbsp;&nbsp;
-<small>Nombre del libro a buscar</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="nombre"                data-endpoint="GETapi-libros-item"
-               value="Génesis"
-               data-component="query">
-    <br>
-<p>Example: <code>Génesis</code></p>
-            </div>
-                </form>
-
                     <h2 id="libros-GETapi-libros--id-">Obtiene un libro específico por ID.</h2>
 
 <p>
@@ -2079,12 +2046,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/libros/saepe"</code></pre></div>
+    --get "http://localhost/api/libros/ab"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/libros/saepe"
+    "http://localhost/api/libros/ab"
 );
 
 fetch(url, {
@@ -2103,6 +2070,7 @@ fetch(url, {
     &quot;data&quot;: {
         &quot;id&quot;: 1,
         &quot;nombre&quot;: &quot;G&eacute;nesis&quot;,
+        &quot;abreviatura&quot;: &quot;GEN&quot;,
         &quot;division_id&quot;: 1,
         &quot;volumen_id&quot;: 1
     }
@@ -2169,10 +2137,123 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-libros--id-"
-               value="saepe"
+               value="ab"
                data-component="url">
     <br>
-<p>Example: <code>saepe</code></p>
+<p>Example: <code>ab</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="libros-GETapi-libros--nombre-">Busca un libro por nombre.</h2>
+
+<p>
+</p>
+
+<p>El nombre es insensible a mayúsculas/minúsculas y acentos.
+La búsqueda funciona tanto con el nombre completo como con la abreviatura del libro.
+Para libros de José Smith, se debe incluir el guión (ej: 'José Smith-Historia').</p>
+
+<span id="example-requests-GETapi-libros--nombre-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/libros/Genesis"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/libros/Genesis"
+);
+
+fetch(url, {
+    method: "GET",
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-libros--nombre-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;nombre&quot;: &quot;G&eacute;nesis&quot;,
+        &quot;abreviatura&quot;: &quot;GEN&quot;,
+        &quot;division_id&quot;: 1,
+        &quot;volumen_id&quot;: 1
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Libro no encontrado):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;"></code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-libros--nombre-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-libros--nombre-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-libros--nombre-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-libros--nombre-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-libros--nombre-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-libros--nombre-" data-method="GET"
+      data-path="api/libros/{nombre}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-libros--nombre-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-libros--nombre-"
+                    onclick="tryItOut('GETapi-libros--nombre-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-libros--nombre-"
+                    onclick="cancelTryOut('GETapi-libros--nombre-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-libros--nombre-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/libros/{nombre}</code></b>
+        </p>
+                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>nombre</code></b>&nbsp;&nbsp;
+<small>Nombre o abreviatura del libro</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="nombre"                data-endpoint="GETapi-libros--nombre-"
+               value="Genesis"
+               data-component="url">
+    <br>
+<p>Example: <code>Genesis</code></p>
             </div>
                     </form>
 
@@ -2189,12 +2270,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/libros/dicta/partes"</code></pre></div>
+    --get "http://localhost/api/libros/deleniti/partes"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/libros/dicta/partes"
+    "http://localhost/api/libros/deleniti/partes"
 );
 
 fetch(url, {
@@ -2281,10 +2362,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-libros--id--partes"
-               value="dicta"
+               value="deleniti"
                data-component="url">
     <br>
-<p>Example: <code>dicta</code></p>
+<p>Example: <code>deleniti</code></p>
             </div>
                     </form>
 
@@ -2301,12 +2382,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/libros/alias/capitulos"</code></pre></div>
+    --get "http://localhost/api/libros/et/capitulos"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/libros/alias/capitulos"
+    "http://localhost/api/libros/et/capitulos"
 );
 
 fetch(url, {
@@ -2395,10 +2476,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-libros--id--capitulos"
-               value="alias"
+               value="et"
                data-component="url">
     <br>
-<p>Example: <code>alias</code></p>
+<p>Example: <code>et</code></p>
             </div>
                     </form>
 
@@ -2415,12 +2496,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/libros/ipsam/division"</code></pre></div>
+    --get "http://localhost/api/libros/inventore/division"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/libros/ipsam/division"
+    "http://localhost/api/libros/inventore/division"
 );
 
 fetch(url, {
@@ -2504,10 +2585,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-libros--id--division"
-               value="ipsam"
+               value="inventore"
                data-component="url">
     <br>
-<p>Example: <code>ipsam</code></p>
+<p>Example: <code>inventore</code></p>
             </div>
                     </form>
 
@@ -2524,12 +2605,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/libros/est/volumen"</code></pre></div>
+    --get "http://localhost/api/libros/harum/volumen"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/libros/est/volumen"
+    "http://localhost/api/libros/harum/volumen"
 );
 
 fetch(url, {
@@ -2612,10 +2693,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-libros--id--volumen"
-               value="est"
+               value="harum"
                data-component="url">
     <br>
-<p>Example: <code>est</code></p>
+<p>Example: <code>harum</code></p>
             </div>
                     </form>
 
@@ -2853,12 +2934,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/partes/eos"</code></pre></div>
+    --get "http://localhost/api/partes/ea"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/partes/eos"
+    "http://localhost/api/partes/ea"
 );
 
 fetch(url, {
@@ -2943,10 +3024,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-partes--id-"
-               value="eos"
+               value="ea"
                data-component="url">
     <br>
-<p>Example: <code>eos</code></p>
+<p>Example: <code>ea</code></p>
             </div>
                     </form>
 
@@ -2963,12 +3044,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/partes/vel/capitulos"</code></pre></div>
+    --get "http://localhost/api/partes/deserunt/capitulos"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/partes/vel/capitulos"
+    "http://localhost/api/partes/deserunt/capitulos"
 );
 
 fetch(url, {
@@ -3057,10 +3138,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-partes--id--capitulos"
-               value="vel"
+               value="deserunt"
                data-component="url">
     <br>
-<p>Example: <code>vel</code></p>
+<p>Example: <code>deserunt</code></p>
             </div>
                     </form>
 
@@ -3077,12 +3158,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/partes/atque/libro"</code></pre></div>
+    --get "http://localhost/api/partes/eos/libro"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/partes/atque/libro"
+    "http://localhost/api/partes/eos/libro"
 );
 
 fetch(url, {
@@ -3167,10 +3248,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-partes--id--libro"
-               value="atque"
+               value="eos"
                data-component="url">
     <br>
-<p>Example: <code>atque</code></p>
+<p>Example: <code>eos</code></p>
             </div>
                     </form>
 
@@ -3408,12 +3489,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/pericopas/quidem"</code></pre></div>
+    --get "http://localhost/api/pericopas/architecto"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/pericopas/quidem"
+    "http://localhost/api/pericopas/architecto"
 );
 
 fetch(url, {
@@ -3498,10 +3579,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-pericopas--id-"
-               value="quidem"
+               value="architecto"
                data-component="url">
     <br>
-<p>Example: <code>quidem</code></p>
+<p>Example: <code>architecto</code></p>
             </div>
                     </form>
 
@@ -3518,12 +3599,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/pericopas/magni/versiculos"</code></pre></div>
+    --get "http://localhost/api/pericopas/alias/versiculos"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/pericopas/magni/versiculos"
+    "http://localhost/api/pericopas/alias/versiculos"
 );
 
 fetch(url, {
@@ -3612,10 +3693,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-pericopas--id--versiculos"
-               value="magni"
+               value="alias"
                data-component="url">
     <br>
-<p>Example: <code>magni</code></p>
+<p>Example: <code>alias</code></p>
             </div>
                     </form>
 
@@ -3632,12 +3713,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/pericopas/voluptas/capitulo"</code></pre></div>
+    --get "http://localhost/api/pericopas/cum/capitulo"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/pericopas/voluptas/capitulo"
+    "http://localhost/api/pericopas/cum/capitulo"
 );
 
 fetch(url, {
@@ -3724,10 +3805,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-pericopas--id--capitulo"
-               value="voluptas"
+               value="cum"
                data-component="url">
     <br>
-<p>Example: <code>voluptas</code></p>
+<p>Example: <code>cum</code></p>
             </div>
                     </form>
 
@@ -4109,12 +4190,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/versiculos/ut"</code></pre></div>
+    --get "http://localhost/api/versiculos/assumenda"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/versiculos/ut"
+    "http://localhost/api/versiculos/assumenda"
 );
 
 fetch(url, {
@@ -4201,10 +4282,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-versiculos--id-"
-               value="ut"
+               value="assumenda"
                data-component="url">
     <br>
-<p>Example: <code>ut</code></p>
+<p>Example: <code>assumenda</code></p>
             </div>
                     </form>
 
@@ -4221,12 +4302,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/versiculos/ducimus/pericopa"</code></pre></div>
+    --get "http://localhost/api/versiculos/fuga/pericopa"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/versiculos/ducimus/pericopa"
+    "http://localhost/api/versiculos/fuga/pericopa"
 );
 
 fetch(url, {
@@ -4311,10 +4392,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-versiculos--id--pericopa"
-               value="ducimus"
+               value="fuga"
                data-component="url">
     <br>
-<p>Example: <code>ducimus</code></p>
+<p>Example: <code>fuga</code></p>
             </div>
                     </form>
 
@@ -4331,12 +4412,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/versiculos/ut/capitulo"</code></pre></div>
+    --get "http://localhost/api/versiculos/repellat/capitulo"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/versiculos/ut/capitulo"
+    "http://localhost/api/versiculos/repellat/capitulo"
 );
 
 fetch(url, {
@@ -4423,10 +4504,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-versiculos--id--capitulo"
-               value="ut"
+               value="repellat"
                data-component="url">
     <br>
-<p>Example: <code>ut</code></p>
+<p>Example: <code>repellat</code></p>
             </div>
                     </form>
 
@@ -4439,7 +4520,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>
 </p>
 
-<p>Retorna una colección de todos los volúmenes disponibles en el sistema.</p>
+<p>Retorna una colección de todos los volúmenes disponibles en el sistema.
+Los volúmenes son las principales divisiones de las escrituras (ej: Antiguo Testamento, Nuevo Testamento).</p>
 
 <span id="example-requests-GETapi-volumenes">
 <blockquote>Example request:</blockquote>
@@ -4529,127 +4611,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </p>
                     </form>
 
-                    <h2 id="volumenes-GETapi-volumenes-item">Busca un volumen por nombre.</h2>
-
-<p>
-</p>
-
-<p>El nombre es insensible a mayúsculas/minúsculas y acentos.</p>
-
-<span id="example-requests-GETapi-volumenes-item">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/volumenes/item?nombre=Antiguo+Testamento"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/volumenes/item"
-);
-
-const params = {
-    "nombre": "Antiguo Testamento",
-};
-Object.keys(params)
-    .forEach(key =&gt; url.searchParams.append(key, params[key]));
-
-fetch(url, {
-    method: "GET",
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-volumenes-item">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: {
-        &quot;id&quot;: 1,
-        &quot;nombre&quot;: &quot;Antiguo Testamento&quot;
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (400, El parámetro nombre es requerido):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;"></code>
- </pre>
-            <blockquote>
-            <p>Example response (404, Volumen no encontrado):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;"></code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-volumenes-item" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-volumenes-item"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-volumenes-item"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-volumenes-item" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-volumenes-item">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-volumenes-item" data-method="GET"
-      data-path="api/volumenes/item"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-volumenes-item', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-volumenes-item"
-                    onclick="tryItOut('GETapi-volumenes-item');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-volumenes-item"
-                    onclick="cancelTryOut('GETapi-volumenes-item');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-volumenes-item"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/volumenes/item</code></b>
-        </p>
-                        <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
-                                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>nombre</code></b>&nbsp;&nbsp;
-<small>Nombre del volumen a buscar</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="nombre"                data-endpoint="GETapi-volumenes-item"
-               value="Antiguo Testamento"
-               data-component="query">
-    <br>
-<p>Example: <code>Antiguo Testamento</code></p>
-            </div>
-                </form>
-
                     <h2 id="volumenes-GETapi-volumenes--id-">Obtiene un volumen específico por ID.</h2>
 
 <p>
@@ -4663,12 +4624,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/volumenes/occaecati"</code></pre></div>
+    --get "http://localhost/api/volumenes/alias"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/volumenes/occaecati"
+    "http://localhost/api/volumenes/alias"
 );
 
 fetch(url, {
@@ -4751,10 +4712,119 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-volumenes--id-"
-               value="occaecati"
+               value="alias"
                data-component="url">
     <br>
-<p>Example: <code>occaecati</code></p>
+<p>Example: <code>alias</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="volumenes-GETapi-volumenes--nombre-">Busca un volumen por nombre.</h2>
+
+<p>
+</p>
+
+<p>El nombre es insensible a mayúsculas/minúsculas y acentos.
+La búsqueda debe ser exacta con el nombre del volumen.</p>
+
+<span id="example-requests-GETapi-volumenes--nombre-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/volumenes/Antiguo Testamento"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/volumenes/Antiguo Testamento"
+);
+
+fetch(url, {
+    method: "GET",
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-volumenes--nombre-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;nombre&quot;: &quot;Antiguo Testamento&quot;
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Volumen no encontrado):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;"></code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-volumenes--nombre-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-volumenes--nombre-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-volumenes--nombre-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-volumenes--nombre-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-volumenes--nombre-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-volumenes--nombre-" data-method="GET"
+      data-path="api/volumenes/{nombre}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-volumenes--nombre-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-volumenes--nombre-"
+                    onclick="tryItOut('GETapi-volumenes--nombre-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-volumenes--nombre-"
+                    onclick="cancelTryOut('GETapi-volumenes--nombre-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-volumenes--nombre-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/volumenes/{nombre}</code></b>
+        </p>
+                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>nombre</code></b>&nbsp;&nbsp;
+<small>Nombre del volumen</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="nombre"                data-endpoint="GETapi-volumenes--nombre-"
+               value="Antiguo Testamento"
+               data-component="url">
+    <br>
+<p>Example: <code>Antiguo Testamento</code></p>
             </div>
                     </form>
 
@@ -4771,12 +4841,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/volumenes/sunt/divisiones"</code></pre></div>
+    --get "http://localhost/api/volumenes/ut/divisiones"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/volumenes/sunt/divisiones"
+    "http://localhost/api/volumenes/ut/divisiones"
 );
 
 fetch(url, {
@@ -4862,10 +4932,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-volumenes--id--divisiones"
-               value="sunt"
+               value="ut"
                data-component="url">
     <br>
-<p>Example: <code>sunt</code></p>
+<p>Example: <code>ut</code></p>
             </div>
                     </form>
 
@@ -4882,12 +4952,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/volumenes/ex/libros"</code></pre></div>
+    --get "http://localhost/api/volumenes/voluptatem/libros"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/volumenes/ex/libros"
+    "http://localhost/api/volumenes/voluptatem/libros"
 );
 
 fetch(url, {
@@ -4907,6 +4977,7 @@ fetch(url, {
         {
             &quot;id&quot;: 1,
             &quot;nombre&quot;: &quot;G&eacute;nesis&quot;,
+            &quot;abreviatura&quot;: &quot;GEN&quot;,
             &quot;division_id&quot;: 1,
             &quot;volumen_id&quot;: 1
         }
@@ -4974,10 +5045,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-volumenes--id--libros"
-               value="ex"
+               value="voluptatem"
                data-component="url">
     <br>
-<p>Example: <code>ex</code></p>
+<p>Example: <code>voluptatem</code></p>
             </div>
                     </form>
 

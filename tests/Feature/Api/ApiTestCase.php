@@ -13,9 +13,9 @@ class ApiTestCase extends TestCase
     {
         parent::setUp();
         
-        // Ejecutar migraciones y seeders antes de cada test
-        $this->artisan('migrate:fresh');
-        $this->artisan('db:seed');
+        // No ejecutamos migraciones ni seeders para usar la base de datos real
+        // $this->artisan('migrate:fresh');
+        // $this->artisan('db:seed');
     }
 
     protected function assertSuccessfulResponse($response)

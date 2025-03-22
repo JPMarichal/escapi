@@ -28,6 +28,7 @@ class LibrosController extends Controller
             [
                 'id' => 1,
                 'nombre' => 'Génesis',
+                'abreviatura' => 'GEN',
                 'division_id' => 1,
                 'volumen_id' => 1
             ]
@@ -45,11 +46,12 @@ class LibrosController extends Controller
      * @param int $id ID del libro
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del libro')]
+    #[UrlParam('id', 'El ID del libro', required: true)]
     #[Response([
         'data' => [
             'id' => 1,
             'nombre' => 'Génesis',
+            'abreviatura' => 'GEN',
             'division_id' => 1,
             'volumen_id' => 1
         ]
@@ -57,7 +59,12 @@ class LibrosController extends Controller
     #[Response(status: 404, description: 'Libro no encontrado')]
     public function show($id)
     {
-        $libro = Libros::findOrFail($id);
+        $libro = Libros::find($id);
+        
+        if (!$libro) {
+            return response()->json(['error' => 'Libro no encontrado'], 404);
+        }
+
         return response()->json($libro);
     }
 
@@ -66,8 +73,9 @@ class LibrosController extends Controller
      * 
      * El nombre es insensible a mayúsculas/minúsculas y acentos.
      * La búsqueda funciona tanto con el nombre completo como con la abreviatura del libro.
+     * Para libros de José Smith, se debe incluir el guión (ej: 'José Smith-Historia').
      *
-     * @param string $nombre Nombre o abreviatura del libro a buscar
+     * @param string $nombre Nombre o abreviatura del libro
      * @return \Illuminate\Http\JsonResponse
      */
     #[UrlParam('nombre', 'Nombre o abreviatura del libro', required: true, example: 'Genesis')]
@@ -75,6 +83,7 @@ class LibrosController extends Controller
         'data' => [
             'id' => 1,
             'nombre' => 'Génesis',
+            'abreviatura' => 'GEN',
             'division_id' => 1,
             'volumen_id' => 1
         ]
@@ -86,12 +95,25 @@ class LibrosController extends Controller
             return response()->json(['error' => 'El nombre del libro es requerido'], 400);
         }
 
-        // Para libros de José Smith, buscar el nombre exacto incluyendo el guión
-        if (str_contains(strtolower($nombre), 'jose-smith-')) {
-            $nombre = str_replace('jose-smith-', 'José Smith-', $nombre);
-            $nombreNormalizado = $this->normalizarTexto($nombre);
+        // Primero verificamos si es un caso de José Smith (antes de normalizar)
+        if (preg_match('/^josé\s*smith[-]+(?:historia|mateo)$/i', $nombre)) {
+            // Para libros de José Smith, preservamos el formato exacto
+            $nombreFormateado = preg_replace(
+                '/^josé\s*smith[-]+(historia|mateo)$/i',
+                'José Smith-$1',
+                $nombre
+            );
             
-            $libro = Libros::whereRaw('LOWER(nombre) = ?', [$nombreNormalizado])->first();
+            // Capitalizar la primera letra después del guión
+            $nombreFormateado = preg_replace_callback(
+                '/-(.)/u',
+                function($matches) {
+                    return '-' . mb_strtoupper($matches[1]);
+                },
+                $nombreFormateado
+            );
+            
+            $libro = Libros::where('nombre', $nombreFormateado)->first();
         } else {
             // Para otros libros, normalizar y buscar sin guiones
             $nombreNormalizado = $this->normalizarTexto(str_replace('-', ' ', $nombre));
@@ -115,7 +137,7 @@ class LibrosController extends Controller
      * @param int $id ID del libro
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del libro')]
+    #[UrlParam('id', 'El ID del libro', required: true)]
     #[Response([
         'data' => [
             [
@@ -129,7 +151,12 @@ class LibrosController extends Controller
     #[Response(status: 404, description: 'Libro no encontrado')]
     public function partes($id)
     {
-        $libro = Libros::findOrFail($id);
+        $libro = Libros::find($id);
+        
+        if (!$libro) {
+            return response()->json(['error' => 'Libro no encontrado'], 404);
+        }
+
         return response()->json($libro->partes);
     }
 
@@ -139,7 +166,7 @@ class LibrosController extends Controller
      * @param int $id ID del libro
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del libro')]
+    #[UrlParam('id', 'El ID del libro', required: true)]
     #[Response([
         'data' => [
             [
@@ -155,7 +182,12 @@ class LibrosController extends Controller
     #[Response(status: 404, description: 'Libro no encontrado')]
     public function capitulos($id)
     {
-        $libro = Libros::findOrFail($id);
+        $libro = Libros::find($id);
+        
+        if (!$libro) {
+            return response()->json(['error' => 'Libro no encontrado'], 404);
+        }
+
         return response()->json($libro->capitulos);
     }
 
@@ -165,7 +197,7 @@ class LibrosController extends Controller
      * @param int $id ID del libro
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del libro')]
+    #[UrlParam('id', 'El ID del libro', required: true)]
     #[Response([
         'data' => [
             'id' => 1,
@@ -176,7 +208,12 @@ class LibrosController extends Controller
     #[Response(status: 404, description: 'Libro no encontrado')]
     public function division($id)
     {
-        $libro = Libros::findOrFail($id);
+        $libro = Libros::find($id);
+        
+        if (!$libro) {
+            return response()->json(['error' => 'Libro no encontrado'], 404);
+        }
+
         return response()->json($libro->division);
     }
 
@@ -186,7 +223,7 @@ class LibrosController extends Controller
      * @param int $id ID del libro
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del libro')]
+    #[UrlParam('id', 'El ID del libro', required: true)]
     #[Response([
         'data' => [
             'id' => 1,
@@ -196,7 +233,12 @@ class LibrosController extends Controller
     #[Response(status: 404, description: 'Libro no encontrado')]
     public function volumen($id)
     {
-        $libro = Libros::findOrFail($id);
+        $libro = Libros::find($id);
+        
+        if (!$libro) {
+            return response()->json(['error' => 'Libro no encontrado'], 404);
+        }
+
         return response()->json($libro->volumen);
     }
 }

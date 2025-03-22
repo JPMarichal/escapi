@@ -19,13 +19,20 @@ class VolumenesController extends Controller
      * Lista todos los volúmenes.
      * 
      * Retorna una colección de todos los volúmenes disponibles en el sistema.
+     * Los volúmenes son las principales divisiones de las escrituras (ej: Antiguo Testamento, Nuevo Testamento).
      *
      * @return \Illuminate\Http\JsonResponse
      */
     #[Response([
         'data' => [
-            ['id' => 1, 'nombre' => 'Antiguo Testamento'],
-            ['id' => 2, 'nombre' => 'Nuevo Testamento']
+            [
+                'id' => 1,
+                'nombre' => 'Antiguo Testamento'
+            ],
+            [
+                'id' => 2,
+                'nombre' => 'Nuevo Testamento'
+            ]
         ]
     ])]
     public function index()
@@ -40,7 +47,7 @@ class VolumenesController extends Controller
      * @param int $id ID del volumen
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del volumen')]
+    #[UrlParam('id', 'El ID del volumen', required: true)]
     #[Response([
         'data' => [
             'id' => 1,
@@ -50,7 +57,12 @@ class VolumenesController extends Controller
     #[Response(status: 404, description: 'Volumen no encontrado')]
     public function show($id)
     {
-        $volumen = Volumenes::findOrFail($id);
+        $volumen = Volumenes::find($id);
+        
+        if (!$volumen) {
+            return response()->json(['error' => 'Volumen no encontrado'], 404);
+        }
+
         return response()->json($volumen);
     }
 
@@ -58,8 +70,9 @@ class VolumenesController extends Controller
      * Busca un volumen por nombre.
      * 
      * El nombre es insensible a mayúsculas/minúsculas y acentos.
+     * La búsqueda debe ser exacta con el nombre del volumen.
      *
-     * @param string $nombre Nombre del volumen a buscar
+     * @param string $nombre Nombre del volumen (ej: 'Antiguo Testamento')
      * @return \Illuminate\Http\JsonResponse
      */
     #[UrlParam('nombre', 'Nombre del volumen', required: true, example: 'Antiguo Testamento')]
@@ -93,7 +106,7 @@ class VolumenesController extends Controller
      * @param int $id ID del volumen
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del volumen')]
+    #[UrlParam('id', 'El ID del volumen', required: true)]
     #[Response([
         'data' => [
             [
@@ -116,12 +129,13 @@ class VolumenesController extends Controller
      * @param int $id ID del volumen
      * @return \Illuminate\Http\JsonResponse
      */
-    #[UrlParam('id', 'El ID del volumen')]
+    #[UrlParam('id', 'El ID del volumen', required: true)]
     #[Response([
         'data' => [
             [
                 'id' => 1,
                 'nombre' => 'Génesis',
+                'abreviatura' => 'GEN',
                 'division_id' => 1,
                 'volumen_id' => 1
             ]

@@ -25,12 +25,24 @@ class Capitulos extends Model
         'featured_image',
         'keywords',
         'libro_id',
+        'parte_id',
         'num_capitulo',
+        'referencia',
+        'abreviatura',
+        'num_versiculos',
+        'titulo_capitulo',
+        'url_oficial',
         'url_audio',
-        'descripcion',
-        'introduccion',
-        'temas_estructura',
+        'id_periodo',
         'sumario',
+        'resumen',
+        'ajuste_pericopas',
+        'secuencia',
+        'url_bc',
+        'url_bcdev',
+        'introduccion',
+        'conclusion',
+        'estado_publicacion'
     ];
 
     public function libro(): BelongsTo

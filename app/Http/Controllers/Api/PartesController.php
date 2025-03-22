@@ -57,7 +57,10 @@ class PartesController extends Controller
     #[Response(status: 404, description: 'Parte no encontrada')]
     public function show($id)
     {
-        $parte = Partes::findOrFail($id);
+        $parte = Partes::find($id);
+        if (!$parte) {
+            return response()->json(['error' => 'Parte no encontrada'], 404);
+        }
         return response()->json($parte);
     }
 
@@ -124,7 +127,10 @@ class PartesController extends Controller
     #[Response(status: 404, description: 'Parte no encontrada')]
     public function capitulos($id)
     {
-        $parte = Partes::findOrFail($id);
+        $parte = Partes::find($id);
+        if (!$parte) {
+            return response()->json(['error' => 'Parte no encontrada'], 404);
+        }
         return response()->json($parte->capitulos);
     }
 
@@ -146,7 +152,10 @@ class PartesController extends Controller
     #[Response(status: 404, description: 'Parte no encontrada')]
     public function libro($id)
     {
-        $parte = Partes::findOrFail($id);
+        $parte = Partes::find($id);
+        if (!$parte) {
+            return response()->json(['error' => 'Parte no encontrada'], 404);
+        }
         return response()->json($parte->libro);
     }
 }
